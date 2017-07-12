@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\FileDatabaseCrawler.cs" />
+    <Compile Include="Controllers\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Data\FolderSyncSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
