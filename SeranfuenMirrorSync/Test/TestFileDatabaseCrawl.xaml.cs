@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SeranfuenMirrorSyncLib.Controllers;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,8 +62,42 @@ namespace SeranfuenMirrorSync.Test
         {
             ProgressBar.Visibility = Visibility.Visible;
             isWorking = true;
+            var root = BrowserTextEdit.Text;
+            var calculateHash = CalculateHashCheckBox.IsChecked;
 
+            var startTime = DateTime.Now;
+
+
+            if (!Directory.Exists(root))
+            {
+                System.Windows.MessageBox.Show("The path does not exist or is not accessible", "Path not found", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                return;
+            }
             
+            Task.Factory.StartNew<List<FileDatabaseEntry>>(() =>
+            {
+                var crawler = new FileDatabaseCrawler(root);
+                crawler.IncludeHash = calculateHash.HasValue ? calculateHash.Value : false;
+                crawler.LoadFileDatabase();
+                return crawler.FileDatabaseEntries;
+            }).ContinueWith((result) =>
+            {
+                var endTime = DateTime.Now;
+
+                isWorking = false;
+                Dispatcher.Invoke(() =>
+                {
+                    if (!result.IsFaulted)
+                    {
+                        DataContext = result.Result;
+                    } else
+                    {
+                        System.Windows.MessageBox.Show(string.Format("The following error ocurred:\n\n{0}", result.Exception.InnerException.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                    }
+                    TimeLabel.Content = string.Format("Generation time: {0} ms", (endTime - startTime).TotalMilliseconds);
+                    ProgressBar.Visibility = Visibility.Hidden;
+                });
+            });
         }
     }
 }

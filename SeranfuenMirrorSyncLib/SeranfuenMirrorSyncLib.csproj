@@ -43,8 +43,12 @@
   <ItemGroup>
     <Compile Include="Controllers\FileDatabaseCrawler.cs" />
     <Compile Include="Controllers\FileDatabaseEntry.cs" />
+    <Compile Include="Controllers\FolderSyncController.cs" />
+    <Compile Include="Controllers\FolderSyncEventArgs.cs" />
+    <Compile Include="Controllers\RandomFolderGenerator.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Data\FolderSyncSetting.cs" />
+    <Compile Include="Data\FolderSyncAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

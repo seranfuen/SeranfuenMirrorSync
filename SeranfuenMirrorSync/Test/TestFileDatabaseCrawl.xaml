@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Test"
         xmlns:Controllers="clr-namespace:SeranfuenMirrorSyncLib.Controllers;assembly=SeranfuenMirrorSyncLib" x:Class="SeranfuenMirrorSync.Test.TestFileDatabaseCrawl"
         mc:Ignorable="d"
-        Title="Test Database Crawl" Height="600" Width="800" Closing="Window_Closing">
+        Title="Test Database Crawl" Height="600" Width="791" Closing="Window_Closing">
     <Window.DataContext>
         <Controllers:FileDatabaseEntry/>
     </Window.DataContext>
@@ -16,12 +16,14 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="BrowserTextEdit" Height="23" Margin="10,5,90,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Button x:Name="BrowseButton" Content="Browse..." Margin="0,5,7,0" VerticalAlignment="Top" Click="Button_Click_1" HorizontalAlignment="Right" Width="75"/>
-        <DataGrid Margin="10,10,7,2" Grid.Row="1"/>
+        <TextBox x:Name="BrowserTextEdit" Height="23" Margin="10,5,271,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button x:Name="BrowseButton" Content="Browse..." Margin="0,5,191,0" VerticalAlignment="Top" Click="Button_Click_1" HorizontalAlignment="Right" Width="75"/>
+        <DataGrid Margin="10,10,7,2" Grid.Row="1" IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding Mode=OneWay}"/>
         <Button x:Name="CloseBUtton" Content="Close" Margin="384,20,0,5" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" HorizontalAlignment="Left" Width="75"/>
         <Button x:Name="CrawlButton" Content="Crawl..." HorizontalAlignment="Left" Margin="304,20,0,5" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="CrawlButton_Click"/>
         <ProgressBar x:Name="ProgressBar" Margin="480,10,10,0" Grid.Row="2" Height="25" VerticalAlignment="Top" IsIndeterminate="True" Visibility="Hidden"/>
-        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="887,279,-235,0" Grid.Row="1" VerticalAlignment="Top" Width="100"/>
+        <ProgressBar Margin="0,19,0,5" Grid.Row="2" HorizontalAlignment="Left" Width="289"/>
+        <Label x:Name="TimeLabel" Content="" Margin="480,14,41,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <CheckBox x:Name="CalculateHashCheckBox" Content="Calculate hash" Margin="583,8,10,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

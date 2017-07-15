@@ -1,0 +1,39 @@
+﻿<Window x:Class="SeranfuenMirrorSync.Test.RandomFolderGenerator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeranfuenMirrorSync.Test"
+        mc:Ignorable="d"
+        Title="Random Folder Generator" Height="213" Width="600" WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="20">
+        <Grid Height="42">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BrowseButton" Content="Browse..." Grid.Column="1" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" Width="75" Height="20" Click="BrowseButton_Click"/>
+            <TextBox x:Name="FolderTextBox" Margin="10,7,10,0" TextWrapping="Wrap" Height="25" VerticalAlignment="Top"/>
+        </Grid>
+        <Grid Height="26" Margin="3,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Breadth" />
+            <TextBox Grid.Column="1" TextWrapping="Wrap" PreviewTextInput="TextBox_PreviewTextInput"/>
+            <Label Grid.Column="2" Content="Depth"/>
+            <TextBox Grid.Column="3" x:Name="DepthTextBox" TextWrapping="Wrap" PreviewTextInput="TextBox_PreviewTextInput" />
+        </Grid>
+        <Grid Margin="10,30" Height="25" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="RunButton" Grid.Column="0" Content="Run..." Width="75" Margin="20,0,10,0" Height="20" VerticalAlignment="Center" Click="Button_Click" HorizontalAlignment="Right" />
+            <Button x:Name="CloseButton" Grid.Column="1" Content="Close&#xD;&#xA;" Width="75" Margin="10,0,20,0" Height="20" VerticalAlignment="Center" Click="Button_Click_1" HorizontalAlignment="Left" />
+        </Grid>
+    </StackPanel>
+</Window>

@@ -22,6 +22,14 @@ namespace SeranfuenMirrorSyncLibTests
         }
 
         [TestMethod]
+        public void TestGetVirtual_ChangeBase()
+        {
+            var result1 = FileDatabaseEntry.GetVirtualPath(@"C:\Foo\bar\c.txt", @"C:\Foo");
+            var result2 = FileDatabaseEntry.GetLocalPath(result1, @"D:\A\B");
+            Assert.AreEqual(@"D:\A\B\bar\c.txt", result2);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void TestGetVirtual_RootGivenNotMatching_Exception()
         {

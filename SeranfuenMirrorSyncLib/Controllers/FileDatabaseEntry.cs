@@ -56,6 +56,24 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         #endregion
 
+        public FileDatabaseEntry()
+        {
+        }
+
+        public FileDatabaseEntry(FileInfo fileInfo)
+        {
+            LastModificationDate = fileInfo.LastWriteTime;
+            Size = fileInfo.Length;
+            LocalPath = fileInfo.FullName;
+        }
+
+        [DataMember]
+        public string LocalPath
+        {
+            get;
+            set;
+        }
+
         [DataMember]
         public string VirtualPath
         {
