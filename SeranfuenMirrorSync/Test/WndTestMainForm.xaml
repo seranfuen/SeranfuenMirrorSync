@@ -1,0 +1,40 @@
+﻿<Window x:Class="SeranfuenMirrorSync.Test.WndTestMainForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeranfuenMirrorSync.Test"
+        xmlns:commands="clr-namespace:SeranfuenMirrorSync.Test.Commands"
+        mc:Ignorable="d"
+        Title="Application Tests" Height="282.686" Width="324.153" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://siteoforigin:,,,/Resources/tests.ico">
+    <Window.CommandBindings>
+        <CommandBinding 
+            Command="{x:Static commands:TestCommandFactory.CmdGenerateRandomFolders}"
+            CanExecute="CmdRandomFolders_CanExecute"
+            Executed="CmdRandomFolders_Executed"
+        />
+        <CommandBinding 
+            Command="{x:Static commands:TestCommandFactory.CmdTestFileCrawler}"
+            CanExecute="CmdRandomFolders_CanExecute"
+            Executed="CmdTestFileCrawler_Executed"
+        />
+
+        <CommandBinding 
+            Command="{x:Static commands:TestCommandFactory.CmdSyncFolderStructure}"
+            CanExecute="CmdRandomFolders_CanExecute"
+            Executed="CmdSyncFolderStructure_Executed"
+        />
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="83*"/>
+            <ColumnDefinition Width="65*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="10" Grid.ColumnSpan="2">
+            <Button Content="Generate Random Folders" Command="{x:Static commands:TestCommandFactory.CmdGenerateRandomFolders}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
+            <Button Content="Test File Crawler" Command="{x:Static commands:TestCommandFactory.CmdTestFileCrawler}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
+            <Button Content="Sync Folder Structure" Command="{x:Static commands:TestCommandFactory.CmdSyncFolderStructure}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

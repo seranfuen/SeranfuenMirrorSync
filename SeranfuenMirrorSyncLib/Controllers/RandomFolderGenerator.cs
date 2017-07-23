@@ -15,17 +15,49 @@ namespace SeranfuenMirrorSyncLib.Controllers
         private int _maxDepth;
         private int _maxBreadth;
         private Random _random = new Random();
+        private DateTime _lastStart;
+        private DateTime _lastEnd;
+        private List<Exception> _listExceptions;
 
-        public RandomFolderGenerator(string rootFolder, int maxDepth = 5, int maxBreadth = 20)
+        public RandomFolderGenerator(string rootFolder, int maxDepth = 5, int maxBreadth = 4)
         {
             _rootFolder = rootFolder;
             _maxDepth = maxDepth;
             _maxBreadth = maxBreadth;
         }
 
+        public TimeSpan LastGenDuration
+        {
+            get;
+            private set;
+        }
+
+        public bool LastGenFailed
+        {
+            get
+            {
+                return _listExceptions.Any();
+            }
+        }
+
+        public int GeneratedFoldersCount
+        {
+            get;
+            private set;
+        }
+
         public void Start()
         {
+            _lastStart = DateTime.Now;
+            _listExceptions = new List<Exception>();
+            GeneratedFoldersCount = 0;
             CreateRandomFolders(_rootFolder, 0);
+            _lastEnd = DateTime.Now;
+            LastGenDuration = _lastEnd - _lastStart;
+            if (_listExceptions.Any())
+            {
+                throw new AggregateException(_listExceptions);
+            }
         }
 
         private string RandomName()
@@ -45,11 +77,25 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 return;
             }
 
-            Parallel.For(0, _random.Next(1, _maxBreadth), (i) =>
+            Parallel.For(0, _maxBreadth, (i) =>
             {
-                var newPath = Path.Combine(path, RandomName());
-                Directory.CreateDirectory(newPath);
-                CreateRandomFolders(newPath, depth+1);
+                try
+                {
+                    var newPath = Path.Combine(path, RandomName());
+                    Directory.CreateDirectory(newPath);
+                    CreateRandomFolders(newPath, depth + 1);
+                    lock (this)
+                    {
+                        GeneratedFoldersCount++;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lock(this)
+                    {
+                        _listExceptions.Add(ex);
+                    }
+                }
             });
         }
     }

@@ -20,11 +20,11 @@ namespace SeranfuenMirrorSync.Test
     /// <summary>
     /// Interaction logic for TestFileDatabaseCrawl.xaml
     /// </summary>
-    public partial class TestFileDatabaseCrawl : Window
+    public partial class WndTestFileDatabaseCrawl : Window
     {
         private bool isWorking;
 
-        public TestFileDatabaseCrawl()
+        public WndTestFileDatabaseCrawl()
         {
             InitializeComponent();
         }

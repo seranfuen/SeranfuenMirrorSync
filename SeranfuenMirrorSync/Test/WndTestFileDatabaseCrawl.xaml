@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Test"
-        xmlns:Controllers="clr-namespace:SeranfuenMirrorSyncLib.Controllers;assembly=SeranfuenMirrorSyncLib" x:Class="SeranfuenMirrorSync.Test.TestFileDatabaseCrawl"
+        xmlns:Controllers="clr-namespace:SeranfuenMirrorSyncLib.Controllers;assembly=SeranfuenMirrorSyncLib" x:Class="SeranfuenMirrorSync.Test.WndTestFileDatabaseCrawl"
         mc:Ignorable="d"
         Title="Test Database Crawl" Height="600" Width="791" Closing="Window_Closing">
     <Window.DataContext>
