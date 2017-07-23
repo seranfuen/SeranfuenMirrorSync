@@ -80,7 +80,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 Action = FolderSyncAction.FolderAction.Skip
             };
 
-            var failed = true; ;
+            var failed = true;
 
             try
             {
@@ -103,6 +103,11 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 action.TimeFinished = DateTime.Now;
                 action.Failed = failed;
                 OnFolderSynced(action);
+            }
+
+            if (!failed && action.Action == FolderSyncAction.FolderAction.Skip)
+            {
+                Parallel.ForEach(Directory.GetDirectories(targetFolder), (dir) => SyncDestinationInternal(dir));
             }
         }
 

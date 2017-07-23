@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeranfuenMirrorSyncLib.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -51,6 +52,14 @@ namespace SeranfuenMirrorSyncLib.Controllers
             }
         }
 
+        public FileDatabase FileDatabase
+        {
+            get
+            {
+                return new FileDatabase(FileDatabaseEntries);
+            }
+        }
+
         public void LoadFileDatabase()
         {
             CrawlInternal(RootPath);
@@ -90,14 +99,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
                         databaseEntries.Add(entry);
                     }
                 });
-
-                //foreach (var file in Directory.GetFiles(path))
-                //{
-                //    lock (this)
-                //    {
-                //        databaseEntries.Add(new FileDatabaseEntry(new FileInfo(file)));
-                //    }
-                //}
             }
             catch (UnauthorizedAccessException e)
             {
@@ -109,11 +110,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 {
                     CrawlInternal(dir);
                 });
-
-                //foreach (var dir in Directory.GetDirectories(path))
-                //{
-                //    CrawlInternal(dir);
-                //}
             }
             catch (UnauthorizedAccessException e)
             {
