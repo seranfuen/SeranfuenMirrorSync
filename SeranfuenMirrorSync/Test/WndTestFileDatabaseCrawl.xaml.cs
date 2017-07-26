@@ -1,4 +1,5 @@
 ﻿using SeranfuenMirrorSyncLib.Controllers;
+using SeranfuenMirrorSyncLib.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,7 +78,6 @@ namespace SeranfuenMirrorSync.Test
             Task.Factory.StartNew<List<FileDatabaseEntry>>(() =>
             {
                 var crawler = new FileDatabaseCrawler(root);
-                crawler.IncludeHash = calculateHash.HasValue ? calculateHash.Value : false;
                 crawler.LoadFileDatabase();
                 return crawler.FileDatabaseEntries;
             }).ContinueWith((result) =>

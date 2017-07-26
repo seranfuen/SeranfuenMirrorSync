@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeranfuenMirrorSyncLib.Controllers
+namespace SeranfuenMirrorSyncLib.Data
 {
     [DataContract]
     public class FileDatabaseEntry
@@ -54,6 +54,14 @@ namespace SeranfuenMirrorSyncLib.Controllers
             }
         }
 
+        public static FileDatabaseEntry NonExistentFile
+        {
+            get
+            {
+                return new FileDatabaseEntry();
+            }
+        }
+
         #endregion
 
         public FileDatabaseEntry()
@@ -95,16 +103,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
             set;
         }
 
-        [DataMember]
-        public string Hash
+        public bool Exists
         {
-            get;
-            set;
-        }
-
-        public void ComputeHash(string rootFolder)
-        {
-
+            get
+            {
+                return !string.IsNullOrWhiteSpace(VirtualPath);
+            }
         }
     }
 }

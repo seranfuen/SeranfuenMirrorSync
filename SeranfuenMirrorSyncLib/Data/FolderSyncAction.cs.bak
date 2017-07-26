@@ -1,66 +1,74 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSyncLib.Data
 {
-    public class FileSyncAction
+    [DataContract]
+    public class FolderSyncAction
     {
-        public enum FileActionType
+        [DataContract]
+        public enum FolderAction
         {
+            [EnumMember]
+            Delete,
+            [EnumMember]
             Copy,
-            Skip,
-            Delete
+            [EnumMember]
+            Skip
         }
 
-        public string VirtualPath
+        [DataMember]
+        public FolderAction Action
         {
             get;
             set;
         }
 
+        [DataMember]
         public string SourcePath
         {
             get;
             set;
         }
 
+        [DataMember]
         public string MirrorPath
         {
             get;
             set;
         }
 
-        public FileActionType Action
+        [DataMember]
+        public DateTime TimeStarted
         {
             get;
             set;
         }
 
-        public long? SourceSize
+        [DataMember]
+        public DateTime? TimeFinished
         {
             get;
             set;
         }
 
-        public long? MirrorSize
+        [DataMember]
+        public bool Failed
         {
             get;
             set;
         }
 
-        public DateTime? SourceLastModified
+        [DataMember]
+        public string MessageFailed
         {
             get;
             set;
         }
 
-        public DateTime? MirrorLastModified
-        {
-            get;
-            set;
-        }
     }
 }

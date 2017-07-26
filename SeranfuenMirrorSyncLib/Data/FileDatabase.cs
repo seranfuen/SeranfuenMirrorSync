@@ -44,7 +44,7 @@ namespace SeranfuenMirrorSyncLib.Data
             }
             else
             {
-                return null;
+                return FileDatabaseEntry.NonExistentFile;
             }
         }
 

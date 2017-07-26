@@ -41,9 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\FileComparisonDecider.cs" />
     <Compile Include="Controllers\FileDatabaseComparisonController.cs" />
     <Compile Include="Controllers\FileDatabaseCrawler.cs" />
-    <Compile Include="Controllers\FileDatabaseEntry.cs" />
+    <Compile Include="Data\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\FolderSyncController.cs" />
     <Compile Include="Controllers\FolderSyncEventArgs.cs" />
     <Compile Include="Controllers\RandomFolderGenerator.cs" />

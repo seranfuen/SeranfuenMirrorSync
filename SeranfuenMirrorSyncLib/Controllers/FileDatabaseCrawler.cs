@@ -38,12 +38,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
             set;
         }
 
-        public bool IncludeHash
-        {
-            get;
-            set;
-        }
-
         public List<FileDatabaseEntry> FileDatabaseEntries
         {
             get
@@ -65,22 +59,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
             CrawlInternal(RootPath);
         }
 
-        protected string CalculateMD5Hash(string file)
-        {
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(file);
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
-
-            return sb.ToString();
-        }
-
         protected void CrawlInternal(string path)
         {
             try
@@ -89,10 +67,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 {
                     var entry = new FileDatabaseEntry(new FileInfo(file));
                     entry.VirtualPath = FileDatabaseEntry.GetVirtualPath(entry.LocalPath, _rootPath);
-                    if (IncludeHash)
-                    {
-                        entry.Hash = CalculateMD5Hash(file);
-                    }
 
                     lock (this)
                     {
