@@ -24,6 +24,12 @@
             CanExecute="CmdRandomFolders_CanExecute"
             Executed="CmdSyncFolderStructure_Executed"
         />
+
+        <CommandBinding 
+            Command="{x:Static commands:TestCommandFactory.CmdCopyFileTest}"
+            CanExecute="CmdRandomFolders_CanExecute"
+            Executed="CmdCopyFileTest_Executed"
+        />
     </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -34,6 +40,7 @@
             <Button Content="Generate Random Folders" Command="{x:Static commands:TestCommandFactory.CmdGenerateRandomFolders}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
             <Button Content="Test File Crawler" Command="{x:Static commands:TestCommandFactory.CmdTestFileCrawler}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
             <Button Content="Sync Folder Structure" Command="{x:Static commands:TestCommandFactory.CmdSyncFolderStructure}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
+            <Button Content="Copy File Test" Command="{x:Static commands:TestCommandFactory.CmdCopyFileTest}" HorizontalAlignment="Center" Margin="0,20,0,0" Width="166"/>
         </StackPanel>
 
     </Grid>

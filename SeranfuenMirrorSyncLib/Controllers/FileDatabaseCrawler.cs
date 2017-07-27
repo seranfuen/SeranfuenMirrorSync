@@ -26,13 +26,13 @@ namespace SeranfuenMirrorSyncLib.Controllers
             get { return _rootPath; }
         }
 
-        public List<Regex> FileFilters
+        public List<IFileFilter> FileFilters
         {
             get;
             set;
         }
 
-        public List<Regex> DirectoryFilters
+        public List<IFileFilter> DirectoryFilters
         {
             get;
             set;
@@ -63,7 +63,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             try
             {
-                Parallel.ForEach(Directory.GetFiles(path), (file) =>
+                Parallel.ForEach(Directory.GetFiles(path).Where(file => FileFilters.All(filter => !filter.ShouldFilter(file))), (file) =>
                 {
                     var entry = new FileDatabaseEntry(new FileInfo(file));
                     entry.VirtualPath = FileDatabaseEntry.GetVirtualPath(entry.LocalPath, _rootPath);
@@ -80,7 +80,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
             }
             try
             {
-                Parallel.ForEach(Directory.GetDirectories(path), (dir) =>
+                Parallel.ForEach(Directory.GetDirectories(path).Where(dir => DirectoryFilters.All(filter => !filter.ShouldFilter(dir))), (dir) =>
                 {
                     CrawlInternal(dir);
                 });

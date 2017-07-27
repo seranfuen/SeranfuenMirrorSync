@@ -41,9 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DirectoryPathRegexFilter.cs" />
+    <Compile Include="Controllers\ExtensionFilter.cs" />
     <Compile Include="Controllers\FileComparisonDecider.cs" />
     <Compile Include="Controllers\FileDatabaseComparisonController.cs" />
     <Compile Include="Controllers\FileDatabaseCrawler.cs" />
+    <Compile Include="Controllers\IFileFilter.cs" />
+    <Compile Include="Controllers\ProgressCopyController.cs" />
+    <Compile Include="Controllers\RegexFileNameFilter.cs" />
     <Compile Include="Data\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\FolderSyncController.cs" />
     <Compile Include="Controllers\FolderSyncEventArgs.cs" />
@@ -53,6 +58,8 @@
     <Compile Include="Data\FileSyncAction.cs" />
     <Compile Include="Data\FolderSyncSetting.cs" />
     <Compile Include="Data\FolderSyncAction.cs" />
+    <Compile Include="Data\ProgressCopyEventArgs.cs" />
+    <Compile Include="Data\ProgressCopyStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

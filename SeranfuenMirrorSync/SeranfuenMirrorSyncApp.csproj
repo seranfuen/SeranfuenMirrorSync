@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\ByteStringConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -84,6 +85,9 @@
     <Compile Include="Test\Commands\TestCommandFactory.cs" />
     <Compile Include="Test\WndRandomFolderGenerator.xaml.cs">
       <DependentUpon>WndRandomFolderGenerator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Test\WndTestCopyFile.xaml.cs">
+      <DependentUpon>WndTestCopyFile.xaml</DependentUpon>
     </Compile>
     <Compile Include="Test\WndTestFileDatabaseCrawl.xaml.cs">
       <DependentUpon>WndTestFileDatabaseCrawl.xaml</DependentUpon>
@@ -107,6 +111,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Test\WndRandomFolderGenerator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\WndTestCopyFile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

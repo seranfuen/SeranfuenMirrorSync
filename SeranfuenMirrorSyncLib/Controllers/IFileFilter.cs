@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
-    public class FileFilter
+    public interface IFileFilter
     {
+        bool ShouldFilter(string fullFilePath);
     }
 }

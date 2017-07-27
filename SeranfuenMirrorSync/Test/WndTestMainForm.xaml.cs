@@ -54,5 +54,13 @@ namespace SeranfuenMirrorSync.Test
             form.Show();
             form.Closed += (s, ex) => bIsWorking = false;
         }
+
+        private void CmdCopyFileTest_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            bIsWorking = true;
+            var form = new WndTestCopyFile();
+            form.Show();
+            form.Closed += (s, ex) => bIsWorking = false;
+        }
     }
 }

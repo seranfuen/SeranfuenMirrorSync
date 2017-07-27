@@ -11,6 +11,7 @@ namespace SeranfuenMirrorSync.Test.Commands
     {
         public static RoutedCommand CmdGenerateRandomFolders = new RoutedCommand();
         public static RoutedCommand CmdSyncFolderStructure = new RoutedCommand();
+        public static RoutedCommand CmdCopyFileTest = new RoutedCommand();
         public static RoutedCommand CmdTestFileCrawler = new RoutedCommand();
         public static RoutedCommand CmdTestSyncFolders = new RoutedCommand();
     }
