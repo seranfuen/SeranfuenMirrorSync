@@ -39,34 +39,57 @@ namespace SeranfuenMirrorSyncLib.Controllers
             private set;
         }
 
-        public bool IsFaulted
-        {
-            get
-            {
-                return Exception != null;
-            }
-        }
-
-        public AggregateException Exception
-        {
-            get;
-            private set;
-        }
-
         public void LoadDatabases()
         {
-            try
+            List<Task> listTasks = new List<Task>();
+            listTasks.Add(Task.Factory.StartNew(() => SourceFileDatabase = LoadDatabase(SourceRoot)));
+            listTasks.Add(Task.Factory.StartNew(() => MirrorFileDatabase = LoadDatabase(MirrorRoot)));
+            Task.WaitAll(listTasks.ToArray());
+        }
+
+        public List<FileSyncAction> CalculateSyncActions()
+        {
+            if (SourceFileDatabase == null || MirrorFileDatabase == null)
             {
-                List<Task> listTasks = new List<Task>();
-                listTasks.Add(Task.Factory.StartNew(() => SourceFileDatabase = LoadDatabase(SourceRoot)));
-                listTasks.Add(Task.Factory.StartNew(() => MirrorFileDatabase = LoadDatabase(MirrorRoot)));
-                Task.WaitAll(listTasks.ToArray());
-            }
-            catch (AggregateException ex)
-            {
-                Exception = ex;
+                throw new InvalidOperationException("The databases haven't been loaded");
             }
 
+            List<Task> listTasks = new List<Task>();
+            var listActions = new List<FileSyncAction>();
+
+            listTasks.Add(Task.Factory.StartNew(() =>
+            {
+                var comparer = new FileComparisonDecider(SourceRoot, MirrorRoot);
+                var localList = new List<FileSyncAction>();
+                foreach (var entry in SourceFileDatabase.DatabaseEntries)
+                {
+                    localList.Add(comparer.DecideAction(entry, MirrorFileDatabase.GetEntryByVirtualPath(entry.VirtualPath)));
+                }
+                lock (this)
+                {
+                    listActions.AddRange(localList);
+                }
+            }));
+
+            listTasks.Add(Task.Factory.StartNew(() =>
+            {
+                var comparer = new FileComparisonDecider(SourceRoot, MirrorRoot);
+                var localList = new List<FileSyncAction>();
+
+                var onlyMirror = MirrorFileDatabase.Minus(SourceFileDatabase);
+                foreach (var entry in onlyMirror.DatabaseEntries)
+                {
+                    localList.Add(comparer.DecideAction(FileDatabaseEntry.NonExistentFile, entry));
+                }
+
+                lock (this)
+                {
+                    listActions.AddRange(localList);
+                }
+            }));
+
+            Task.WaitAll(listTasks.ToArray());
+            return listActions;
         }
 
         private FileDatabase LoadDatabase(string rootPath)

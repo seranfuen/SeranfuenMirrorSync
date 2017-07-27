@@ -52,5 +52,21 @@ namespace SeranfuenMirrorSyncLib.Data
         {
             return _vPathEntryDict.ContainsKey(vPath);
         }
+
+        /// <summary>
+        /// Performs the set minus operation, based on virtual paths, not actual paths. Actual paths are ignored. The local paths returned
+        /// are those of the database where the method is called
+        /// </summary>
+        /// <param name="databaseToSubstract"></param>
+        /// <returns></returns>
+        public FileDatabase Minus(FileDatabase databaseToSubstract)
+        {
+            var query =
+                from fileEntry in _listDatabaseEntries
+                where !databaseToSubstract.ContainsPath(fileEntry.VirtualPath)
+                select fileEntry;
+
+            return new FileDatabase(query.ToList());
+        }
     }
 }

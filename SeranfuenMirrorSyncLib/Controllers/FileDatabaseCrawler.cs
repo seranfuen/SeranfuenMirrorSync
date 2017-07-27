@@ -56,7 +56,10 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         public void LoadFileDatabase()
         {
-            CrawlInternal(RootPath);
+            if (Directory.Exists(RootPath))
+            {
+                CrawlInternal(RootPath);
+            }
         }
 
         protected void CrawlInternal(string path)
