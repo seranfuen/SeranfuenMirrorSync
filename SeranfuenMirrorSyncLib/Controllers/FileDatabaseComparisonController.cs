@@ -39,6 +39,18 @@ namespace SeranfuenMirrorSyncLib.Controllers
             private set;
         }
 
+        public List<IFileFilter> FileFilters
+        {
+            get;
+            internal set;
+        }
+
+        public List<IFileFilter> DirectoryFilters
+        {
+            get;
+            internal set;
+        }
+
         public void LoadDatabases()
         {
             List<Task> listTasks = new List<Task>();
@@ -95,6 +107,8 @@ namespace SeranfuenMirrorSyncLib.Controllers
         private FileDatabase LoadDatabase(string rootPath)
         {
             var crawler = new FileDatabaseCrawler(rootPath);
+            crawler.FileFilters = FileFilters;
+            crawler.DirectoryFilters = DirectoryFilters;
             crawler.LoadFileDatabase();
             return crawler.FileDatabase;
         }

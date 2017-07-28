@@ -58,6 +58,8 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             if (Directory.Exists(RootPath))
             {
+                if (FileFilters == null) FileFilters = new List<IFileFilter>();
+                if (DirectoryFilters == null) DirectoryFilters = new List<IFileFilter>();
                 CrawlInternal(RootPath);
             }
         }
@@ -77,7 +79,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
                     }
                 });
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
 
             }
@@ -88,7 +90,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
                     CrawlInternal(dir);
                 });
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
 
             }
