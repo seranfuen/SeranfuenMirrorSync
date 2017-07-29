@@ -62,5 +62,13 @@ namespace SeranfuenMirrorSync.Test
             form.Show();
             form.Closed += (s, ex) => bIsWorking = false;
         }
+
+        private void CmdTestSyncFolders_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            bIsWorking = true;
+            var form = new WndTestMirrorSync();
+            form.Show();
+            form.Closed += (s, ex) => bIsWorking = false;
+        }
     }
 }

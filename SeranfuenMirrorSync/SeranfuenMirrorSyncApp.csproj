@@ -77,12 +77,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\ByteStringConverter.cs" />
+    <Compile Include="Controls\CtrFolderChooseTextBox.xaml.cs">
+      <DependentUpon>CtrFolderChooseTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Test\Commands\TestCommandFactory.cs" />
+    <Compile Include="Test\ViewModels\TestMirrorSyncViewModel.cs" />
     <Compile Include="Test\WndRandomFolderGenerator.xaml.cs">
       <DependentUpon>WndRandomFolderGenerator.xaml</DependentUpon>
     </Compile>
@@ -95,9 +99,16 @@
     <Compile Include="Test\WndTestMainForm.xaml.cs">
       <DependentUpon>WndTestMainForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test\WndTestMirrorSync.xaml.cs">
+      <DependentUpon>WndTestMirrorSync.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\WndTestSyncFolders.xaml.cs">
       <DependentUpon>WndTestSyncFolders.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\CtrFolderChooseTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\WndTestMainForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Test\WndTestMirrorSync.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,6 +191,9 @@
     <None Include="Resources\tests.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
