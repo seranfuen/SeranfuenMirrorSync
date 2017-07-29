@@ -10,7 +10,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="FolderPathTextBox" Height="22" HorizontalAlignment="Stretch" Margin="5,2" />
+        <TextBox x:Name="FolderPathTextBox" Height="22" HorizontalAlignment="Stretch" Margin="5,2" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=SelectedPath, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CtrFolderChooseTextBox}}}" />
         <Button Margin="5,2" Grid.Column="1" VerticalAlignment="Center" Height="22" Click="Button_Click">
             <Grid>
                 <Grid.ColumnDefinitions>

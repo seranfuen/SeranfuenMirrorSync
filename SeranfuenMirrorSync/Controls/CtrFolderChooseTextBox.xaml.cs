@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +33,17 @@ namespace SeranfuenMirrorSync.Controls
             set { SetValue(SelectedPathProperty, value); }
         }
 
+        public bool HasSelectedPath
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(SelectedPath);
+            }
+        }
+
         // Using a DependencyProperty as the backing store for SelectedPath.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedPathProperty =
-            DependencyProperty.Register("SelectedPath", typeof(string), typeof(CtrFolderChooseTextBox), new PropertyMetadata(0));
+            DependencyProperty.Register("SelectedPath", typeof(string), typeof(CtrFolderChooseTextBox), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnFilePathPropertyChanged)) { BindsTwoWayByDefault = true });
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -47,6 +56,13 @@ namespace SeranfuenMirrorSync.Controls
             {
                 FolderPathTextBox.Text = form.SelectedPath;
             }
+        }
+
+        static void OnFilePathPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            var obj = o as CtrFolderChooseTextBox;
+            if (obj == null)
+                return;
         }
     }
 }

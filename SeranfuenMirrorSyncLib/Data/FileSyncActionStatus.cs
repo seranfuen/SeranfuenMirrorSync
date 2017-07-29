@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace SeranfuenMirrorSyncLib.Data
 {
     [DataContract]
+    [Serializable]
     public class FileSyncActionStatus : FileSyncAction
     {
         [DataContract]

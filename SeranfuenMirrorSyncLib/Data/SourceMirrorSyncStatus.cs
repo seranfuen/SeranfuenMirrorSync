@@ -215,7 +215,14 @@ namespace SeranfuenMirrorSyncLib.Data
             {
                 lock (this)
                 {
-                    return _actionStatuses.ToList();
+                    if (_actionStatuses != null)
+                    {
+                        return _actionStatuses.ToList();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
             set

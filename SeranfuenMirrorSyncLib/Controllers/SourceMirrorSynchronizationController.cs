@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeranfuenMirrorSyncLib.Data;
 using System.IO;
+using SeranfuenMirrorSyncLib.Utils.Clone;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
@@ -53,11 +54,20 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             _currentGuid = Guid.NewGuid();
             ReportLoadingData();
+
+            var directorySyncController = new FolderSyncController(SourceRoot, MirrorRoot);
+            directorySyncController.StartSync();
+
             var fileComparisonController = InitializeFileComparisonController();
             var actions = fileComparisonController.CalculateSyncActions();
             RunSkippedActions(actions);
             RunActions(actions);
             ReportSyncFinished();
+        }
+
+        public SourceMirrorSyncStatus GetStatus()
+        {
+            return DeepCloneFactory<SourceMirrorSyncStatus>.DefaultCloner.DeepClone(_status);
         }
 
         private void RunActions(List<FileSyncAction> actions)
