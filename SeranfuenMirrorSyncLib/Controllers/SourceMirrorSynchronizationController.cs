@@ -9,7 +9,7 @@ using SeranfuenMirrorSyncLib.Utils.Clone;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
-    public class SourceMirrorSynchronizationController
+    public class SourceMirrorSynchronizationController : ISyncActionController
     {
         private Guid _currentGuid;
         private SourceMirrorSyncStatus _status;
