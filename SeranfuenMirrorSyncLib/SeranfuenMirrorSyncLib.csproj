@@ -47,9 +47,12 @@
     <Compile Include="Controllers\FileDatabaseComparisonController.cs" />
     <Compile Include="Controllers\FileDatabaseCrawler.cs" />
     <Compile Include="Controllers\IFileFilter.cs" />
+    <Compile Include="Controllers\ISyncActionController.cs" />
+    <Compile Include="Controllers\SyncActionControllerFactory.cs" />
     <Compile Include="Controllers\ProgressCopyController.cs" />
     <Compile Include="Controllers\RegexFileNameFilter.cs" />
     <Compile Include="Controllers\SourceMirrorSynchronizationController.cs" />
+    <Compile Include="Controllers\SyncScheduler.cs" />
     <Compile Include="Data\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\FolderSyncController.cs" />
     <Compile Include="Controllers\FolderSyncEventArgs.cs" />
