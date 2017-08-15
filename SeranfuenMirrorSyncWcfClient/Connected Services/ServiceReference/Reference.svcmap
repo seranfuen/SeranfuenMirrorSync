@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fd7bc976-ba43-4c42-99cb-4ecc1d24012a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="c2ed5148-559a-4ed0-a500-7365cd3f79a3" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="8b7f04c1-d820-46b5-8075-2f305de560b8" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="9d924735-33fb-4d92-8cbf-bcaef4a1923d" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="768eca9b-0026-4468-9fb8-e231a8059c2e" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+    <MetadataFile FileName="SeranfuenMirrorSyncLib.Data.xsd" MetadataType="Schema" ID="72ea70da-2a91-46ce-a602-e05bf9a38d2e" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="4ca5ac7d-6f70-4eb7-b663-958fa019a024" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

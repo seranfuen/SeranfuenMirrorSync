@@ -80,6 +80,9 @@
     <Compile Include="Controls\CtrFolderChooseTextBox.xaml.cs">
       <DependentUpon>CtrFolderChooseTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CtrSourceMirrorFolderChooser.xaml.cs">
+      <DependentUpon>CtrSourceMirrorFolderChooser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,7 +108,15 @@
     <Compile Include="Test\WndTestSyncFolders.xaml.cs">
       <DependentUpon>WndTestSyncFolders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ManualSyncViewModel.cs" />
+    <Compile Include="Windows\WndManualSync.xaml.cs">
+      <DependentUpon>WndManualSync.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\CtrFolderChooseTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CtrSourceMirrorFolderChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\WndManualSync.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -155,18 +170,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="..\SeranfuenMirrorSyncWcfClient\app.config">
+      <Link>app.config</Link>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SeranfuenMirrorSyncLib\SeranfuenMirrorSyncLib.csproj">
       <Project>{04c2bf07-d150-4247-82b0-73fbcaafc2f8}</Project>
       <Name>SeranfuenMirrorSyncLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeranfuenMirrorSyncWcfClient\SeranfuenMirrorSyncWcfClient.csproj">
+      <Project>{72b22d48-de37-4e51-bcfd-489bce24543c}</Project>
+      <Name>SeranfuenMirrorSyncWcfClient</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +213,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

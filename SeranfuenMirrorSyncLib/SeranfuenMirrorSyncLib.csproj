@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\DateTimeNowProvider.cs" />
     <Compile Include="Controllers\DirectoryPathRegexFilter.cs" />
     <Compile Include="Controllers\ExtensionFilter.cs" />
     <Compile Include="Controllers\FileComparisonDecider.cs" />
@@ -49,11 +50,15 @@
     <Compile Include="Controllers\IFileFilter.cs" />
     <Compile Include="Controllers\ISyncActionController.cs" />
     <Compile Include="Controllers\ISyncActionControllerFactory.cs" />
+    <Compile Include="Controllers\ITimeProvider.cs" />
     <Compile Include="Controllers\SyncActionControllerFactory.cs" />
     <Compile Include="Controllers\ProgressCopyController.cs" />
     <Compile Include="Controllers\RegexFileNameFilter.cs" />
     <Compile Include="Controllers\SourceMirrorSynchronizationController.cs" />
+    <Compile Include="Controllers\SyncCalendarScheduler.cs" />
+    <Compile Include="Controllers\SyncProgressReportedEventArgs.cs" />
     <Compile Include="Controllers\SyncScheduler.cs" />
+    <Compile Include="Controllers\Time.cs" />
     <Compile Include="Data\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\FolderSyncController.cs" />
     <Compile Include="Controllers\FolderSyncEventArgs.cs" />
@@ -64,10 +69,12 @@
     <Compile Include="Data\FileSyncActionStatus.cs" />
     <Compile Include="Data\FolderSyncSetting.cs" />
     <Compile Include="Data\FolderSyncAction.cs" />
+    <Compile Include="Data\ISchedule.cs" />
     <Compile Include="Data\PendingSyncInfo.cs" />
     <Compile Include="Data\ProgressCopyEventArgs.cs" />
     <Compile Include="Data\ProgressCopyStatus.cs" />
     <Compile Include="Data\SourceMirrorSyncStatus.cs" />
+    <Compile Include="Data\WeekdaySchedule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Clone\BinarySerializerDeepClone.cs" />
     <Compile Include="Utils\Clone\DeepCloneFactory.cs" />

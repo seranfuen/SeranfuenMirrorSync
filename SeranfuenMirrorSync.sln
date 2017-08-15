@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeranfuenMirrorSyncLibTests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeranfuenMirrorSyncWcfService", "SeranfuenMirrorSyncWcfService\SeranfuenMirrorSyncWcfService.csproj", "{9C9B6207-817C-4BEC-88AA-4B88167B0BCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeranfuenLogging", "SeranfuenLogging\SeranfuenLogging.csproj", "{1CCB2662-84C2-40F5-9C82-AC1A4D410F08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeranfuenMirrorSyncWcfClient", "SeranfuenMirrorSyncWcfClient\SeranfuenMirrorSyncWcfClient.csproj", "{72B22D48-DE37-4E51-BCFD-489BCE24543C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9C9B6207-817C-4BEC-88AA-4B88167B0BCD} = {9C9B6207-817C-4BEC-88AA-4B88167B0BCD}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +46,14 @@ Global
 		{9C9B6207-817C-4BEC-88AA-4B88167B0BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C9B6207-817C-4BEC-88AA-4B88167B0BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C9B6207-817C-4BEC-88AA-4B88167B0BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CCB2662-84C2-40F5-9C82-AC1A4D410F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CCB2662-84C2-40F5-9C82-AC1A4D410F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CCB2662-84C2-40F5-9C82-AC1A4D410F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CCB2662-84C2-40F5-9C82-AC1A4D410F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72B22D48-DE37-4E51-BCFD-489BCE24543C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B22D48-DE37-4E51-BCFD-489BCE24543C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B22D48-DE37-4E51-BCFD-489BCE24543C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B22D48-DE37-4E51-BCFD-489BCE24543C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

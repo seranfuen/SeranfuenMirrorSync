@@ -12,14 +12,21 @@ namespace SeranfuenMirrorSyncService
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
+#if DEBUG
+            var serviceTest = new MirrorSyncService();
+            serviceTest.StartTest(args);
+            Console.ReadLine();
+            serviceTest.StopTest();
+#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new MirrorSyncService()
             };
             ServiceBase.Run(ServicesToRun);
+#endif
         }
     }
 }

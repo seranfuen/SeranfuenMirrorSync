@@ -1,0 +1,36 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
+        xmlns:controls="clr-namespace:SeranfuenMirrorSync.Controls"
+        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" x:Class="SeranfuenMirrorSync.Windows.WndManualSync"
+        mc:Ignorable="d"
+        Title="Manual Sync" Height="468" Width="800" Icon="pack://siteoforigin:,,,/Resources/copy.ico" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <ViewModels:ManualSyncViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBox VerticalContentAlignment="Stretch" Margin="5" Text="Select the source folder. The mirror folder will be synchronized with it, so the contents will be the same." />
+            <TextBox VerticalContentAlignment="Stretch" Margin="5,0,5,5" Text="WARNING: the contents of the mirror folder may be DELETED, if it exists. Any file not found in the source folder will be deleted." />
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10">
+            <CheckBox Margin="5" x:Name="UseSourceFolderName" Content="Use source folder name" IsChecked="{Binding UseSourceFolderName}" />
+            <CheckBox Margin="5" x:Name="FolderDateCheckEdit" Content="Create folder with synchronization date" IsChecked="{Binding CreateDateFolder}" />
+        </StackPanel>
+        <controls:CtrSourceMirrorFolderChooser Grid.Row="1" Margin="5" SourceFolderPath="{Binding SourcePath}" MirrorFolderPath="{Binding MirrorPath}"/>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10" >
+            <Button x:Name="Close" Margin="10,5" Padding="20,5" Content="Close" />
+            <Button x:Name="Sync"  Margin="10,5" Padding="20,5" Content="Start sync..." Click="Sync_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -67,7 +67,10 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         public SourceMirrorSyncStatus GetStatus()
         {
-            return DeepCloneFactory<SourceMirrorSyncStatus>.DefaultCloner.DeepClone(_status);
+            lock (_status)
+            {
+                return DeepCloneFactory<SourceMirrorSyncStatus>.DefaultCloner.DeepClone(_status);
+            }
         }
 
         private void RunActions(List<FileSyncAction> actions)

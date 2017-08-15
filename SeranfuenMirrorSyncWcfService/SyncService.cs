@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using SeranfuenMirrorSyncLib.Controllers;
 using SeranfuenMirrorSyncLib.Data;
+using SeranfuenMirrorSyncWcfService.Controllers;
 
 namespace SeranfuenMirrorSyncWcfService
 {
@@ -13,8 +14,7 @@ namespace SeranfuenMirrorSyncWcfService
     {
         public SourceMirrorSyncStatus GetCurrentSyncStatus()
         {
-            // use sync scheduler or status controller to get status of current sync
-            throw new NotImplementedException();
+            return ServiceSyncController.Instance.GetCurrentStatus();
         }
 
         public List<SourceMirrorSyncStatus> GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count)
@@ -25,8 +25,7 @@ namespace SeranfuenMirrorSyncWcfService
 
         public void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
         {
-            // put sync in scheduler
-            throw new NotImplementedException();
+            ServiceSyncController.Instance.ScheduleSync(sourceRoot, mirrorRoot);
         }
     }
 }

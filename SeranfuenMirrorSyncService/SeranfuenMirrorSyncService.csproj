@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ADF9FCCE-1DCA-4731-BC20-738790C9391F}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>SeranfuenMirrorSyncService</RootNamespace>
     <AssemblyName>SeranfuenMirrorSyncService</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -31,9 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SeranfuenMirrorSyncService.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,17 +49,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service1.cs">
+    <Compile Include="MirrorSyncService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service1.Designer.cs">
-      <DependentUpon>Service1.cs</DependentUpon>
+    <Compile Include="MirrorSyncService.Designer.cs">
+      <DependentUpon>MirrorSyncService.cs</DependentUpon>
     </Compile>
+    <Compile Include="MirrorSyncServiceMainThread.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <EmbeddedResource Include="MirrorSyncService.resx">
+      <DependentUpon>MirrorSyncService.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SeranfuenLogging\SeranfuenLogging.csproj">
+      <Project>{1ccb2662-84c2-40f5-9c82-ac1a4d410f08}</Project>
+      <Name>SeranfuenLogging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeranfuenMirrorSyncWcfService\SeranfuenMirrorSyncWcfService.csproj">
+      <Project>{9c9b6207-817c-4bec-88aa-4b88167b0bcd}</Project>
+      <Name>SeranfuenMirrorSyncWcfService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\SeranfuenMirrorSyncWcfService\App.config">
+      <Link>App.config</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

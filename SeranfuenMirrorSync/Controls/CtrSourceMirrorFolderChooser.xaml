@@ -1,0 +1,21 @@
+﻿<UserControl x:Name="SourceMirrorFolderChooser" x:Class="SeranfuenMirrorSync.Controls.CtrSourceMirrorFolderChooser"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SeranfuenMirrorSync.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Source Folder" Margin="5" VerticalContentAlignment="Center" VerticalAlignment="Top" />
+        <local:CtrFolderChooseTextBox x:Name="SourceFolderTextBox" Grid.Column="1" Margin="5" VerticalContentAlignment="Center" VerticalAlignment="Top" SelectedPath="{Binding SourceFolderPath, ElementName=SourceMirrorFolderChooser}" />
+        <Label Grid.Column="2" Content="Mirror Folder" Margin="5" VerticalContentAlignment="Center" VerticalAlignment="Top" />
+        <local:CtrFolderChooseTextBox x:Name="MirrorFolderTextBox" Grid.Column="3" Margin="5" VerticalContentAlignment="Center" VerticalAlignment="Top" SelectedPath="{Binding MirrorFolderPath, ElementName=SourceMirrorFolderChooser}" />
+    </Grid>
+</UserControl>

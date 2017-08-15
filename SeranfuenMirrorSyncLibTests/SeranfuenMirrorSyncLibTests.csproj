@@ -51,8 +51,16 @@
     <Compile Include="FileComparisonDeciderTests.cs" />
     <Compile Include="FileDatabaseTests.cs" />
     <Compile Include="FileFilterTests.cs" />
+    <Compile Include="IncreasingDayProvider.cs" />
+    <Compile Include="StaticTimeProvider.cs" />
+    <Compile Include="SyncCalendarSchedulerTests.cs" />
+    <Compile Include="SyncSchedulerTestController.cs" />
     <Compile Include="TestFileDatabaseEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyncSchedulerTests.cs" />
+    <Compile Include="TestSyncActionController.cs" />
+    <Compile Include="TestSyncActionFactory.cs" />
+    <Compile Include="TimeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
