@@ -208,6 +208,29 @@ namespace SeranfuenMirrorSyncLib.Data
             }
         }
 
+        public bool HasFinished
+        {
+            get
+            {
+                return End.HasValue;
+            }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                if (End.HasValue)
+                {
+                    return End.Value - Start;
+                }
+                else
+                {
+                    return DateTime.Now - Start;
+                }
+            }
+        }
+
         [DataMember]
         public List<FileSyncActionStatus> FileSyncActionStatuses
         {

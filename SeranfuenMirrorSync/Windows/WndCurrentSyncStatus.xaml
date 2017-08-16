@@ -1,0 +1,54 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
+        xmlns:Data="clr-namespace:SeranfuenMirrorSyncLib.Data;assembly=SeranfuenMirrorSyncLib" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Class="SeranfuenMirrorSync.Windows.WndCurrentSyncStatus"
+        mc:Ignorable="d"
+        Title="Synchronization Status" Height="600" Width="800" Icon="pack://siteoforigin:,,,/Resources/copy.ico">
+    <Window.Resources>
+        <Converters:TimeSpanMinuteSecondStringConverter x:Key="TimeSpanMinuteSecondStringConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <Data:SourceMirrorSyncStatus/>
+    </Window.DataContext>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,10" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Source" Margin="0,0,10,0" />
+            <TextBox Grid.Column="1" IsReadOnly="True" Width="Auto" HorizontalAlignment="Stretch" Text="{Binding SourceRoot}" VerticalAlignment="Center" />
+            <Label Grid.Column="2" Content="Destination" Margin="0,0,10,0" />
+            <TextBox Grid.Column="3" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" Text="{Binding MirrorRoot}" VerticalAlignment="Center" />
+            <Label Grid.Column="4" Content="Start" Margin="0,0,10,0" />
+            <DatePicker Grid.Column="5"  Width="Auto"  HorizontalAlignment="Stretch" SelectedDate="{Binding Start}" VerticalContentAlignment="Stretch" VerticalAlignment="Center" />
+            <Label Grid.Column="6" Content="Duration" Margin="0,0,10,0" />
+            <TextBox Grid.Column="7" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" DataContext="{Binding Duration, Converter={StaticResource TimeSpanMinuteSecondStringConverter}, Mode=OneWay}" VerticalAlignment="Center"  />
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,10" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <CheckBox Content="Completed" DataContext="{Binding HasFinished, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" />
+            <Label Grid.Column="1" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
+            <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="90" />
+        </Grid>
+        <DataGrid Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" />
+    </Grid>
+</Window>

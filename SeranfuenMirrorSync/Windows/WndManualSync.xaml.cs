@@ -24,6 +24,9 @@ namespace SeranfuenMirrorSync.Windows
         public WndManualSync()
         {
             InitializeComponent();
+            var viewModel = new ManualSyncViewModel();
+            viewModel.UseSourceFolderName = true;
+            DataContext = viewModel;
         }
 
         public ManualSyncViewModel ViewModel
