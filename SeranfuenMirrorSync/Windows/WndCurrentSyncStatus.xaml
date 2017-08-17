@@ -49,6 +49,13 @@
             <Label Grid.Column="1" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
             <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="90" />
         </Grid>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" />
+        <DataGrid Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Binding="{Binding Action}" ClipboardContentBinding="{x:Null}" Header="Action" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Binding="{Binding SourceSize}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Binding="{Binding ProgressPercent, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Progress" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

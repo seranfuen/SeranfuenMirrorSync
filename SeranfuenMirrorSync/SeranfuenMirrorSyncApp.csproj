@@ -90,7 +90,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Test\Commands\TestCommandFactory.cs" />
+    <Compile Include="Test\ViewModels\ProgressTest.cs" />
     <Compile Include="Test\ViewModels\TestMirrorSyncViewModel.cs" />
+    <Compile Include="Test\WndProgressBarInGridTest.xaml.cs">
+      <DependentUpon>WndProgressBarInGridTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Test\WndRandomFolderGenerator.xaml.cs">
       <DependentUpon>WndRandomFolderGenerator.xaml</DependentUpon>
     </Compile>
@@ -136,6 +140,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Test\WndProgressBarInGridTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Test\WndRandomFolderGenerator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
