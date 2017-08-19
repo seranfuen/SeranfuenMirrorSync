@@ -11,6 +11,6 @@ namespace SeranfuenMirrorSyncWcfClient
     public interface IServiceProxy
     {
         void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
-        SourceMirrorSyncStatus GetCurrentSyncStatus();
+        SourceMirrorSyncStatus GetCurrentSyncStatus(bool filterCompletedActions);
     }
 }

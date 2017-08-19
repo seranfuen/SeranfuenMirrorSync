@@ -12,9 +12,21 @@ namespace SeranfuenMirrorSyncWcfService
 {
     public class SyncService : ISyncService
     {
-        public SourceMirrorSyncStatus GetCurrentSyncStatus()
+        public byte[] GetCurrentSyncStatus(bool filterCompletedActions)
         {
-            return ServiceSyncController.Instance.GetCurrentStatus();
+            var status = ServiceSyncController.Instance.GetCurrentStatus();
+            if (status == null)
+            {
+                return null;
+            }
+            else
+            {
+                if (filterCompletedActions)
+                {
+                    status.FilterCompletedActions();
+                }
+                return ObjectCompressionFactory.GetDefaultCompressor<SourceMirrorSyncStatus>().CompressObject(status);
+            }
         }
 
         public List<SourceMirrorSyncStatus> GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count)

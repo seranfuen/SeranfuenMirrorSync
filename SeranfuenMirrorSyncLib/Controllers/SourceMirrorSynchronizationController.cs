@@ -46,6 +46,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
             set;
         }
 
+        public int MaxParallelActions
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region ' Methods '
@@ -78,7 +84,10 @@ namespace SeranfuenMirrorSyncLib.Controllers
             var actualActions = actions.Where(action => action.Action != FileSyncAction.FileActionType.Skip);
             UpdatePendingActions(actualActions);
 
-            Parallel.ForEach(actualActions, (action) =>
+            Parallel.ForEach(actualActions, new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = MaxParallelActions
+            }, (action) =>
             {
                 _status.IncrementThreads();
                 ReportActionStarted(action);

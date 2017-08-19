@@ -47,10 +47,13 @@
     <Compile Include="Controllers\FileComparisonDecider.cs" />
     <Compile Include="Controllers\FileDatabaseComparisonController.cs" />
     <Compile Include="Controllers\FileDatabaseCrawler.cs" />
+    <Compile Include="Controllers\GZipDataCompression.cs" />
+    <Compile Include="Controllers\IDataCompression.cs" />
     <Compile Include="Controllers\IFileFilter.cs" />
     <Compile Include="Controllers\ISyncActionController.cs" />
     <Compile Include="Controllers\ISyncActionControllerFactory.cs" />
     <Compile Include="Controllers\ITimeProvider.cs" />
+    <Compile Include="Controllers\ObjectCompressionFactory.cs" />
     <Compile Include="Controllers\SyncActionControllerFactory.cs" />
     <Compile Include="Controllers\ProgressCopyController.cs" />
     <Compile Include="Controllers\RegexFileNameFilter.cs" />

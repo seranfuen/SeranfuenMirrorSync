@@ -19,13 +19,15 @@
   </xs:element>
   <xs:element name="GetCurrentSyncStatus">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="filterCompletedActions" type="xs:boolean" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetCurrentSyncStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="GetCurrentSyncStatusResult" nillable="true" type="q3:SourceMirrorSyncStatus" />
+        <xs:element minOccurs="0" name="GetCurrentSyncStatusResult" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -41,7 +43,7 @@
   <xs:element name="GetHistorySyncStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="GetHistorySyncStatusResult" nillable="true" type="q4:ArrayOfSourceMirrorSyncStatus" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="GetHistorySyncStatusResult" nillable="true" type="q3:ArrayOfSourceMirrorSyncStatus" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -11,6 +11,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         #region ' Singleton '
 
         private static SyncActionControllerFactory _instance;
+        private static int _defaultMaxActions = 4;
 
         public static SyncActionControllerFactory Instance
         {
@@ -26,11 +27,25 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         }
 
+        public static int MaxParallelActions
+        {
+            get
+            {
+                return _defaultMaxActions;
+            }
+            set
+            {
+                _defaultMaxActions = value;
+            }
+        }
+
         #endregion
 
         public ISyncActionController GetDefaultController(string sourcePath, string mirrorPath)
         {
-            return new SourceMirrorSynchronizationController(sourcePath, mirrorPath);
+            var controller = new SourceMirrorSynchronizationController(sourcePath, mirrorPath);
+            controller.MaxParallelActions = _defaultMaxActions;
+            return controller;
         }
     }
 }

@@ -11,11 +11,13 @@ namespace SeranfuenMirrorSyncWcfClient
 {
     public class ServiceProxy : IServiceProxy
     {
-        public SourceMirrorSyncStatus GetCurrentSyncStatus()
+        public SourceMirrorSyncStatus GetCurrentSyncStatus(bool filterCompletedActions)
         {
             using (var proxy = new ServiceReference.SyncServiceClient("BasicHttpBinding_ISyncService"))
             {
-                return proxy.GetCurrentSyncStatus();
+                var statusArray = proxy.GetCurrentSyncStatus(filterCompletedActions);
+                if (statusArray == null) return null;
+                return ObjectCompressionFactory.GetDefaultCompressor<SourceMirrorSyncStatus>().DecompressObjecT(statusArray);
             }
         }
 

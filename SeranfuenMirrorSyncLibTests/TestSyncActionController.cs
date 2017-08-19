@@ -43,6 +43,8 @@ namespace SeranfuenMirrorSyncLibTests
             private set;
         }
 
+        public int MaxParallelActions => throw new NotImplementedException();
+
         public SourceMirrorSyncStatus GetStatus()
         {
             throw new NotImplementedException();

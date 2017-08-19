@@ -49,12 +49,21 @@
             <Label Grid.Column="1" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
             <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="90" />
         </Grid>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" >
+        <DataGrid x:Name="ActionsGrid" Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Binding="{Binding Action}" ClipboardContentBinding="{x:Null}" Header="Action" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Binding="{Binding SourceSize}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Binding="{Binding ProgressPercent, Mode=OneWay}" ClipboardContentBinding="{x:Null}" Header="Progress" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True" MaxWidth="497"/>
+                <DataGridTextColumn Binding="{Binding Action}" ClipboardContentBinding="{x:Null}" Header="Action" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding SourceSize}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Progress" Width="250">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4">
+                                <ProgressBar MinHeight="2" Margin="3" Grid.Row="0" Grid.Column="0" Minimum="0" Maximum="100" Value="{Binding ProgressPercent, Mode=OneWay}" ToolTip="{Binding ProgressPercent, Mode=OneWay}" />
+                                <Label Padding="2" Margin="2" Content="{Binding ProgressPercent, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

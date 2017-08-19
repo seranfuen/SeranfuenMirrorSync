@@ -41,6 +41,10 @@ namespace SeranfuenMirrorSync.Windows
         {
             var proxy = ServiceProxyFactory.Proxy;
             proxy.RunSync(ViewModel.SourcePath, ViewModel.FinalMirrorPath);
+            var statusWnd = new WndCurrentSyncStatus();
+            statusWnd.StartUpdating();
+            statusWnd.ShowDialog();
+            statusWnd.StopUpdating();
         }
     }
 }

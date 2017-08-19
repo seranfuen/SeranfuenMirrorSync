@@ -16,7 +16,7 @@ namespace SeranfuenMirrorSyncWcfService
         void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
 
         [OperationContract]
-        SourceMirrorSyncStatus GetCurrentSyncStatus();
+        byte[] GetCurrentSyncStatus(bool filterCompletedActions);
 
         [OperationContract]
         List<SourceMirrorSyncStatus> GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count);

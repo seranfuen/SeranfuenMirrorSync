@@ -61,6 +61,7 @@
     <Compile Include="TestSyncActionController.cs" />
     <Compile Include="TestSyncActionFactory.cs" />
     <Compile Include="TimeTests.cs" />
+    <Compile Include="GZipDataCompressionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

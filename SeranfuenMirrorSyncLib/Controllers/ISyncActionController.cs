@@ -9,6 +9,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         List<IFileFilter> FileFilters { get; set; }
         string MirrorRoot { get; }
         string SourceRoot { get; }
+        int MaxParallelActions { get; }
 
         SourceMirrorSyncStatus GetStatus();
         void RunSynchronization();

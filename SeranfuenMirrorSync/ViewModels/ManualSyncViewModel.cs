@@ -10,16 +10,28 @@ namespace SeranfuenMirrorSync.ViewModels
 {
     public class ManualSyncViewModel
     {
+
+#if DEBUG
+
+        private string _sourcePath = @"F:\Test\Software";
+        private string _destinationPath = @"D:\Backup";
+
+#else
+        private string _sourcePath;
+        private string _destinationPath;
+#endif
+
+
         public string SourcePath
         {
-            get;
-            set;
+            get { return _sourcePath; }
+            set { _sourcePath = value; }
         }
 
         public string MirrorPath
         {
-            get;
-            set;
+            get { return _destinationPath; }
+            set { _destinationPath = value; }
         }
 
         public string FinalMirrorPath

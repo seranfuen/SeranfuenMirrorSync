@@ -252,7 +252,7 @@ namespace SeranfuenMirrorSyncLib.Data
             {
                 lock (this)
                 {
-                    _actionStatuses = value;
+                    _actionStatuses = value ?? new List<FileSyncActionStatus>();
                     _vPathToFileSync = _actionStatuses.ToDictionary(key => key.VirtualPath, val => val);
                 }
             }
@@ -347,6 +347,15 @@ namespace SeranfuenMirrorSyncLib.Data
             lock (this)
             {
                 _end = DateTime.Now;
+            }
+        }
+
+
+        public void FilterCompletedActions()
+        {
+            if (FileSyncActionStatuses != null)
+            {
+                FileSyncActionStatuses = FileSyncActionStatuses.Where(status => status.End.HasValue == false).ToList();
             }
         }
 
