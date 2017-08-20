@@ -17,9 +17,10 @@ namespace SeranfuenMirrorSync.Converters
             if (timeSpan.TotalSeconds < 1)
             {
                 return string.Format("{0} ms", timeSpan.TotalMilliseconds);
-            } else
+            }
+            else
             {
-                return string.Format("{0:00}:{1:00}", timeSpan.TotalMinutes, timeSpan.Seconds);
+                return string.Format("{0}:{1}", Math.Round(timeSpan.TotalMinutes, 0), timeSpan.Seconds);
             }
         }
 

@@ -81,6 +81,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         private void RunActions(List<FileSyncAction> actions)
         {
+            ReportRunningActions();
             var actualActions = actions.Where(action => action.Action != FileSyncAction.FileActionType.Skip);
             UpdatePendingActions(actualActions);
 
@@ -92,8 +93,15 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 _status.IncrementThreads();
                 ReportActionStarted(action);
                 PerformAction(action);
+                _status.IncrementFilesCopied();
+                _status.IncrementFilesProcessed();
                 _status.DecrementThreads();
             });
+        }
+
+        private void ReportRunningActions()
+        {
+            _status.CurrentStatus = SourceMirrorSyncStatus.SyncStatus.Synchronizing;
         }
 
         private void ReportActionStarted(FileSyncAction action)
@@ -131,6 +139,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             _status = new SourceMirrorSyncStatus(SourceRoot, MirrorRoot);
             _status.SetStarted();
+            _status.Id = _currentGuid;
         }
 
         private void PerformCopyAction(FileSyncAction action)

@@ -23,7 +23,7 @@ namespace SeranfuenMirrorSyncWcfService
             {
                 if (filterCompletedActions)
                 {
-                    status.FilterCompletedActions();
+                    status.FilterNotActiveActions();
                 }
                 return ObjectCompressionFactory.GetDefaultCompressor<SourceMirrorSyncStatus>().CompressObject(status);
             }

@@ -1,6 +1,7 @@
 ﻿using SeranfuenMirrorSyncLib.Utils.Clone;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -13,6 +14,30 @@ namespace SeranfuenMirrorSyncLib.Data
     [DataContract]
     public class SourceMirrorSyncStatus
     {
+        [DataContract]
+        public enum SyncStatus
+        {
+            [EnumMember]
+            [Description("Pending to start")]
+            NotStarted,
+
+            [EnumMember]
+            [Description("Calculating actions")]
+            CalculatingActions,
+
+            [EnumMember]
+            [Description("Synchronizing files")]
+            Synchronizing,
+
+            [EnumMember]
+            [Description("Completed")]
+            Completed,
+
+            [EnumMember]
+            [Description("Faulted")]
+            Faulted
+        }
+
         private int _threads;
         private int _filesProcessed;
         private int _filesSkipped;
@@ -21,6 +46,7 @@ namespace SeranfuenMirrorSyncLib.Data
         private int _filesFailed;
         private DateTime _start;
         private DateTime? _end;
+        private SyncStatus _syncStatus = SyncStatus.NotStarted;
 
         private List<FileSyncActionStatus> _actionStatuses;
         private Dictionary<string, FileSyncActionStatus> _vPathToFileSync;
@@ -258,6 +284,25 @@ namespace SeranfuenMirrorSyncLib.Data
             }
         }
 
+
+        public SyncStatus CurrentStatus
+        {
+            get
+            {
+                lock(this)
+                {
+                    return _syncStatus;
+                }
+            }
+            set
+            {
+                lock (this)
+                {
+                    _syncStatus = value;
+                }
+            }
+        }
+
         #endregion
 
         #region ' Methods '
@@ -339,6 +384,7 @@ namespace SeranfuenMirrorSyncLib.Data
             lock (this)
             {
                 _start = DateTime.Now;
+                _syncStatus = SyncStatus.CalculatingActions;
             }
         }
 
@@ -347,15 +393,16 @@ namespace SeranfuenMirrorSyncLib.Data
             lock (this)
             {
                 _end = DateTime.Now;
+                _syncStatus = SyncStatus.Completed;
             }
         }
 
 
-        public void FilterCompletedActions()
+        public void FilterNotActiveActions()
         {
             if (FileSyncActionStatuses != null)
             {
-                FileSyncActionStatuses = FileSyncActionStatuses.Where(status => status.End.HasValue == false).ToList();
+                FileSyncActionStatuses = FileSyncActionStatuses.Where(status => status.CurrentStatus == FileSyncActionStatus.ActionStatus.Copying).ToList();
             }
         }
 
@@ -413,8 +460,24 @@ namespace SeranfuenMirrorSyncLib.Data
             lock (this)
             {
                 var actionStatus = _vPathToFileSync[action.VirtualPath];
+                actionStatus.CurrentStatus = GetSyncActionStatus(status);
                 actionStatus.DataCopied = status.CopiedSize;
                 actionStatus.AverageBandwidth = status.AverageSpeedBps;
+            }
+        }
+
+        private FileSyncActionStatus.ActionStatus GetSyncActionStatus(ProgressCopyStatus status)
+        {
+            if (status.Failed)
+            {
+                return FileSyncActionStatus.ActionStatus.Failed;
+            }
+            else if (status.Finished)
+            {
+                return FileSyncActionStatus.ActionStatus.Finished;
+            }else
+            {
+                return FileSyncActionStatus.ActionStatus.Copying;
             }
         }
 

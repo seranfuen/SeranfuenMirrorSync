@@ -35,7 +35,10 @@ namespace SeranfuenMirrorSyncLib.Data
             Failed
         }
 
-        public FileSyncActionStatus() { }
+        public FileSyncActionStatus()
+        {
+            CurrentStatus = ActionStatus.Pending;
+        }
 
         public FileSyncActionStatus(FileSyncAction prototype)
         {

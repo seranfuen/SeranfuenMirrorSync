@@ -83,6 +83,9 @@
     <Compile Include="Controls\CtrSourceMirrorFolderChooser.xaml.cs">
       <DependentUpon>CtrSourceMirrorFolderChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EnumDescriptionConverter.cs" />
+    <Compile Include="Converters\HumanReadableBytesConverter.cs" />
+    <Compile Include="Converters\PercentConverter.cs" />
     <Compile Include="Converters\TimeSpanMinuteSecondStringConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -236,6 +239,9 @@
     <None Include="Resources\copy.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Styles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,9 +6,24 @@
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
         xmlns:Data="clr-namespace:SeranfuenMirrorSyncLib.Data;assembly=SeranfuenMirrorSyncLib" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Class="SeranfuenMirrorSync.Windows.WndCurrentSyncStatus"
         mc:Ignorable="d"
-        Title="Synchronization Status" Height="600" Width="800" Icon="pack://siteoforigin:,,,/Resources/copy.ico">
+        Title="Synchronization Status" Height="700" Width="1000" Icon="pack://siteoforigin:,,,/Resources/copy.ico" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <Converters:HumanReadableBytesConverter x:Key="HumanReadableBytesConverter"/>
+        <Converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
         <Converters:TimeSpanMinuteSecondStringConverter x:Key="TimeSpanMinuteSecondStringConverter"/>
+        <Converters:PercentConverter x:Key="PercentConverter"/>
+        <Style x:Key="Body_Content_DataGrid_Centering"
+        TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.DataContext>
         <Data:SourceMirrorSyncStatus/>
@@ -44,22 +59,25 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <CheckBox Content="Completed" DataContext="{Binding HasFinished, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,20,0" />
-            <Label Grid.Column="1" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
-            <TextBox Grid.Column="2" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="90" />
+            <Label Grid.Column="0" Content="Sync Status" VerticalAlignment="Center" />
+            <TextBox Grid.Column="1" IsReadOnly="True" VerticalAlignment="Center" Width="120" Margin="10,0" Text="{Binding CurrentStatus, Converter={StaticResource EnumDescriptionConverter}}" />
+            <Label Grid.Column="2" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
+            <TextBox Grid.Column="3" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="90" />
         </Grid>
-        <DataGrid x:Name="ActionsGrid" Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" >
+        <DataGrid x:Name="ActionsGrid" Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" VerticalContentAlignment="Center" CanUserAddRows="False"
+        CellStyle="{StaticResource Body_Content_DataGrid_Centering}" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True" MaxWidth="497"/>
-                <DataGridTextColumn Binding="{Binding Action}" ClipboardContentBinding="{x:Null}" Header="Action" IsReadOnly="True"/>
-                <DataGridTextColumn Binding="{Binding SourceSize}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="Progress" Width="250">
+                <DataGridTextColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True" Width="500"/>
+                <DataGridTextColumn Binding="{Binding SourceSize, Converter={StaticResource HumanReadableBytesConverter}}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding DataCopied, Converter={StaticResource HumanReadableBytesConverter}}" ClipboardContentBinding="{x:Null}" Header="Copied"/>
+                <DataGridTemplateColumn Header="Progress" Width="200" SortMemberPath="ProgressPercent" MaxWidth="200" MinWidth="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Grid Margin="4">
-                                <ProgressBar MinHeight="2" Margin="3" Grid.Row="0" Grid.Column="0" Minimum="0" Maximum="100" Value="{Binding ProgressPercent, Mode=OneWay}" ToolTip="{Binding ProgressPercent, Mode=OneWay}" />
-                                <Label Padding="2" Margin="2" Content="{Binding ProgressPercent, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                            <Grid Margin="2">
+                                <ProgressBar MinHeight="2" Grid.Row="0" Grid.Column="0" Minimum="0" Maximum="100" Value="{Binding ProgressPercent, Mode=OneWay}" ToolTip="{Binding ProgressPercent, Mode=OneWay}" />
+                                <Label Padding="2" Margin="1" Content="{Binding ProgressPercent, Mode=OneWay, Converter={StaticResource PercentConverter}}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
