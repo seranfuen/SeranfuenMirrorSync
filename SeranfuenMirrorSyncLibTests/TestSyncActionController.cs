@@ -27,8 +27,8 @@ namespace SeranfuenMirrorSyncLibTests
 
         public TestSyncActionController(string sourcePath, string mirrorPath)
         {
-            this.SourceRoot = sourcePath;
-            this.MirrorRoot = mirrorPath;
+            SourceRoot = sourcePath;
+            MirrorRoot = mirrorPath;
         }
 
         public string MirrorRoot
@@ -53,6 +53,11 @@ namespace SeranfuenMirrorSyncLibTests
         public void RunSynchronization()
         {
             Thread.Sleep(_sleepTimeoutMs);
+        }
+
+        public void Cancel()
+        {
+            throw new NotImplementedException();
         }
     }
 }

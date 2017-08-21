@@ -5,15 +5,36 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
     public class FolderSyncController
     {
+        #region ' Events '
+
         public event EventHandler<FolderSyncEventArgs> FolderSynced;
+
+        #endregion
+
+        #region ' Fields '
 
         private string _rootFolder;
         private string _targetFolder;
+
+        #endregion
+
+        #region ' Properties' 
+
+        public CancellationToken CancellationToken
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region ' Constructor '
 
         public FolderSyncController(string rootFolder, string targetRootFolder)
         {
@@ -21,17 +42,35 @@ namespace SeranfuenMirrorSyncLib.Controllers
             _targetFolder = targetRootFolder;
         }
 
+        #endregion
+
+        #region ' Methods '
+
         public void StartSync()
         {
-            Task.WaitAll(new List<Task>() {
+            try
+            {
+                Task.WaitAll(new List<Task>() {
                 Task.Factory.StartNew(() => SyncSourceInternal(_rootFolder)),
-                Task.Factory.StartNew(() => SyncDestinationInternal(_targetFolder))
-            }.ToArray());
-            
+                Task.Factory.StartNew(() => SyncDestinationInternal(_targetFolder)) }.ToArray());
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerException is OperationCanceledException)
+                {
+                    throw ex.InnerException;
+                } else
+                {
+                    throw ex;
+                }
+            }
+
         }
 
         private void SyncSourceInternal(string rootFolder)
         {
+            if (CancellationToken != null) CancellationToken.ThrowIfCancellationRequested();
+
             var target = FileDatabaseEntry.GetLocalPath(FileDatabaseEntry.GetVirtualPath(rootFolder, _rootFolder), _targetFolder);
             var action = new FolderSyncAction()
             {
@@ -72,6 +111,8 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         private void SyncDestinationInternal(string targetFolder)
         {
+            if (CancellationToken != null) CancellationToken.ThrowIfCancellationRequested();
+
             var sourceDir = FileDatabaseEntry.GetLocalPath(FileDatabaseEntry.GetVirtualPath(targetFolder, _targetFolder), _rootFolder);
             var action = new FolderSyncAction()
             {
@@ -115,5 +156,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             FolderSynced?.Invoke(this, new FolderSyncEventArgs(action));
         }
+
+        #endregion
     }
 }

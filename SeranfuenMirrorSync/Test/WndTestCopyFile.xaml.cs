@@ -128,7 +128,7 @@ namespace SeranfuenMirrorSync.Test
 
         private void CmdCancel_Click(object sender, RoutedEventArgs e)
         {
-            _controller.Cancel();
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

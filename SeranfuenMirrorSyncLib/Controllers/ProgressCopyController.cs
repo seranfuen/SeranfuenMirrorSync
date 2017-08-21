@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSyncLib.Controllers
@@ -36,21 +37,37 @@ namespace SeranfuenMirrorSyncLib.Controllers
             set;
         }
 
+        public CancellationToken CancellationToken
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region ' Functions '
 
-        public void Cancel()
-        {
-            _status.SetCanceled();
-        }
-
         public void StartCopy()
         {
-            var fileInfo = new FileInfo(_source);
-            _status.SetStarted(fileInfo.Length);
-            OnStatusUpdated();
-            CopyInternal();
+            try
+            {
+                var fileInfo = new FileInfo(_source);
+                _status.SetStarted(fileInfo.Length);
+                OnStatusUpdated();
+                CopyInternal();
+            }
+            catch (OperationCanceledException)
+            {
+                try
+                {
+                    File.Delete(_destination);
+                    
+                } 
+                finally
+                {
+                    _status.SetCanceled();
+                }
+            }
         }
 
         protected virtual void OnStatusUpdated()
@@ -78,6 +95,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
                         while ((currentBlockSize = source.Read(buffer, 0, buffer.Length)) > 0)
                         {
+                            if (CancellationToken != null) CancellationToken.ThrowIfCancellationRequested();
                             dest.Write(buffer, 0, currentBlockSize);
 
                             totalBytes += currentBlockSize;

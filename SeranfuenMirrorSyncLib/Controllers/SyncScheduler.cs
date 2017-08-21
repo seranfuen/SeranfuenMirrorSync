@@ -108,6 +108,14 @@ namespace SeranfuenMirrorSyncLib.Controllers
             return _currentSync.GetStatus();
         }
 
+        public void CancelCurrentSync()
+        {
+            if (_currentSync != null)
+            {
+                _currentSync.Cancel();
+            }
+        }
+
         protected virtual void OnSyncProgressReported(SyncProgressReportType statusType, PendingSyncInfo nextSync)
         {
             SyncProgressReported?.Invoke(this, new SyncProgressReportedEventArgs(statusType, nextSync.SourceRoot, nextSync.MirrorRoot));

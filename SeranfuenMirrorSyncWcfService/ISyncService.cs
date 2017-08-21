@@ -21,6 +21,9 @@ namespace SeranfuenMirrorSyncWcfService
         [OperationContract]
         List<SourceMirrorSyncStatus> GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count);
 
+        [OperationContract]
+        void CancelCurrentSync();
+
         // TODO: scheduling operations (set new schedule, change schedule, retrieve schedules)
     }
 }

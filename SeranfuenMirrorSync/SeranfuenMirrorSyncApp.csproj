@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CommandsFactory.cs" />
     <Compile Include="Controllers\ByteStringConverter.cs" />
     <Compile Include="Controls\CtrFolderChooseTextBox.xaml.cs">
       <DependentUpon>CtrFolderChooseTextBox.xaml</DependentUpon>

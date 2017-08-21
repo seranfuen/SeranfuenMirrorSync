@@ -27,6 +27,12 @@
   <wsdl:message name="ISyncService_GetHistorySyncStatus_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetHistorySyncStatusResponse" />
   </wsdl:message>
+  <wsdl:message name="ISyncService_CancelCurrentSync_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelCurrentSync" />
+  </wsdl:message>
+  <wsdl:message name="ISyncService_CancelCurrentSync_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelCurrentSyncResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISyncService">
     <wsdl:operation name="RunSync">
       <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/RunSync" message="tns:ISyncService_RunSync_InputMessage" />
@@ -39,6 +45,10 @@
     <wsdl:operation name="GetHistorySyncStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/GetHistorySyncStatus" message="tns:ISyncService_GetHistorySyncStatus_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/GetHistorySyncStatusResponse" message="tns:ISyncService_GetHistorySyncStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelCurrentSync">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/CancelCurrentSync" message="tns:ISyncService_CancelCurrentSync_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/CancelCurrentSyncResponse" message="tns:ISyncService_CancelCurrentSync_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISyncService" type="tns:ISyncService">
@@ -63,6 +73,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetHistorySyncStatus">
       <soap:operation soapAction="http://tempuri.org/ISyncService/GetHistorySyncStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelCurrentSync">
+      <soap:operation soapAction="http://tempuri.org/ISyncService/CancelCurrentSync" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

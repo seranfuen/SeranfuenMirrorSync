@@ -12,6 +12,11 @@ namespace SeranfuenMirrorSyncWcfService
 {
     public class SyncService : ISyncService
     {
+        public void CancelCurrentSync()
+        {
+            ServiceSyncController.Instance.CancelCurrentSync();
+        }
+
         public byte[] GetCurrentSyncStatus(bool filterCompletedActions)
         {
             var status = ServiceSyncController.Instance.GetCurrentStatus();

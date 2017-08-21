@@ -4,9 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
+        xmlns:commands="clr-namespace:SeranfuenMirrorSync.Commands"
         xmlns:Data="clr-namespace:SeranfuenMirrorSyncLib.Data;assembly=SeranfuenMirrorSyncLib" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Class="SeranfuenMirrorSync.Windows.WndCurrentSyncStatus"
         mc:Ignorable="d"
         Title="Synchronization Status" Height="700" Width="1000" Icon="pack://siteoforigin:,,,/Resources/copy.ico" WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding 
+            Command="{x:Static commands:CommandsFactory.CmdCancelSync}"
+            CanExecute="CmdCancelSync_CanExecute"
+            Executed="CmdCancelSync_Executed"
+        />
+
+        <CommandBinding 
+            Command="{x:Static commands:CommandsFactory.CmdCloseWindow}"
+            CanExecute="CmdCloseWindow_CanExecute"
+            Executed="CmdCloseWindow_Executed"
+        />
+    </Window.CommandBindings>
     <Window.Resources>
         <Converters:HumanReadableBytesConverter x:Key="HumanReadableBytesConverter"/>
         <Converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
@@ -33,6 +47,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0,10" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -50,12 +65,14 @@
             <Label Grid.Column="2" Content="Destination" Margin="0,0,10,0" />
             <TextBox Grid.Column="3" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" Text="{Binding MirrorRoot}" VerticalAlignment="Center" />
             <Label Grid.Column="4" Content="Start" Margin="0,0,10,0" />
-            <DatePicker Grid.Column="5"  Width="Auto"  HorizontalAlignment="Stretch" SelectedDate="{Binding Start}" VerticalContentAlignment="Stretch" VerticalAlignment="Center" />
+            <TextBox Grid.Column="5"  Width="Auto"  IsReadOnly="True" HorizontalAlignment="Stretch" Text="{Binding Start, StringFormat=\{0:G\}}" VerticalContentAlignment="Stretch" VerticalAlignment="Center" />
             <Label Grid.Column="6" Content="Duration" Margin="0,0,10,0" />
-            <TextBox Grid.Column="7" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" DataContext="{Binding Duration, Converter={StaticResource TimeSpanMinuteSecondStringConverter}, Mode=OneWay}" VerticalAlignment="Center"  />
+            <TextBox Grid.Column="7" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Duration, Converter={StaticResource TimeSpanMinuteSecondStringConverter}, Mode=OneWay}"  />
         </Grid>
         <Grid Grid.Row="1" Margin="0,10" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -64,7 +81,9 @@
             <Label Grid.Column="0" Content="Sync Status" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" IsReadOnly="True" VerticalAlignment="Center" Width="120" Margin="10,0" Text="{Binding CurrentStatus, Converter={StaticResource EnumDescriptionConverter}}" />
             <Label Grid.Column="2" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
-            <TextBox Grid.Column="3" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="90" />
+            <TextBox Grid.Column="3" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="70" />
+            <Label Grid.Column="4" Margin="0,0,10,0" Content="Files Copied" VerticalAlignment="Center" />
+            <TextBox Grid.Column="5" IsReadOnly="True" Text="{Binding FilesCopied}" VerticalAlignment="Center" Width="70" />
         </Grid>
         <DataGrid x:Name="ActionsGrid" Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" VerticalContentAlignment="Center" CanUserAddRows="False"
         CellStyle="{StaticResource Body_Content_DataGrid_Centering}" IsReadOnly="True">
@@ -72,7 +91,7 @@
                 <DataGridTextColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True" Width="500"/>
                 <DataGridTextColumn Binding="{Binding SourceSize, Converter={StaticResource HumanReadableBytesConverter}}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding DataCopied, Converter={StaticResource HumanReadableBytesConverter}}" ClipboardContentBinding="{x:Null}" Header="Copied"/>
-                <DataGridTemplateColumn Header="Progress" Width="200" SortMemberPath="ProgressPercent" MaxWidth="200" MinWidth="200">
+                <DataGridTemplateColumn Header="Progress" Width="200" SortMemberPath="ProgressPercent" MaxWidth="200" MinWidth="200" SortDirection="Descending">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid Margin="2">
@@ -84,5 +103,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button Content="Cancel Sync" Width="Auto" Command="{x:Static commands:CommandsFactory.CmdCancelSync}" HorizontalAlignment="Center" Margin="5" Padding="10,4" />
+            <Button Content="Close" Width="Auto" HorizontalAlignment="Center" Margin="5" Padding="10,4" />
+        </StackPanel>
     </Grid>
 </Window>

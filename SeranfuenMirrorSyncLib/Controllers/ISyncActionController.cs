@@ -13,5 +13,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         SourceMirrorSyncStatus GetStatus();
         void RunSynchronization();
+        void Cancel();
     }
 }

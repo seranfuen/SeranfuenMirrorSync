@@ -14,13 +14,13 @@ namespace SeranfuenMirrorSync.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var timeSpan = (TimeSpan)value;
-            if (timeSpan.TotalSeconds < 1)
+            if (timeSpan == TimeSpan.MaxValue)
             {
-                return string.Format("{0} ms", timeSpan.TotalMilliseconds);
+                return string.Empty;
             }
             else
             {
-                return string.Format("{0}:{1}", Math.Round(timeSpan.TotalMinutes, 0), timeSpan.Seconds);
+                return string.Format("{0:#,#00}m {1:00}s", Math.Round(timeSpan.TotalMinutes, 0), timeSpan.Seconds);
             }
         }
 

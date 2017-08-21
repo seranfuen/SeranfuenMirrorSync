@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 using SeranfuenMirrorSyncLib.Data;
 using System.IO;
 using SeranfuenMirrorSyncLib.Utils.Clone;
+using System.Threading;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
     public class SourceMirrorSynchronizationController : ISyncActionController
     {
+        public class SyncCancelledException : Exception
+        {
+
+        }
+
         private Guid _currentGuid;
         private SourceMirrorSyncStatus _status;
+        private CancellationTokenSource _cancellationToken;
 
         public SourceMirrorSynchronizationController(string sourceRoot, string mirrorRoot)
         {
@@ -58,15 +65,42 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         public void RunSynchronization()
         {
-            _currentGuid = Guid.NewGuid();
+            lock(this)
+            {
+                _cancellationToken = new CancellationTokenSource();
+            }
+            try
+            {
+                RunSyncInternal();
+            } catch (OperationCanceledException)
+            {
+                SetCancelledStatus();
+            }
+        }
+
+        private void SetCancelledStatus()
+        {
+            _status.End = DateTime.Now;
+            _status.CurrentStatus = SourceMirrorSyncStatus.SyncStatus.Cancelled;
+        }
+
+        private void RunSyncInternal()
+        {
             ReportLoadingData();
 
             var directorySyncController = new FolderSyncController(SourceRoot, MirrorRoot);
+            directorySyncController.CancellationToken = _cancellationToken.Token;
             directorySyncController.StartSync();
+
+            _cancellationToken.Token.ThrowIfCancellationRequested();
 
             var fileComparisonController = InitializeFileComparisonController();
             var actions = fileComparisonController.CalculateSyncActions();
+
+            _cancellationToken.Token.ThrowIfCancellationRequested();
+
             RunSkippedActions(actions);
+            _cancellationToken.Token.ThrowIfCancellationRequested();
             RunActions(actions);
             ReportSyncFinished();
         }
@@ -85,11 +119,15 @@ namespace SeranfuenMirrorSyncLib.Controllers
             var actualActions = actions.Where(action => action.Action != FileSyncAction.FileActionType.Skip);
             UpdatePendingActions(actualActions);
 
-            Parallel.ForEach(actualActions, new ParallelOptions()
+            var options = new ParallelOptions()
             {
-                MaxDegreeOfParallelism = MaxParallelActions
-            }, (action) =>
+                MaxDegreeOfParallelism = MaxParallelActions,
+                CancellationToken = _cancellationToken.Token
+            };
+
+            Parallel.ForEach(actualActions, options, (action) =>
             {
+                options.CancellationToken.ThrowIfCancellationRequested();
                 _status.IncrementThreads();
                 ReportActionStarted(action);
                 PerformAction(action);
@@ -118,10 +156,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             if (action.Action == FileSyncAction.FileActionType.Copy)
             {
+                _cancellationToken.Token.ThrowIfCancellationRequested();
                 PerformCopyAction(action);
             }
             else if (action.Action == FileSyncAction.FileActionType.Delete)
             {
+                _cancellationToken.Token.ThrowIfCancellationRequested();
                 PerformDeleteAction(action);
             }
             else
@@ -145,6 +185,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         private void PerformCopyAction(FileSyncAction action)
         {
             var copyController = new ProgressCopyController(action.SourcePath, action.MirrorPath);
+            copyController.CancellationToken = _cancellationToken.Token;
             var progressCopyEvent = new EventHandler<ProgressCopyEventArgs>(delegate (Object o, ProgressCopyEventArgs arg)
             {
                 _status.UpdateFileCopyProgress(action, arg.Status);
@@ -208,6 +249,11 @@ namespace SeranfuenMirrorSyncLib.Controllers
             };
             controller.LoadDatabases();
             return controller;
+        }
+
+        public void Cancel()
+        {
+            _cancellationToken.Cancel();
         }
 
         #endregion

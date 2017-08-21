@@ -1,4 +1,5 @@
 ﻿using SeranfuenMirrorSyncLib.Data;
+using SeranfuenMirrorSyncWcfClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -80,6 +81,33 @@ namespace SeranfuenMirrorSync.Windows
             _timer.Stop();
         }
 
-        #endregion  
+        private void CmdCancelSync_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = DataContext != null && !((SourceMirrorSyncStatus)DataContext).HasFinished;
+        }
+
+        private void CmdCancelSync_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                var proxy = ServiceProxyFactory.Proxy;
+                proxy.CancelCurrentSync();
+            } catch (Exception ex)
+            {
+                // show error
+            }
+        }
+
+        private void CmdCloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CmdCloseWindow_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
+        }
+
+        #endregion
     }
 }

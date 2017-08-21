@@ -35,7 +35,11 @@ namespace SeranfuenMirrorSyncLib.Data
 
             [EnumMember]
             [Description("Faulted")]
-            Faulted
+            Faulted,
+
+            [EnumMember]
+            [Description("Cancelled")]
+            Cancelled
         }
 
         private int _threads;

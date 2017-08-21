@@ -47,4 +47,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CancelCurrentSync">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelCurrentSyncResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -16,6 +16,7 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
 
         private static ServiceSyncController _instance;
 
+
         public static ServiceSyncController Instance
         {
             get
@@ -59,6 +60,12 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
         {
             _scheduler.ScheduleSync(new SeranfuenMirrorSyncLib.Data.PendingSyncInfo(sourcePath, mirrorPath));
         }
+
+        public void CancelCurrentSync()
+        {
+            _scheduler.CancelCurrentSync();
+        }
+
 
         public SourceMirrorSyncStatus GetCurrentStatus()
         {
