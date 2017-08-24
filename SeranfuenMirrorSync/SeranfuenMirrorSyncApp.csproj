@@ -117,12 +117,19 @@
     <Compile Include="Test\WndTestSyncFolders.xaml.cs">
       <DependentUpon>WndTestSyncFolders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\SyncScheduleManagerViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\ManualSyncViewModel.cs" />
+    <Compile Include="ViewModels\SyncScheduleViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelList.cs" />
     <Compile Include="Windows\WndCurrentSyncStatus.xaml.cs">
       <DependentUpon>WndCurrentSyncStatus.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WndManualSync.xaml.cs">
       <DependentUpon>WndManualSync.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WndSyncScheduleManager.xaml.cs">
+      <DependentUpon>WndSyncScheduleManager.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CtrFolderChooseTextBox.xaml">
       <SubType>Designer</SubType>
@@ -177,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WndManualSync.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WndSyncScheduleManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

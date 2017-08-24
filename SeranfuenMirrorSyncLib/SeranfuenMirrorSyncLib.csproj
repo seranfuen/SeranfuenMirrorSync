@@ -44,6 +44,7 @@
     <Compile Include="Controllers\DateTimeNowProvider.cs" />
     <Compile Include="Controllers\DirectoryPathRegexFilter.cs" />
     <Compile Include="Controllers\ExtensionFilter.cs" />
+    <Compile Include="Controllers\ExtensionMethods.cs" />
     <Compile Include="Controllers\FileComparisonDecider.cs" />
     <Compile Include="Controllers\FileDatabaseComparisonController.cs" />
     <Compile Include="Controllers\FileDatabaseCrawler.cs" />
