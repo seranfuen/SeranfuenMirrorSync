@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
-    public class ManualSyncViewModel
+    public class ManualSyncViewModel : ViewModel
     {
 
 #if DEBUG
 
         private string _sourcePath = @"F:\Test\Software";
         private string _destinationPath = @"D:\Backup";
+
+        private bool _useSourceFolderName;
+        private bool _createDateFolder;
 
 #else
         private string _sourcePath;
@@ -25,13 +28,21 @@ namespace SeranfuenMirrorSync.ViewModels
         public string SourcePath
         {
             get { return _sourcePath; }
-            set { _sourcePath = value; }
+            set
+            {
+                _sourcePath = value;
+                OnPropertyChanged("SourcePath");
+            }
         }
 
         public string MirrorPath
         {
             get { return _destinationPath; }
-            set { _destinationPath = value; }
+            set
+            {
+                _destinationPath = value;
+                OnPropertyChanged("MirrorPath");
+            }
         }
 
         public string FinalMirrorPath
@@ -57,14 +68,22 @@ namespace SeranfuenMirrorSync.ViewModels
         [DefaultValue(true)]
         public bool UseSourceFolderName
         {
-            get;
-            set;
+            get { return _useSourceFolderName; }
+            set
+            {
+                _useSourceFolderName = value;
+                OnPropertyChanged("UseSourceFolderName");
+            }
         }
 
         public bool CreateDateFolder
         {
-            get;
-            set;
+            get { return _createDateFolder; }
+            set
+            {
+                _createDateFolder = value;
+                OnPropertyChanged("CreateDateFolder");
+            }
         }
     }
 }
