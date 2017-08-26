@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
-    public class ViewModelList<T> : ViewModel
+    public class ViewModelList<T> : ViewModel where T : class
     {
         #region ' Fields '
 
         private int _selectedIndex = -1;
-        protected List<T> _listItems;
+        protected ObservableCollection<T> _listItems = new ObservableCollection<T>();
 
         #endregion
 
         #region ' Properties '
 
-        public List<T> ListItems
+        public ObservableCollection<T> ListItems
         {
             get { return _listItems; }
             set
@@ -37,6 +38,27 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 _selectedIndex = value;
                 OnPropertyChanged("SelectedIndex");
+                OnPropertyChanged("Current");
+            }
+        }
+
+        public T Current
+        {
+            get
+            {
+                if (Count == 0)
+                {
+                    return null;
+                }
+                return _listItems[_selectedIndex];
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return _listItems == null ? 0 : _listItems.Count;
             }
         }
 

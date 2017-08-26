@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SeranfuenMirrorSync.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ namespace SeranfuenMirrorSync.ViewModels
         #region ' Fields '
 
         private string _syncName = "New Sync";
-        private bool _enabled;
+        private bool _enabled = true;
         private List<string> _sourceFolders;
         private string _mirrorFolder;
 
@@ -36,6 +38,14 @@ namespace SeranfuenMirrorSync.ViewModels
             get
             {
                 return SyncName;
+            }
+        }
+
+        public Image SyncImage
+        {
+            get
+            {
+                return Resources.sync_128;
             }
         }
 
@@ -161,6 +171,7 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 _everyday = value;
                 OnPropertyChanged("Everyday");
+                OnPropertyChanged("WeekdaysEnabled");
                 if (_everyday)
                 {
                     Monday = true;
@@ -181,6 +192,9 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 _manual = value;
                 OnPropertyChanged("Manual");
+                OnPropertyChanged("WeekdaysEnabled");
+                OnPropertyChanged("HourEnabled");
+                OnPropertyChanged("EverydayEnabled");
             }
         }
 
@@ -194,6 +208,14 @@ namespace SeranfuenMirrorSync.ViewModels
         }
 
         public bool HourEnabled
+        {
+            get
+            {
+                return !_manual;
+            }
+        }
+
+        public bool EverydayEnabled
         {
             get
             {

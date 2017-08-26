@@ -3,21 +3,102 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SeranfuenMirrorSync.Controls"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
-        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" x:Class="SeranfuenMirrorSync.Windows.WndSyncScheduleManager"
+        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Class="SeranfuenMirrorSync.Windows.WndSyncScheduleManager"
         mc:Ignorable="d"
         Title="{Binding DisplayName, Mode=OneWay}" Height="598" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Converters:NullBoolConverter x:Key="NullBoolConverter"/>
+        <Converters:ImageConverter x:Key="ImageConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <ViewModels:SyncScheduleManagerViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DataGrid Margin="10" ItemsSource="{Binding ListItems}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
-        </DataGrid>
+        <ListView x:Name="SyncList" Margin="10" ItemsSource="{Binding ListItems}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Width="64" HorizontalAlignment="Center" Margin="10">
+                        <Image Source="{Binding SyncImage, Converter={StaticResource ImageConverter}, Mode=OneWay}" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBlock Text="{Binding DisplayName}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid DataContext="{Binding Current, Mode=OneWay}" IsEnabled="{Binding DataContext.Current, RelativeSource={RelativeSource AncestorType=local:WndSyncScheduleManager}, Converter={StaticResource NullBoolConverter}}" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Synchronization Name" Margin="5" />
+                    <TextBox Grid.Column="1" Text="{Binding SyncName}" Margin="5" Height="Auto"/>
+                    <CheckBox Content="Enabled" Grid.Column="2" IsChecked="{Binding Enabled}" Margin="15,5" VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Mirror destination" ToolTip="The folder where the data will be copied" Margin="5" />
+                    <controls:CtrFolderChooseTextBox SelectedPath="{Binding MirrorFolder}" Grid.Column="1" />
+                </Grid>
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
+                    <Button Content="Add" Margin="5" Padding="5" />
+                    <Button Content="Remove" Margin="5" Padding="5" />
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1" Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <CheckBox Content="Monday" IsChecked="{Binding Monday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}"/>
+                <CheckBox Content="Tuesday" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Tuesday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}"/>
+                <CheckBox Content="Wednesday" Grid.Row="1" IsChecked="{Binding Wednesday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}"/>
+                <CheckBox Content="Thursday" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Thursday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}"/>
+                <CheckBox Content="Friday" Grid.Row="2" IsChecked="{Binding Friday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}" />
+                <CheckBox Content="Saturday" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Saturday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}"/>
+                <CheckBox Content="Sunday" Grid.Row="3" Grid.Column="0" IsChecked="{Binding Sunday}" Margin="10,5" IsEnabled="{Binding WeekdaysEnabled}" />
+                <CheckBox Content="Everyday" Grid.Row="3" Grid.Column="1" IsChecked="{Binding Everyday}" IsEnabled="{Binding EverydayEnabled}" Margin="10,5"/>
+                <Label Content="Sync Time" Grid.Row="4" HorizontalAlignment="Right" Margin="5" />
+                <wpfTool:TimePicker Value="{Binding Hour}" IsEnabled="{Binding HourEnabled}" Grid.Row="4" Grid.Column="1" Margin="5,5,0,5" Height="auto" HorizontalAlignment="Left" Width="120" />
+                <CheckBox Content="Manual Synchronization" ToolTip="No synchronization will be performed unless you choose to run it" IsChecked="{Binding Manual}" Grid.Row="5" Margin="5"/>
+            </Grid>
+        </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
             <Button Content="New" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding NewSyncCommand, Mode=OneWay}" />
             <Button Content="Discard" Padding="10, 5" Margin="5,5" Width="auto" />

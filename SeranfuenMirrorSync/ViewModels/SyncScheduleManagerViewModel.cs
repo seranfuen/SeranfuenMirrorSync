@@ -87,7 +87,6 @@ namespace SeranfuenMirrorSync.ViewModels
 
         public SyncScheduleManagerViewModel()
         {
-            _listItems = new List<SyncScheduleViewModel>();
             _createSyncCommand = new SyncScheduleManagerCreateSyncCommand(this);
         }
 
