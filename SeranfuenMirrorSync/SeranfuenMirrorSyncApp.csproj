@@ -106,6 +106,7 @@
     <Compile Include="Converters\EnumDescriptionConverter.cs" />
     <Compile Include="Converters\HumanReadableBytesConverter.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
+    <Compile Include="Converters\MessageBoxImageConverter.cs" />
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\PercentConverter.cs" />
     <Compile Include="Converters\NullBoolConverter.cs" />
@@ -114,6 +115,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AppStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Test\Commands\TestCommandFactory.cs" />
     <Compile Include="Test\ViewModels\ProgressTest.cs" />
@@ -267,6 +273,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AppStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

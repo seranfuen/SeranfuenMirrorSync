@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SeranfuenMirrorSync.StringResources;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,12 +54,27 @@ namespace SeranfuenMirrorSync.ViewModels
 
             public void Execute(object parameter)
             {
-                if (parameter != null && !(parameter is string))
+                var path = parameter as string;
+                if (parameter == null || string.IsNullOrWhiteSpace(path))
                 {
-                    throw new ArgumentException("Parameber to Add New Item Command must be a string");
+                    _parent.ShowUserMessage(AppStrings.SyncSourcesViewModel_EmptyPath_Message, AppStrings.SyncSourcesViewModel_EmptyPath_Title, ShowMessageRequestedEventArgs.MessageType.Warning);
                 }
-                var itemToAdd = parameter as string;
-                _parent._listItems.Add(itemToAdd);
+                else if (_parent.ListItems.Any(pth => path.Equals(pth, StringComparison.OrdinalIgnoreCase)))
+                {
+                    _parent.ShowUserMessage(string.Format(AppStrings.SyncSourcesViewModel_AlreadyExistingPath_Message, path), (AppStrings.SyncSourcesViewModel_AlreadyExistingPath_Title), ShowMessageRequestedEventArgs.MessageType.Warning);
+                }
+                else
+                {
+                    var shouldAdd = true;
+                    if (!Directory.Exists(path))
+                    {
+                        shouldAdd = _parent.RequestUserConfirmation(string.Format(AppStrings.SyncSourcesViewModel_PathNotExists_Message, path), AppStrings.SyncSourcesViewModel_PathNotExists_Title);
+                    }
+                    if (shouldAdd)
+                    {
+                        _parent._listItems.Add(path);
+                    }
+                }
             }
 
             protected virtual void OnCanExecuteChanged()

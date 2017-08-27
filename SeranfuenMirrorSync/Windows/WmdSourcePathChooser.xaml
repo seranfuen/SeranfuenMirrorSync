@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
         xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" x:Class="SeranfuenMirrorSync.Windows.WmdSourcePathChooser"
         mc:Ignorable="d"
-        Title="{Binding DisplayName, Mode=OneWay}" Height="111" Width="501">
+        Title="{Binding DisplayName, Mode=OneWay}" Height="111" Width="501" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <ViewModels:AddSyncSourceViewModel/>
     </Window.DataContext>

@@ -31,6 +31,15 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #endregion
 
+        #region ' Ctor '
+
+        public SyncScheduleViewModel()
+        {
+            _syncSourcesViewModel = new SyncSourcesViewModel();
+        }
+
+        #endregion
+
         #region ' Properties '
 
         public override string DisplayName

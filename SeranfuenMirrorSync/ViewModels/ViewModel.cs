@@ -114,14 +114,14 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
-        protected virtual void ShowUserMessage(string message, ShowMessageRequestedEventArgs.MessageType type = ShowMessageRequestedEventArgs.MessageType.Info)
+        protected virtual void ShowUserMessage(string message, string title, ShowMessageRequestedEventArgs.MessageType type = ShowMessageRequestedEventArgs.MessageType.Info)
         {
-            ShowMessageRequested?.Invoke(this, new ShowMessageRequestedEventArgs(message, type));
+            ShowMessageRequested?.Invoke(this, new ShowMessageRequestedEventArgs(message,title, type));
         }
 
-        protected virtual bool RequestUserConfirmation(string message)
+        protected virtual bool RequestUserConfirmation(string message, string title)
         {
-            var args = new UserConfirmationRequestedEventArgs(message, false);
+            var args = new UserConfirmationRequestedEventArgs(message,title, false);
             UserConfirmationRequested?.Invoke(this, args);
             return !args.Cancel;
         }
@@ -140,13 +140,20 @@ namespace SeranfuenMirrorSync.ViewModels
             Error
         }
 
-        public ShowMessageRequestedEventArgs(string message, MessageType type = MessageType.Info)
+        public ShowMessageRequestedEventArgs(string message, string title, MessageType type = MessageType.Info)
         {
             Message = message;
             Type = type;
+            Title = title;
         }
 
         public string Message
+        {
+            get;
+            private set;
+        }
+
+        public string Title
         {
             get;
             private set;
@@ -161,12 +168,18 @@ namespace SeranfuenMirrorSync.ViewModels
 
     public class UserConfirmationRequestedEventArgs : CancelEventArgs
     {
-        public UserConfirmationRequestedEventArgs(string message, bool cancel ) : base(cancel)
+        public UserConfirmationRequestedEventArgs(string message, string title, bool cancel ) : base(cancel)
         {
             Message = message;
         }
 
         public string Message
+        {
+            get;
+            private set;
+        }
+
+        public string Title
         {
             get;
             private set;

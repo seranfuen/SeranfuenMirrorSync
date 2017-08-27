@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SeranfuenMirrorSync.Converters;
+using SeranfuenMirrorSync.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,24 @@ namespace SeranfuenMirrorSync.Windows
         public WmdSourcePathChooser()
         {
             InitializeComponent();
+        }
+
+        public void SetSourcePathChooserViewModel(SyncSourcesViewModel viewModel)
+        {
+            var context = DataContext as AddSyncSourceViewModel;
+            context.SyncSourcesViewModel = viewModel;
+            viewModel.ShowMessageRequested += ViewModel_ShowMessageRequested;
+            viewModel.UserConfirmationRequested += ViewModel_UserConfirmationRequested;
+        }
+
+        private void ViewModel_UserConfirmationRequested(object sender, UserConfirmationRequestedEventArgs e)
+        {
+            e.Cancel = MessageBox.Show(e.Message, e.Title, MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes;
+        }
+
+        private void ViewModel_ShowMessageRequested(object sender, ShowMessageRequestedEventArgs e)
+        {
+            MessageBox.Show(e.Message, e.Title, MessageBoxButton.OK, MessageBoxImageConverter.FromViewModelMessageType(e.Type));
         }
     }
 }

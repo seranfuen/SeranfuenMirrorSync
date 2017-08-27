@@ -49,7 +49,9 @@ namespace SeranfuenMirrorSync.Windows
             var parameter = e.Parameter as SyncSourcesViewModel;
             if (parameter != null)
             {
-                // Send the viewmodel to the window that allows selecting a folder and process there the logic 
+                var window = new WmdSourcePathChooser();
+                window.SetSourcePathChooserViewModel(parameter);
+                window.ShowDialog();
             }
         }
 
