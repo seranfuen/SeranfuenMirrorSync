@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SeranfuenMirrorSync.Controls"
+        xmlns:commands="clr-namespace:SeranfuenMirrorSync.Commands"
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
         xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Class="SeranfuenMirrorSync.Windows.WndSyncScheduleManager"
@@ -13,6 +14,9 @@
         <Converters:NullBoolConverter x:Key="NullBoolConverter"/>
         <Converters:ImageConverter x:Key="ImageConverter"/>
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdAddSyncSource}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
     <Window.DataContext>
         <ViewModels:SyncScheduleManagerViewModel/>
     </Window.DataContext>
@@ -67,9 +71,10 @@
                     <Label Content="Mirror destination" ToolTip="The folder where the data will be copied" Margin="5" />
                     <controls:CtrFolderChooseTextBox SelectedPath="{Binding MirrorFolder}" Grid.Column="1" />
                 </Grid>
+                <ListView Grid.Row="2" ItemsSource="{Binding SyncSourcesViewModel.ListItems}" SelectedIndex="{Binding SyncSourcesViewModel.SelectedIndex}"  />
                 <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
-                    <Button Content="Add" Margin="5" Padding="5" />
-                    <Button Content="Remove" Margin="5" Padding="5" />
+                    <Button Content="Add" Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdAddSyncSource}"  Margin="5" Padding="5" CommandParameter="{Binding SyncSourcesViewModel}" />
+                    <Button Content="Remove" Margin="5" Padding="5" Command="{Binding SyncSourcesViewModel.RemoveCurrent, Mode=OneWay}" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1" Margin="20">

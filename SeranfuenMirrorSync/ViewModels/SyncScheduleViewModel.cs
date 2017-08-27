@@ -15,7 +15,7 @@ namespace SeranfuenMirrorSync.ViewModels
 
         private string _syncName = "New Sync";
         private bool _enabled = true;
-        private List<string> _sourceFolders;
+        private SyncSourcesViewModel _syncSourcesViewModel;
         private string _mirrorFolder;
 
         private bool _monday;
@@ -74,13 +74,13 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
-        public List<string> SourceFolders
+        public SyncSourcesViewModel SyncSourcesViewModel
         {
-            get { return _sourceFolders; }
+            get { return _syncSourcesViewModel; }
             set
             {
-                _sourceFolders = value;
-                OnPropertyChanged("SourceFolders");
+                _syncSourcesViewModel = value;
+                OnPropertyChanged("SyncSourcesViewModel");
             }
         }
 

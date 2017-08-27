@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeranfuenMirrorSync.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,35 @@ namespace SeranfuenMirrorSync.Windows
         {
             InitializeComponent();
         }
+
+        #region ' Properties '
+
+        private SyncScheduleManagerViewModel Current
+        {
+            get
+            {
+                return DataContext as SyncScheduleManagerViewModel;
+            }
+        }
+
+        #endregion
+
+        #region ' Memebers '
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Current != null && Current.Current != null;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var parameter = e.Parameter as SyncSourcesViewModel;
+            if (parameter != null)
+            {
+                // Send the viewmodel to the window that allows selecting a folder and process there the logic 
+            }
+        }
+
+        #endregion
     }
 }

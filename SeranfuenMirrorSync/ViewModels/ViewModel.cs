@@ -11,6 +11,13 @@ namespace SeranfuenMirrorSync.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        #region ' Events '
+
+        public event EventHandler<ShowMessageRequestedEventArgs> ShowMessageRequested;
+        public event EventHandler<UserConfirmationRequestedEventArgs> UserConfirmationRequested;
+
+        #endregion
+
         #region ' INotifyPropertyChanged '
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -107,7 +114,64 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
-        #endregion
+        protected virtual void ShowUserMessage(string message, ShowMessageRequestedEventArgs.MessageType type = ShowMessageRequestedEventArgs.MessageType.Info)
+        {
+            ShowMessageRequested?.Invoke(this, new ShowMessageRequestedEventArgs(message, type));
+        }
 
+        protected virtual bool RequestUserConfirmation(string message)
+        {
+            var args = new UserConfirmationRequestedEventArgs(message, false);
+            UserConfirmationRequested?.Invoke(this, args);
+            return !args.Cancel;
+        }
+
+        #endregion
     }
+
+    #region ' EventArgs '
+
+    public class ShowMessageRequestedEventArgs : EventArgs
+    {
+        public enum MessageType
+        {
+            Info,
+            Warning,
+            Error
+        }
+
+        public ShowMessageRequestedEventArgs(string message, MessageType type = MessageType.Info)
+        {
+            Message = message;
+            Type = type;
+        }
+
+        public string Message
+        {
+            get;
+            private set;
+        }
+
+        public MessageType Type
+        {
+            get;
+            private set;
+        }
+    }
+
+    public class UserConfirmationRequestedEventArgs : CancelEventArgs
+    {
+        public UserConfirmationRequestedEventArgs(string message, bool cancel ) : base(cancel)
+        {
+            Message = message;
+        }
+
+        public string Message
+        {
+            get;
+            private set;
+        }
+    }
+
+    #endregion
 }
