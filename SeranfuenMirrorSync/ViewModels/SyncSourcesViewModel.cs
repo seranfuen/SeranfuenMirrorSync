@@ -73,6 +73,7 @@ namespace SeranfuenMirrorSync.ViewModels
                     if (shouldAdd)
                     {
                         _parent._listItems.Add(path);
+                        _parent.OnRequestedClose();
                     }
                 }
             }

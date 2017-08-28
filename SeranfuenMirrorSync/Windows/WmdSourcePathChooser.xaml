@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <controls:CtrFolderChooseTextBox SelectedPath="{Binding SourcePath}" Margin="5" />
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <Button Content="Cancel" Padding="10,5" Margin="10,5"/>
+            <Button Content="Cancel" Padding="10,5" Margin="10,5" Command="{Binding CloseCommand, Mode=OneWay}"/>
             <Button Content="OK" Padding="15,5" Margin="10,5"  Command="{Binding AddSourceCommand, Mode=OneWay}" CommandParameter="{Binding SourcePath}"  />
         </StackPanel>
     </Grid>

@@ -32,6 +32,12 @@ namespace SeranfuenMirrorSync.Windows
             context.SyncSourcesViewModel = viewModel;
             viewModel.ShowMessageRequested += ViewModel_ShowMessageRequested;
             viewModel.UserConfirmationRequested += ViewModel_UserConfirmationRequested;
+            viewModel.RequestedClose += ViewModel_RequestedClose;
+        }
+
+        private void ViewModel_RequestedClose(object sender, RequestedCloseEventArgs e)
+        {
+            Close();
         }
 
         private void ViewModel_UserConfirmationRequested(object sender, UserConfirmationRequestedEventArgs e)

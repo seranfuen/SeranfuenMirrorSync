@@ -6,15 +6,75 @@ using System.Text;
 using System.Threading.Tasks;
 using SeranfuenMirrorSyncLib.Controllers;
 using System.Reflection;
+using System.Windows.Input;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
     public abstract class ViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        #region ' Commands '
+
+        private class RequestCloseCommand : ICommand
+        {
+            #region ' Events '
+
+            public event EventHandler CanExecuteChanged;
+
+            #endregion
+
+            #region ' Fields '
+
+            private ViewModel _parent;
+
+            #endregion
+
+            #region ' Ctor '
+
+            public RequestCloseCommand(ViewModel parent)
+            {
+                _parent = parent;
+                _parent.PropertyChanged += _parent_PropertyChanged;
+            }
+
+            private void _parent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == "CanClose")
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+
+            #endregion
+
+            #region ' Members '
+
+            public bool CanExecute(object parameter)
+            {
+                return _parent.CanClose;
+            }
+
+            public void Execute(object parameter)
+            {
+                _parent.OnRequestedClose();
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+        #region ' Fields '
+
+        private bool _canClose = true;
+        private ICommand _closeCommand;
+
+        #endregion
+
         #region ' Events '
 
         public event EventHandler<ShowMessageRequestedEventArgs> ShowMessageRequested;
         public event EventHandler<UserConfirmationRequestedEventArgs> UserConfirmationRequested;
+        public event EventHandler<RequestedCloseEventArgs> RequestedClose;
 
         #endregion
 
@@ -66,6 +126,15 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #endregion
 
+        #region ' Ctor '
+
+        public ViewModel()
+        {
+            _closeCommand = new RequestCloseCommand(this);
+        }
+
+        #endregion
+
         #region ' Properties '
 
         public virtual string DisplayName
@@ -76,6 +145,27 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
+        public bool CanClose
+        {
+            get
+            {
+                return _canClose;
+            }
+            set
+            {
+                _canClose = value;
+                OnPropertyChanged("CanClose");
+            }
+        }
+
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return _closeCommand;
+            }
+        }
+
         #endregion
 
         #region ' Methods '
@@ -83,6 +173,13 @@ namespace SeranfuenMirrorSync.ViewModels
         public override string ToString()
         {
             return DisplayName;
+        }
+
+        protected virtual bool OnRequestedClose()
+        {
+            var args = new RequestedCloseEventArgs(false);
+            RequestedClose?.Invoke(this, args);
+            return !args.Cancel;
         }
 
         protected virtual void ValidateNotNullField(string propertyName, object value)
@@ -183,6 +280,14 @@ namespace SeranfuenMirrorSync.ViewModels
         {
             get;
             private set;
+        }
+    }
+
+    public class RequestedCloseEventArgs : CancelEventArgs
+    {
+        public RequestedCloseEventArgs(bool cancel) : base(cancel)
+        {
+            
         }
     }
 
