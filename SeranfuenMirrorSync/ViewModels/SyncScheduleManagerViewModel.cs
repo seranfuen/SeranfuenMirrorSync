@@ -49,9 +49,7 @@ namespace SeranfuenMirrorSync.ViewModels
                         break;
                     }
                 }
-                _parent._listItems.Add(syncSchedule);
-                _parent.SelectLast();
-                _parent.OnPropertyChanged("ListItems");
+                _parent.RegisterNewSchedule(syncSchedule);
             }
 
             private bool HasSyncName(string nextSyncName)
@@ -88,6 +86,26 @@ namespace SeranfuenMirrorSync.ViewModels
         public SyncScheduleManagerViewModel()
         {
             _createSyncCommand = new SyncScheduleManagerCreateSyncCommand(this);
+        }
+
+        #endregion
+
+        #region ' Members '
+
+        private void RegisterNewSchedule(SyncScheduleViewModel syncSchedule)
+        {
+            _listItems.Add(syncSchedule);
+            syncSchedule.DeleteRequested += SyncSchedule_DeleteRequested;
+            SelectLast();
+            OnPropertyChanged("ListItems");
+        }
+
+        private void SyncSchedule_DeleteRequested(object sender, EventArgs e)
+        {
+            var syncSchedule = (SyncScheduleViewModel)sender;
+            syncSchedule.DeleteRequested -= SyncSchedule_DeleteRequested;
+            _listItems.Remove(syncSchedule);
+            OnPropertyChanged("ListItems");
         }
 
         #endregion

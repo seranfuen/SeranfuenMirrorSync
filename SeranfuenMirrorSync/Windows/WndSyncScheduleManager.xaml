@@ -7,7 +7,7 @@
         xmlns:commands="clr-namespace:SeranfuenMirrorSync.Commands"
         xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
-        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Class="SeranfuenMirrorSync.Windows.WndSyncScheduleManager"
+        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Name="MainWindow" x:Class="SeranfuenMirrorSync.Windows.WndSyncScheduleManager"
         mc:Ignorable="d"
         Title="{Binding DisplayName, Mode=OneWay}" Height="598" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -20,28 +20,42 @@
     <Window.DataContext>
         <ViewModels:SyncScheduleManagerViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="6*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="SyncList" Margin="10" ItemsSource="{Binding ListItems}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Width="64" HorizontalAlignment="Center" Margin="10">
-                        <Image Source="{Binding SyncImage, Converter={StaticResource ImageConverter}, Mode=OneWay}" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <TextBlock Text="{Binding DisplayName}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Grid DataContext="{Binding Current, Mode=OneWay}" IsEnabled="{Binding DataContext.Current, RelativeSource={RelativeSource AncestorType=local:WndSyncScheduleManager}, Converter={StaticResource NullBoolConverter}}" Grid.Row="1">
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView x:Name="SyncList" Margin="10" ItemsSource="{Binding ListItems}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Width="64" HorizontalAlignment="Center" Margin="10">
+                            <Image Source="{Binding SyncImage, Converter={StaticResource ImageConverter}, Mode=OneWay}" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding DisplayName}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Remove" Command="{Binding RequestDeleteCommand, Mode=OneWay}"  />
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel Orientation="Horizontal" Height="Auto" Grid.Row="1" Margin="20,0,0,0">
+                <Button Content="New Synchronization" Padding="10,5" Height="Auto" Margin="5,5" Width="auto" Command="{Binding NewSyncCommand, Mode=OneWay}" />
+            </StackPanel>
+        </Grid>
+        <Grid DataContext="{Binding Current, Mode=OneWay}" IsEnabled="{Binding DataContext.Current, Converter={StaticResource NullBoolConverter}, RelativeSource={RelativeSource AncestorType={x:Type local:WndSyncScheduleManager}}}" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -71,7 +85,7 @@
                     <Label Content="Mirror destination" ToolTip="The folder where the data will be copied" Margin="5" />
                     <controls:CtrFolderChooseTextBox SelectedPath="{Binding MirrorFolder}" Grid.Column="1" />
                 </Grid>
-                <ListView Grid.Row="2" ItemsSource="{Binding SyncSourcesViewModel.ListItems}" SelectedIndex="{Binding SyncSourcesViewModel.SelectedIndex}"  />
+                <ListView Grid.Row="2" ItemsSource="{Binding SyncSourcesViewModel.ListItems}" SelectedIndex="{Binding SyncSourcesViewModel.SelectedIndex}" MouseDoubleClick="ListView_MouseDoubleClick"  />
                 <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                     <Button Content="Add" Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdAddSyncSource}"  Margin="5" Padding="5" CommandParameter="{Binding SyncSourcesViewModel}" />
                     <Button Content="Remove" Margin="5" Padding="5" Command="{Binding SyncSourcesViewModel.RemoveCurrent, Mode=OneWay}" />
@@ -104,8 +118,7 @@
                 <CheckBox Content="Manual Synchronization" ToolTip="No synchronization will be performed unless you choose to run it" IsChecked="{Binding Manual}" Grid.Row="5" Margin="5"/>
             </Grid>
         </Grid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
-            <Button Content="New" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding NewSyncCommand, Mode=OneWay}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3" Margin="304,0">
             <Button Content="Discard" Padding="10, 5" Margin="5,5" Width="auto" />
             <Button Content="Save" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding PersistSyncSchedulesCommand, Mode=OneWay}" />
         </StackPanel>

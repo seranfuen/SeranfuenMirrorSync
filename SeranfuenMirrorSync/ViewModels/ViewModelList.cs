@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
-    public class ViewModelList<T> : ViewModel where T : class
+    public class ViewModelList<T> : ViewModel where T : ViewModel
     {
         #region ' Fields '
 
@@ -151,6 +151,18 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Properties '
 
+        public override bool HasChanged
+        {
+            get
+            {
+                return base.HasChanged || _listItems.Any(item => item.HasChanged);
+            }
+            set
+            {
+                base.HasChanged = value;
+            }
+        }
+
         public bool IsReadOnly
         {
             get
@@ -183,8 +195,8 @@ namespace SeranfuenMirrorSync.ViewModels
             set
             {
                 _selectedIndex = value;
-                OnPropertyChanged("SelectedIndex");
-                OnPropertyChanged("Current");
+                OnPropertyChanged("SelectedIndex", false);
+                OnPropertyChanged("Current", false);
             }
         }
 

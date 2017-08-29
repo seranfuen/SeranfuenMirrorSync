@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:SeranfuenMirrorSync.Controls"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
-        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" x:Class="SeranfuenMirrorSync.Windows.WmdSourcePathChooser"
+        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" x:Class="SeranfuenMirrorSync.Windows.WndSourcePathChooser"
         mc:Ignorable="d"
         Title="{Binding DisplayName, Mode=OneWay}" Height="111" Width="501" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <controls:CtrFolderChooseTextBox SelectedPath="{Binding SourcePath}" Margin="5" />
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <Button Content="Cancel" Padding="10,5" Margin="10,5" Command="{Binding CloseCommand, Mode=OneWay}"/>
+            <Button Content="Cancel" Padding="10,5" Margin="10,5" Command="{Binding SyncSourcesViewModel.CloseCommand, Mode=OneWay}"/>
             <Button Content="OK" Padding="15,5" Margin="10,5"  Command="{Binding AddSourceCommand, Mode=OneWay}" CommandParameter="{Binding SourcePath}"  />
         </StackPanel>
     </Grid>

@@ -43,16 +43,6 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
-        private void _syncSourcesViewModel_UserConfirmationRequested(object sender, UserConfirmationRequestedEventArgs e)
-        {
-            e.Cancel = !RequestUserConfirmation(e.Message, e.Title);
-        }
-
-        private void _syncSourcesViewModel_ShowMessageRequested(object sender, ShowMessageRequestedEventArgs e)
-        {
-            ShowUserMessage(e.Message, e.Title, e.Type);
-        }
-
         public override string DisplayName
         {
             get
@@ -81,6 +71,20 @@ namespace SeranfuenMirrorSync.ViewModels
                 }
                 return _syncSourcesViewModel.AddNewItem;
             }
+        }
+
+        #endregion
+
+        #region ' Members '
+
+        private void _syncSourcesViewModel_UserConfirmationRequested(object sender, UserConfirmationRequestedEventArgs e)
+        {
+            e.Cancel = !RequestUserConfirmation(e.Message, e.Title);
+        }
+
+        private void _syncSourcesViewModel_ShowMessageRequested(object sender, ShowMessageRequestedEventArgs e)
+        {
+            ShowUserMessage(e.Message, e.Title, e.Type);
         }
 
         #endregion

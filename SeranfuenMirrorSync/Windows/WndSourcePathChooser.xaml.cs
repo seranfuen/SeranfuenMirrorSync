@@ -17,11 +17,12 @@ using System.Windows.Shapes;
 namespace SeranfuenMirrorSync.Windows
 {
     /// <summary>
-    /// Lógica de interacción para WmdSourcePathChooser.xaml
+    /// Lógica de interacción para 
+    /// SourcePathChooser.xaml
     /// </summary>
-    public partial class WmdSourcePathChooser : Window
+    public partial class WndSourcePathChooser : Window
     {
-        public WmdSourcePathChooser()
+        public WndSourcePathChooser()
         {
             InitializeComponent();
         }
@@ -38,6 +39,16 @@ namespace SeranfuenMirrorSync.Windows
         private void ViewModel_RequestedClose(object sender, RequestedCloseEventArgs e)
         {
             Close();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            var context = DataContext as AddSyncSourceViewModel;
+            var viewModel = context.SyncSourcesViewModel;
+            viewModel.ShowMessageRequested -= ViewModel_ShowMessageRequested;
+            viewModel.UserConfirmationRequested -= ViewModel_UserConfirmationRequested;
+            viewModel.RequestedClose -= ViewModel_RequestedClose;
+            base.OnClosed(e);
         }
 
         private void ViewModel_UserConfirmationRequested(object sender, UserConfirmationRequestedEventArgs e)

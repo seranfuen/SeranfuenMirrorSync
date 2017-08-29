@@ -49,9 +49,29 @@ namespace SeranfuenMirrorSync.Windows
             var parameter = e.Parameter as SyncSourcesViewModel;
             if (parameter != null)
             {
-                var window = new WmdSourcePathChooser();
+                var window = new WndSourcePathChooser();
                 window.SetSourcePathChooserViewModel(parameter);
                 window.ShowDialog();
+            }
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (Current.Current != null)
+            {
+                var currentSourceViewModel = Current.Current.SyncSourcesViewModel;
+                if (currentSourceViewModel.Current != null)
+                {
+                    var dataModel = new AddSyncSourceViewModel()
+                    {
+                        SourcePath = currentSourceViewModel.Current.Path,
+                        SyncSourcesViewModel = currentSourceViewModel
+                    };
+                    var formAdd = new WndSourcePathChooser();
+                    formAdd.DataContext = dataModel;
+                    formAdd.SetSourcePathChooserViewModel(currentSourceViewModel);
+                    formAdd.ShowDialog();
+                }
             }
         }
 

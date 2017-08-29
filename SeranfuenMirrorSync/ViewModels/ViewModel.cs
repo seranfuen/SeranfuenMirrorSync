@@ -66,6 +66,7 @@ namespace SeranfuenMirrorSync.ViewModels
         #region ' Fields '
 
         private bool _canClose = true;
+        private bool _hasChanged = false;
         private ICommand _closeCommand;
 
         #endregion
@@ -82,9 +83,13 @@ namespace SeranfuenMirrorSync.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged(string propertyName, bool updateHasChanged = true)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (updateHasChanged)
+            {
+                _hasChanged = true;
+            }
         }
 
         #endregion
@@ -137,6 +142,20 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Properties '
 
+        public virtual bool HasChanged
+        {
+            get
+            {
+                return _hasChanged;
+            }
+            set
+            {
+
+                _hasChanged = value;
+                OnPropertyChanged("HasChanged");
+            }
+        }
+
         public virtual string DisplayName
         {
             get
@@ -153,8 +172,11 @@ namespace SeranfuenMirrorSync.ViewModels
             }
             set
             {
-                _canClose = value;
-                OnPropertyChanged("CanClose");
+                if (_canClose != value)
+                {
+                    _canClose = value;
+                    OnPropertyChanged("CanClose");
+                }
             }
         }
 

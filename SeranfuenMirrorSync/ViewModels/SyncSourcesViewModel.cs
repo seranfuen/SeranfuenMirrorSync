@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
-    public class SyncSourcesViewModel : ViewModelList<string>
+    public class SyncSourcesViewModel : ViewModelList<PathViewModel>
     {
         #region ' Command Definitions '
 
@@ -59,7 +59,7 @@ namespace SeranfuenMirrorSync.ViewModels
                 {
                     _parent.ShowUserMessage(AppStrings.SyncSourcesViewModel_EmptyPath_Message, AppStrings.SyncSourcesViewModel_EmptyPath_Title, ShowMessageRequestedEventArgs.MessageType.Warning);
                 }
-                else if (_parent.ListItems.Any(pth => path.Equals(pth, StringComparison.OrdinalIgnoreCase)))
+                else if (_parent.ListItems.Any(pth => path.Equals(pth.Path, StringComparison.OrdinalIgnoreCase)))
                 {
                     _parent.ShowUserMessage(string.Format(AppStrings.SyncSourcesViewModel_AlreadyExistingPath_Message, path), (AppStrings.SyncSourcesViewModel_AlreadyExistingPath_Title), ShowMessageRequestedEventArgs.MessageType.Warning);
                 }
@@ -72,7 +72,10 @@ namespace SeranfuenMirrorSync.ViewModels
                     }
                     if (shouldAdd)
                     {
-                        _parent._listItems.Add(path);
+                        _parent._listItems.Add(new PathViewModel()
+                        {
+                            Path = path
+                        });
                         _parent.OnRequestedClose();
                     }
                 }
