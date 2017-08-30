@@ -6,16 +6,50 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
     public class SyncScheduleViewModel : ViewModel
     {
+        #region ' Commands '
+
+        private class DeleteCommand : ICommand
+        {
+            private SyncScheduleViewModel _viewModel;
+
+            public event EventHandler CanExecuteChanged;
+
+            public DeleteCommand(SyncScheduleViewModel viewModel)
+            {
+                _viewModel = viewModel;
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                _viewModel.OnDeleteRequested();
+            }
+        }
+
+        #endregion
+
+        #region ' Events '
+
+        public event EventHandler DeleteRequested;
+
+        #endregion
+
         #region ' Fields '
 
         private string _syncName = "New Sync";
         private bool _enabled = true;
         private SyncSourcesViewModel _syncSourcesViewModel;
+        private ICommand _deleteCommand;
         private string _mirrorFolder;
 
         private bool _monday;
@@ -36,6 +70,7 @@ namespace SeranfuenMirrorSync.ViewModels
         public SyncScheduleViewModel()
         {
             _syncSourcesViewModel = new SyncSourcesViewModel();
+            _deleteCommand = new DeleteCommand(this);
         }
 
         #endregion
@@ -58,18 +93,34 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
+        public ICommand RequestDeleteCommand
+        {
+            get
+            {
+                return _deleteCommand;
+            }
+            private set
+            {
+                _deleteCommand = value;
+                OnPropertyChanged("DeleteCommand", false);
+            }
+        }
+
         [DisplayName("Synchronization Name")]
         public string SyncName
         {
             get { return _syncName; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (_syncName != value)
                 {
-                    ValidateNotNullField("SyncName", value);
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        ValidateNotNullField("SyncName", value);
+                    }
+                    _syncName = value;
+                    OnPropertyChanged("SyncName");
                 }
-                _syncName = value;
-                OnPropertyChanged("SyncName");
             }
         }
 
@@ -78,8 +129,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _enabled; }
             set
             {
-                _enabled = value;
-                OnPropertyChanged("Enabled");
+                if (_enabled != value)
+                {
+                    _enabled = value;
+                    OnPropertyChanged("Enabled");
+                }
             }
         }
 
@@ -88,8 +142,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _syncSourcesViewModel; }
             set
             {
-                _syncSourcesViewModel = value;
-                OnPropertyChanged("SyncSourcesViewModel");
+                if (_syncSourcesViewModel != value)
+                {
+                    _syncSourcesViewModel = value;
+                    OnPropertyChanged("SyncSourcesViewModel");
+                }
             }
         }
 
@@ -98,8 +155,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _mirrorFolder; }
             set
             {
-                _mirrorFolder = value;
-                OnPropertyChanged("MirrorFolder");
+                if (_mirrorFolder != value)
+                {
+                    _mirrorFolder = value;
+                    OnPropertyChanged("MirrorFolder");
+                }
             }
         }
 
@@ -108,8 +168,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _monday; }
             set
             {
-                _monday = value;
-                OnPropertyChanged("Monday");
+                if (_monday != value)
+                {
+                    _monday = value;
+                    OnPropertyChanged("Monday");
+                }
             }
         }
 
@@ -118,8 +181,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _tuesday; }
             set
             {
-                _tuesday = value;
-                OnPropertyChanged("Tuesday");
+                if (_tuesday != value)
+                {
+                    _tuesday = value;
+                    OnPropertyChanged("Tuesday");
+                }
             }
         }
 
@@ -128,8 +194,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _wednesday; }
             set
             {
-                _wednesday = value;
-                OnPropertyChanged("Wednesday");
+                if (_wednesday != value)
+                {
+                    _wednesday = value;
+                    OnPropertyChanged("Wednesday");
+                }
             }
         }
 
@@ -138,8 +207,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _thursday; }
             set
             {
-                _thursday = value;
-                OnPropertyChanged("Thursday");
+                if (_thursday != value)
+                {
+                    _thursday = value;
+                    OnPropertyChanged("Thursday");
+                }
             }
         }
 
@@ -148,8 +220,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _friday; }
             set
             {
-                _friday = value;
-                OnPropertyChanged("Friday");
+                if (_friday != value)
+                {
+                    _friday = value;
+                    OnPropertyChanged("Friday");
+                }
             }
         }
 
@@ -158,8 +233,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _tuesday; }
             set
             {
-                _saturday = value;
-                OnPropertyChanged("Saturday");
+                if (_saturday != value)
+                {
+                    _saturday = value;
+                    OnPropertyChanged("Saturday");
+                }
             }
         }
 
@@ -168,8 +246,11 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _sunday; }
             set
             {
-                _sunday = value;
-                OnPropertyChanged("Sunday");
+                if (_sunday != value)
+                {
+                    _sunday = value;
+                    OnPropertyChanged("Sunday");
+                }
             }
         }
 
@@ -178,18 +259,21 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _everyday; }
             set
             {
-                _everyday = value;
-                OnPropertyChanged("Everyday");
-                OnPropertyChanged("WeekdaysEnabled");
-                if (_everyday)
+                if (_everyday != value)
                 {
-                    Monday = true;
-                    Tuesday = true;
-                    Wednesday = true;
-                    Thursday = true;
-                    Friday = true;
-                    Saturday = true;
-                    Sunday = true;
+                    _everyday = value;
+                    OnPropertyChanged("Everyday");
+                    OnPropertyChanged("WeekdaysEnabled");
+                    if (_everyday)
+                    {
+                        Monday = true;
+                        Tuesday = true;
+                        Wednesday = true;
+                        Thursday = true;
+                        Friday = true;
+                        Saturday = true;
+                        Sunday = true;
+                    }
                 }
             }
         }
@@ -199,11 +283,14 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _manual; }
             set
             {
-                _manual = value;
-                OnPropertyChanged("Manual");
-                OnPropertyChanged("WeekdaysEnabled");
-                OnPropertyChanged("HourEnabled");
-                OnPropertyChanged("EverydayEnabled");
+                if (_monday != value)
+                {
+                    _manual = value;
+                    OnPropertyChanged("Manual");
+                    OnPropertyChanged("WeekdaysEnabled");
+                    OnPropertyChanged("HourEnabled");
+                    OnPropertyChanged("EverydayEnabled");
+                }
             }
         }
 
@@ -237,9 +324,21 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _hour; }
             set
             {
-                _hour = value;
-                OnPropertyChanged("Hour");
+                if (_hour != value)
+                {
+                    _hour = value;
+                    OnPropertyChanged("Hour");
+                }
             }
+        }
+
+        #endregion
+
+        #region ' Members '
+
+        protected virtual void OnDeleteRequested()
+        {
+            DeleteRequested?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

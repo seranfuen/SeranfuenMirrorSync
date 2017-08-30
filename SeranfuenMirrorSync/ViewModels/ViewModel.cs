@@ -61,13 +61,60 @@ namespace SeranfuenMirrorSync.ViewModels
             #endregion
         }
 
+        private class SaveCloseCommand : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            #region ' Fields '
+
+            private ViewModel _parent;
+
+            #endregion
+
+            #region ' Ctor '
+
+            public SaveCloseCommand(ViewModel parent)
+            {
+                _parent = parent;
+                _parent.PropertyChanged += _parent_PropertyChanged;
+            }
+
+            #endregion
+
+            #region ' Members '
+
+            public bool CanExecute(object parameter)
+            {
+                return _parent.CanClose;
+            }
+
+            public void Execute(object parameter)
+            {
+                if (_parent.OnRequestedSave())
+                {
+                    _parent.SaveChanges();
+                }
+                _parent.OnRequestedClose();
+            }
+
+            private void _parent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == "CanClose")
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+
+            #endregion
+        }
+
         #endregion
 
         #region ' Fields '
 
         private bool _canClose = true;
-        private bool _hasChanged = false;
         private ICommand _closeCommand;
+        private ICommand _saveCommand;
 
         #endregion
 
@@ -75,7 +122,8 @@ namespace SeranfuenMirrorSync.ViewModels
 
         public event EventHandler<ShowMessageRequestedEventArgs> ShowMessageRequested;
         public event EventHandler<UserConfirmationRequestedEventArgs> UserConfirmationRequested;
-        public event EventHandler<RequestedCloseEventArgs> RequestedClose;
+        public event EventHandler<RequestedConfirmationEventArgs> RequestedClose;
+        public event EventHandler<RequestedConfirmationEventArgs> RequestedSave;
 
         #endregion
 
@@ -86,10 +134,6 @@ namespace SeranfuenMirrorSync.ViewModels
         protected virtual void OnPropertyChanged(string propertyName, bool updateHasChanged = true)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            if (updateHasChanged)
-            {
-                _hasChanged = true;
-            }
         }
 
         #endregion
@@ -142,20 +186,6 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Properties '
 
-        public virtual bool HasChanged
-        {
-            get
-            {
-                return _hasChanged;
-            }
-            set
-            {
-
-                _hasChanged = value;
-                OnPropertyChanged("HasChanged");
-            }
-        }
-
         public virtual string DisplayName
         {
             get
@@ -197,9 +227,21 @@ namespace SeranfuenMirrorSync.ViewModels
             return DisplayName;
         }
 
+        protected virtual void SaveChanges()
+        {
+
+        }
+
+        protected virtual bool OnRequestedSave()
+        {
+            var args = new RequestedConfirmationEventArgs(false);
+            RequestedSave?.Invoke(this, args);
+            return !args.Cancel;
+        }
+
         protected virtual bool OnRequestedClose()
         {
-            var args = new RequestedCloseEventArgs(false);
+            var args = new RequestedConfirmationEventArgs(false);
             RequestedClose?.Invoke(this, args);
             return !args.Cancel;
         }
@@ -223,11 +265,11 @@ namespace SeranfuenMirrorSync.ViewModels
         protected virtual string GetPropertyDisplayName(string propertyName)
         {
             MemberInfo property = GetType().GetProperty(propertyName);
-            var dd = property.GetCustomAttribute(typeof(DisplayNameAttribute)) as DisplayNameAttribute;
-            if (dd != null)
+            if (property.GetCustomAttribute(typeof(DisplayNameAttribute)) is DisplayNameAttribute dd)
             {
                 return dd.DisplayName;
-            } else
+            }
+            else
             {
                 return null;
             }
@@ -305,9 +347,9 @@ namespace SeranfuenMirrorSync.ViewModels
         }
     }
 
-    public class RequestedCloseEventArgs : CancelEventArgs
+    public class RequestedConfirmationEventArgs : CancelEventArgs
     {
-        public RequestedCloseEventArgs(bool cancel) : base(cancel)
+        public RequestedConfirmationEventArgs(bool cancel) : base(cancel)
         {
             
         }

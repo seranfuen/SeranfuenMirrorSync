@@ -151,18 +151,6 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Properties '
 
-        public override bool HasChanged
-        {
-            get
-            {
-                return base.HasChanged || _listItems.Any(item => item.HasChanged);
-            }
-            set
-            {
-                base.HasChanged = value;
-            }
-        }
-
         public bool IsReadOnly
         {
             get

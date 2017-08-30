@@ -36,7 +36,7 @@ namespace SeranfuenMirrorSync.Windows
             viewModel.RequestedClose += ViewModel_RequestedClose;
         }
 
-        private void ViewModel_RequestedClose(object sender, RequestedCloseEventArgs e)
+        private void ViewModel_RequestedClose(object sender, RequestedConfirmationEventArgs e)
         {
             Close();
         }
