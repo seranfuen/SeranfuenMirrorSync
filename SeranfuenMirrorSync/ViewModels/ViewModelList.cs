@@ -196,7 +196,7 @@ namespace SeranfuenMirrorSync.ViewModels
                 {
                     return null;
                 }
-                return _listItems[_selectedIndex];
+                return _listItems[_selectedIndex >= 0 ? _selectedIndex : 0];
             }
         }
 

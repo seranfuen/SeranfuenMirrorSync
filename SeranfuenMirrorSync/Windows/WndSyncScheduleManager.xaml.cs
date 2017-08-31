@@ -1,4 +1,6 @@
-﻿using SeranfuenMirrorSync.ViewModels;
+﻿using SeranfuenMirrorSync.Converters;
+using SeranfuenMirrorSync.StringResources;
+using SeranfuenMirrorSync.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace SeranfuenMirrorSync.Windows
 {
@@ -23,6 +26,11 @@ namespace SeranfuenMirrorSync.Windows
         public WndSyncScheduleManager()
         {
             InitializeComponent();
+            var viewModel = new SyncScheduleManagerViewModel();
+            viewModel.RequestedSave += ViewModel_RequestedSave;
+            viewModel.RequestedClose += ViewModel_RequestedClose;
+            DataContext = viewModel;
+            
         }
 
         #region ' Properties '
@@ -75,6 +83,35 @@ namespace SeranfuenMirrorSync.Windows
             }
         }
 
+        private void ViewModel_RequestedClose(object sender, RequestedConfirmationEventArgs e)
+        {
+            Close();
+        }
+
+        private void ViewModel_RequestedSave(object sender, ConfirmSaveAndCloseEventArgs e)
+        {
+            MessageBoxResult result = PromptSaveClose();
+            e.ConfirmSave = result.ToBool();
+        }
+
+        private static MessageBoxResult PromptSaveClose()
+        {
+            return MessageBox.Show(AppStrings.ConfirmSave_Message, AppStrings.ConfirmSave_Title, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            var viewModel = DataContext as SyncScheduleManagerViewModel;
+            var result = PromptSaveClose();
+            if (result == MessageBoxResult.Yes)
+            {
+                viewModel.SaveChanges();
+            }
+            e.Cancel = result == MessageBoxResult.Cancel;
+        }
+
         #endregion
+
+
     }
 }
