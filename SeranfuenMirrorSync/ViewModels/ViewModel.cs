@@ -61,7 +61,7 @@ namespace SeranfuenMirrorSync.ViewModels
             #endregion
         }
 
-        private class SaveCloseCommand : ICommand
+        private class RequestSaveCloseCommand : ICommand
         {
             public event EventHandler CanExecuteChanged;
 
@@ -73,7 +73,7 @@ namespace SeranfuenMirrorSync.ViewModels
 
             #region ' Ctor '
 
-            public SaveCloseCommand(ViewModel parent)
+            public RequestSaveCloseCommand(ViewModel parent)
             {
                 _parent = parent;
                 _parent.PropertyChanged += _parent_PropertyChanged;
@@ -90,11 +90,15 @@ namespace SeranfuenMirrorSync.ViewModels
 
             public void Execute(object parameter)
             {
-                if (_parent.OnRequestedSave())
+                var confirmSave = _parent.OnRequestedSave();
+                if (confirmSave.HasValue && confirmSave.Value)
                 {
                     _parent.SaveChanges();
                 }
-                _parent.OnRequestedClose();
+                if (confirmSave.HasValue)
+                {
+                    _parent.OnRequestedClose();
+                }
             }
 
             private void _parent_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -123,7 +127,7 @@ namespace SeranfuenMirrorSync.ViewModels
         public event EventHandler<ShowMessageRequestedEventArgs> ShowMessageRequested;
         public event EventHandler<UserConfirmationRequestedEventArgs> UserConfirmationRequested;
         public event EventHandler<RequestedConfirmationEventArgs> RequestedClose;
-        public event EventHandler<RequestedConfirmationEventArgs> RequestedSave;
+        public event EventHandler<ConfirmSaveAndCloseEventArgs> RequestedSave;
 
         #endregion
 
@@ -160,7 +164,8 @@ namespace SeranfuenMirrorSync.ViewModels
                 if (value == null)
                 {
                     _errorInfo.Remove(columnName);
-                } else
+                }
+                else
                 {
                     _errorInfo[columnName] = value;
                 }
@@ -180,6 +185,7 @@ namespace SeranfuenMirrorSync.ViewModels
         public ViewModel()
         {
             _closeCommand = new RequestCloseCommand(this);
+            _saveCommand = new RequestSaveCloseCommand(this);
         }
 
         #endregion
@@ -218,6 +224,14 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
+        public ICommand SaveCloseCommand
+        {
+            get
+            {
+                return _saveCommand;
+            }
+        }
+
         #endregion
 
         #region ' Methods '
@@ -232,11 +246,11 @@ namespace SeranfuenMirrorSync.ViewModels
 
         }
 
-        protected virtual bool OnRequestedSave()
+        protected virtual bool? OnRequestedSave()
         {
-            var args = new RequestedConfirmationEventArgs(false);
+            var args = new ConfirmSaveAndCloseEventArgs(false);
             RequestedSave?.Invoke(this, args);
-            return !args.Cancel;
+            return args.ConfirmSave;
         }
 
         protected virtual bool OnRequestedClose()
@@ -277,12 +291,12 @@ namespace SeranfuenMirrorSync.ViewModels
 
         protected virtual void ShowUserMessage(string message, string title, ShowMessageRequestedEventArgs.MessageType type = ShowMessageRequestedEventArgs.MessageType.Info)
         {
-            ShowMessageRequested?.Invoke(this, new ShowMessageRequestedEventArgs(message,title, type));
+            ShowMessageRequested?.Invoke(this, new ShowMessageRequestedEventArgs(message, title, type));
         }
 
         protected virtual bool RequestUserConfirmation(string message, string title)
         {
-            var args = new UserConfirmationRequestedEventArgs(message,title, false);
+            var args = new UserConfirmationRequestedEventArgs(message, title, false);
             UserConfirmationRequested?.Invoke(this, args);
             return !args.Cancel;
         }
@@ -329,7 +343,7 @@ namespace SeranfuenMirrorSync.ViewModels
 
     public class UserConfirmationRequestedEventArgs : CancelEventArgs
     {
-        public UserConfirmationRequestedEventArgs(string message, string title, bool cancel ) : base(cancel)
+        public UserConfirmationRequestedEventArgs(string message, string title, bool cancel) : base(cancel)
         {
             Message = message;
         }
@@ -351,7 +365,21 @@ namespace SeranfuenMirrorSync.ViewModels
     {
         public RequestedConfirmationEventArgs(bool cancel) : base(cancel)
         {
-            
+
+        }
+    }
+
+    public class ConfirmSaveAndCloseEventArgs : EventArgs
+    {
+        public ConfirmSaveAndCloseEventArgs(bool? defaultValue = true)
+        {
+            ConfirmSave = defaultValue;
+        }
+
+        public bool? ConfirmSave
+        {
+            get;
+            set;
         }
     }
 

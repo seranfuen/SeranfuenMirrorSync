@@ -103,6 +103,7 @@
     <Compile Include="Controls\CtrSourceMirrorFolderChooser.xaml.cs">
       <DependentUpon>CtrSourceMirrorFolderChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DialogResultBoolConverter.cs" />
     <Compile Include="Converters\EnumDescriptionConverter.cs" />
     <Compile Include="Converters\HumanReadableBytesConverter.cs" />
     <Compile Include="Converters\ImageConverter.cs" />
@@ -116,7 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\AppStrings.Designer.cs">
+    <Compile Include="StringResources\AppStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AppStrings.resx</DependentUpon>
@@ -275,7 +276,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AppStrings.resx">
+    <EmbeddedResource Include="StringResources\AppStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>

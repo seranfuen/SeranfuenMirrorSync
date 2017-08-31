@@ -119,8 +119,7 @@
             </Grid>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3" Margin="304,0">
-            <Button Content="Discard" Padding="10, 5" Margin="5,5" Width="auto" />
-            <Button Content="Save" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding PersistSyncSchedulesCommand, Mode=OneWay}" />
+            <Button Content="Close" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding SaveCloseCommand, Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </Window>

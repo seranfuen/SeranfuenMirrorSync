@@ -120,6 +120,7 @@ namespace SeranfuenMirrorSync.ViewModels
                     }
                     _syncName = value;
                     OnPropertyChanged("SyncName");
+                    OnPropertyChanged("DisplayName");
                 }
             }
         }

@@ -39,7 +39,7 @@ namespace SeranfuenMirrorSync.StringResources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SeranfuenMirrorSync.Resources.AppStrings", typeof(AppStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SeranfuenMirrorSync.StringResources.AppStrings", typeof(AppStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,24 @@ namespace SeranfuenMirrorSync.StringResources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you wish to save the changes before closing?.
+        /// </summary>
+        internal static string ConfirmSave_Message {
+            get {
+                return ResourceManager.GetString("ConfirmSave_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes.
+        /// </summary>
+        internal static string ConfirmSave_Title {
+            get {
+                return ResourceManager.GetString("ConfirmSave_Title", resourceCulture);
             }
         }
         
