@@ -9,16 +9,26 @@ namespace SeranfuenMirrorSyncLib.Controllers
 {
     public class SyncCalendarScheduler
     {
+        #region ' Constructor '
+
         public SyncCalendarScheduler()
         {
             TimeProvider = DateTimeNowProvider.Instance;
         }
+
+        #endregion
+
+        #region ' Properties '
 
         public ITimeProvider TimeProvider
         {
             get;
             set;
         }
+
+        #endregion
+
+        #region ' Members '
 
         public void PutSchedule(ISchedule schedule)
         {
@@ -34,5 +44,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

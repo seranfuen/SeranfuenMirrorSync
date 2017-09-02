@@ -17,7 +17,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         }
 
-        private Guid _currentGuid;
         private SourceMirrorSyncStatus _status;
         private CancellationTokenSource _cancellationToken;
 
@@ -179,7 +178,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             _status = new SourceMirrorSyncStatus(SourceRoot, MirrorRoot);
             _status.SetStarted();
-            _status.Id = _currentGuid;
         }
 
         private void PerformCopyAction(FileSyncAction action)

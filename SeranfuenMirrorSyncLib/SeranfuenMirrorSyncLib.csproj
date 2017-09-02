@@ -63,6 +63,7 @@
     <Compile Include="Controllers\SyncProgressReportedEventArgs.cs" />
     <Compile Include="Controllers\SyncScheduler.cs" />
     <Compile Include="Controllers\Time.cs" />
+    <Compile Include="Data\DaysOfWeekFlag.cs" />
     <Compile Include="Data\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\FolderSyncController.cs" />
     <Compile Include="Controllers\FolderSyncEventArgs.cs" />

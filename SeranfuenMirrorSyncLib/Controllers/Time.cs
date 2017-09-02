@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
+    [Serializable]
     public class Time
     {
+
+        #region ' Ctor '
         public Time(int hour, int minute)
         {
             if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
@@ -18,8 +21,16 @@ namespace SeranfuenMirrorSyncLib.Controllers
             Minute = minute;
         }
 
+        #endregion
+
+        #region ' Properties '
+
         public int Hour { get; private set; }
         public int Minute { get; private set; }
+
+        #endregion
+
+        #region ' Members '
 
         public override bool Equals(object obj)
         {
@@ -38,5 +49,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             return string.Format("{0:00}:{1:00}", Hour, Minute);
         }
+
+        #endregion
     }
 }

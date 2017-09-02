@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeranfuenMirrorSyncLib.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace SeranfuenMirrorSyncLib.Data
 {
     public interface ISchedule
     {
+        bool IsScheduled { get; }
+        DateTime? LastTimeRun { get; }
+        ITimeProvider TimeProvider { get; set; }
+        void SetSyncRun();
     }
 }

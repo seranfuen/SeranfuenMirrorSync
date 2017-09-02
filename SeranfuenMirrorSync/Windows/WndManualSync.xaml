@@ -28,7 +28,7 @@
         </StackPanel>
         <controls:CtrSourceMirrorFolderChooser Grid.Row="1" Margin="5" SourceFolderPath="{Binding SourcePath}" MirrorFolderPath="{Binding MirrorPath}"/>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10" >
-            <Button x:Name="Close" Margin="10,5" Padding="20,5" Content="Close" />
+            <Button x:Name="CmdClose" Margin="10,5" Padding="20,5" Content="Close" />
             <Button x:Name="Sync"  Margin="10,5" Padding="20,5" Content="Start sync..." Click="Sync_Click" />
         </StackPanel>
     </Grid>

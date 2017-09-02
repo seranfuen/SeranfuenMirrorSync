@@ -57,6 +57,11 @@ namespace SeranfuenMirrorSync.ViewModels
                 return _parent._listItems.Any(schedule => schedule.SyncName.Equals(nextSyncName, StringComparison.OrdinalIgnoreCase));
             }
 
+            protected virtual void OnCanExecuteChanged()
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            }
+
             #endregion
         }
 

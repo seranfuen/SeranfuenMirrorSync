@@ -27,7 +27,5 @@ namespace SeranfuenMirrorSyncLib.Controllers
         }
 
         #endregion
-
-        private HashSet<FolderSyncSetting> settings;
     }
 }

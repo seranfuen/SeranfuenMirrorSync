@@ -34,6 +34,11 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 _viewModel.OnDeleteRequested();
             }
+
+            public virtual void OnCanExecuteChanged()
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         #endregion
