@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSyncLib.Data
 {
     [Serializable]
+    [DataContract]
     public class WeekdaySchedule : ISchedule
     {
         private DaysOfWeekFlag _dayOfWeek;
@@ -15,10 +17,17 @@ namespace SeranfuenMirrorSyncLib.Data
 
         #region ' Constructor '
 
-        public WeekdaySchedule(DaysOfWeekFlag dayOfWeek, Time time)
+        public WeekdaySchedule(DaysOfWeekFlag dayOfWeek, Time time, List<string> sourcePaths, string destinatioPath)
         {
             _dayOfWeek = dayOfWeek;
             _time = time;
+            TimeProvider = DateTimeNowProvider.Instance;
+            SourcePaths = sourcePaths;
+            DestinationPath = destinatioPath;
+        }
+
+        public WeekdaySchedule()
+        {
             TimeProvider = DateTimeNowProvider.Instance;
         }
 
@@ -26,11 +35,13 @@ namespace SeranfuenMirrorSyncLib.Data
 
         #region ' Properties '
 
+        [DataMember]
         public DateTime? LastTimeRun
         {
             get;
-            private set;
+            set;
         }
+
         public ITimeProvider TimeProvider
         {
             get;
@@ -58,6 +69,27 @@ namespace SeranfuenMirrorSyncLib.Data
                     return false;
                 }
             }
+        }
+
+        [DataMember]
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        public List<string> SourcePaths
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        public string DestinationPath
+        {
+            get;
+            set;
         }
 
         #endregion

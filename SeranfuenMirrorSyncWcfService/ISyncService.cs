@@ -24,6 +24,14 @@ namespace SeranfuenMirrorSyncWcfService
         [OperationContract]
         void CancelCurrentSync();
 
-        // TODO: scheduling operations (set new schedule, change schedule, retrieve schedules)
+        /// <summary>
+        /// We need the whole list, it will replace the current schedules so adding a new schedule means sending the previous schedules plus the new one
+        /// </summary>
+        /// <param name="schedules"></param>
+        [OperationContract]
+        void SetSchedules(List<ISchedule> schedules);
+
+        [OperationContract]
+        List<ISchedule> GetSchedules();
     }
 }

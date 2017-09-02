@@ -57,4 +57,28 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="SetSchedules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="schedules" nillable="true" type="q4:ArrayOfanyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetSchedulesResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSchedules">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSchedulesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetSchedulesResult" nillable="true" type="q5:ArrayOfanyType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

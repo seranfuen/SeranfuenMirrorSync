@@ -11,7 +11,13 @@ namespace SeranfuenMirrorSyncWcfClient
 {
     public class ServiceProxy : IServiceProxy
     {
+        #region ' Fields '
+
         private const string HttpBindingName = "BasicHttpBinding_ISyncService";
+
+        #endregion
+
+        #region ' Members '
 
         public SourceMirrorSyncStatus GetCurrentSyncStatus(bool filterCompletedActions)
         {
@@ -39,9 +45,27 @@ namespace SeranfuenMirrorSyncWcfClient
             }
         }
 
+        public void SetSchedules(List<ISchedule> schedules)
+        {
+            using (var proxy = GetProxyInstance())
+            {
+                proxy.SetSchedules(schedules.ToArray());
+            }
+        }
+
+        public List<ISchedule> GetSchedules()
+        {
+            using (var proxy = GetProxyInstance())
+            {
+                return proxy.GetSchedules().Cast<ISchedule>().ToList();
+            }
+        }
+
         private static SyncServiceClient GetProxyInstance()
         {
             return new ServiceReference.SyncServiceClient(HttpBindingName);
         }
+
+        #endregion
     }
 }

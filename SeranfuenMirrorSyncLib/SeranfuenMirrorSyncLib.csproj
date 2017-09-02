@@ -75,6 +75,7 @@
     <Compile Include="Data\FolderSyncSetting.cs" />
     <Compile Include="Data\FolderSyncAction.cs" />
     <Compile Include="Data\ISchedule.cs" />
+    <Compile Include="Data\ManualSchedule.cs" />
     <Compile Include="Data\PendingSyncInfo.cs" />
     <Compile Include="Data\ProgressCopyEventArgs.cs" />
     <Compile Include="Data\ProgressCopyStatus.cs" />

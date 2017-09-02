@@ -13,5 +13,7 @@ namespace SeranfuenMirrorSyncWcfClient
         void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
         SourceMirrorSyncStatus GetCurrentSyncStatus(bool filterCompletedActions);
         void CancelCurrentSync();
+        void SetSchedules(List<ISchedule> schedules);
+        List<ISchedule> GetSchedules();
     }
 }

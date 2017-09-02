@@ -33,6 +33,18 @@
   <wsdl:message name="ISyncService_CancelCurrentSync_OutputMessage">
     <wsdl:part name="parameters" element="tns:CancelCurrentSyncResponse" />
   </wsdl:message>
+  <wsdl:message name="ISyncService_SetSchedules_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetSchedules" />
+  </wsdl:message>
+  <wsdl:message name="ISyncService_SetSchedules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetSchedulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISyncService_GetSchedules_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSchedules" />
+  </wsdl:message>
+  <wsdl:message name="ISyncService_GetSchedules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSchedulesResponse" />
+  </wsdl:message>
   <wsdl:portType name="ISyncService">
     <wsdl:operation name="RunSync">
       <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/RunSync" message="tns:ISyncService_RunSync_InputMessage" />
@@ -49,6 +61,14 @@
     <wsdl:operation name="CancelCurrentSync">
       <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/CancelCurrentSync" message="tns:ISyncService_CancelCurrentSync_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/CancelCurrentSyncResponse" message="tns:ISyncService_CancelCurrentSync_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetSchedules">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/SetSchedules" message="tns:ISyncService_SetSchedules_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/SetSchedulesResponse" message="tns:ISyncService_SetSchedules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedules">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/GetSchedules" message="tns:ISyncService_GetSchedules_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/GetSchedulesResponse" message="tns:ISyncService_GetSchedules_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISyncService" type="tns:ISyncService">
@@ -82,6 +102,24 @@
     </wsdl:operation>
     <wsdl:operation name="CancelCurrentSync">
       <soap:operation soapAction="http://tempuri.org/ISyncService/CancelCurrentSync" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetSchedules">
+      <soap:operation soapAction="http://tempuri.org/ISyncService/SetSchedules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSchedules">
+      <soap:operation soapAction="http://tempuri.org/ISyncService/GetSchedules" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

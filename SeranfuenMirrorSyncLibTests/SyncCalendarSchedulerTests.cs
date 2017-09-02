@@ -63,7 +63,7 @@ namespace SeranfuenMirrorSyncLibTests
         [TestMethod]
         public void CheckScheduleBefore_NotScheduled()
         {
-            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30));
+            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30), null, null);
             schedule.TimeProvider = new StaticTimeProvider(new DateTime(2017, 8, 3, 20, 25, 0)); // thursday
             var isScheduled = schedule.IsScheduled;
             Assert.IsFalse(isScheduled);
@@ -72,7 +72,7 @@ namespace SeranfuenMirrorSyncLibTests
         [TestMethod]
         public void CheckScheduleAfterInRange_Scheduled()
         {
-            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30));
+            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30), null, null);
             schedule.TimeProvider = new StaticTimeProvider(new DateTime(2017, 8, 3, 20, 31, 0)); // thursday
             var isScheduled = schedule.IsScheduled;
             Assert.IsTrue(isScheduled);
@@ -81,7 +81,7 @@ namespace SeranfuenMirrorSyncLibTests
         [TestMethod]
         public void CheckScheduleAfterNotInRange_NotScheduled()
         {
-            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(21, 35));
+            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(21, 35), null, null);
             schedule.TimeProvider = new StaticTimeProvider(new DateTime(2017, 8, 3, 20, 31, 0)); // thursday
             var isScheduled = schedule.IsScheduled;
             Assert.IsFalse(isScheduled);
@@ -90,7 +90,7 @@ namespace SeranfuenMirrorSyncLibTests
         [TestMethod]
         public void CheckScheduleNotifyDone_NotScheduled()
         {
-            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30));
+            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30), null, null);
             schedule.TimeProvider = new StaticTimeProvider(new DateTime(2017, 8, 3, 20, 31, 0)); // thursday
             var isScheduled = schedule.IsScheduled;
             Assert.IsTrue(isScheduled);
@@ -103,7 +103,7 @@ namespace SeranfuenMirrorSyncLibTests
         [TestMethod]
         public void CheckWeeklySchedule()
         {
-            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30));
+            var schedule = new WeekdaySchedule(DaysOfWeekFlag.Monday | DaysOfWeekFlag.Thursday, new Time(20, 30), null, null);
             var timeProvider = new IncreasingDayProvider(new DateTime(2017, 7, 31, 20, 30, 0)); // starts on monday;
             schedule.TimeProvider = timeProvider;
 

@@ -13,5 +13,8 @@ namespace SeranfuenMirrorSyncLib.Data
         DateTime? LastTimeRun { get; }
         ITimeProvider TimeProvider { get; set; }
         void SetSyncRun();
+        string Name { get; }
+        List<string> SourcePaths { get; }
+        string DestinationPath { get; }
     }
 }

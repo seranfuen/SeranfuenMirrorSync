@@ -12,6 +12,8 @@ namespace SeranfuenMirrorSyncWcfService
 {
     public class SyncService : ISyncService
     {
+        #region ' Members '
+
         public void CancelCurrentSync()
         {
             ServiceSyncController.Instance.CancelCurrentSync();
@@ -40,9 +42,21 @@ namespace SeranfuenMirrorSyncWcfService
             throw new NotImplementedException();
         }
 
+        public List<ISchedule> GetSchedules()
+        {
+            return ScheduleManager.Instance.Schedules;
+        }
+
         public void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
         {
             ServiceSyncController.Instance.ScheduleSync(sourceRoot, mirrorRoot);
         }
+
+        public void SetSchedules(List<ISchedule> schedules)
+        {
+            ScheduleManager.Instance.SetSchedules(schedules);
+        }
+
+        #endregion
     }
 }
