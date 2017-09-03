@@ -14,6 +14,20 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #endregion
 
+        #region ' Ctor '
+
+        public PathViewModel(string path)
+        {
+            Path = path;
+        }
+
+        public PathViewModel()
+        {
+
+        }
+
+        #endregion
+
         #region ' Properties '
 
         public string Path

@@ -85,6 +85,8 @@
     <Compile Include="Utils\Clone\BinarySerializerDeepClone.cs" />
     <Compile Include="Utils\Clone\DeepCloneFactory.cs" />
     <Compile Include="Utils\Clone\IDeepClone.cs" />
+    <Compile Include="Utils\Serialization\ISerialization.cs" />
+    <Compile Include="Utils\Serialization\XmlSerialization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

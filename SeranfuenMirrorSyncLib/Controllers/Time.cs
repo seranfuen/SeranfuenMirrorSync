@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
     [Serializable]
+    [DataContract]
     public class Time
     {
+        private DateTime hour;
 
         #region ' Ctor '
         public Time(int hour, int minute)
@@ -21,12 +24,19 @@ namespace SeranfuenMirrorSyncLib.Controllers
             Minute = minute;
         }
 
+        public Time(DateTime time) : this(time.Hour, time.Minute)
+        {
+            
+        }
+
         #endregion
 
         #region ' Properties '
 
-        public int Hour { get; private set; }
-        public int Minute { get; private set; }
+        [DataMember]
+        public int Hour { get; set; }
+        [DataMember]
+        public int Minute { get; set; }
 
         #endregion
 
@@ -48,6 +58,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
         public override string ToString()
         {
             return string.Format("{0:00}:{1:00}", Hour, Minute);
+        }
+
+        public DateTime ToDateTime()
+        {
+            var reference = DateTime.MinValue;
+            return new DateTime(reference.Year, reference.Month, reference.Day, Hour, Minute, 0);
         }
 
         #endregion

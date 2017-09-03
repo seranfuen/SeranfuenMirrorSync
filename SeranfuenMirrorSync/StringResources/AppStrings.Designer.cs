@@ -79,6 +79,26 @@ namespace SeranfuenMirrorSync.StringResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The follow error occurred:
+        ///
+        ///{0}.
+        /// </summary>
+        internal static string ErrorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error happened.
+        /// </summary>
+        internal static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The path &apos;{0}&apos; is already in the synchronization source.
         /// </summary>
         internal static string SyncSourcesViewModel_AlreadyExistingPath_Message {

@@ -236,7 +236,7 @@ namespace SeranfuenMirrorSync.ViewModels
 
         public bool Saturday
         {
-            get { return _tuesday; }
+            get { return _saturday; }
             set
             {
                 if (_saturday != value)

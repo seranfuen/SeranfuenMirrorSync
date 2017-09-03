@@ -1,9 +1,12 @@
-﻿using System;
+﻿using SeranfuenMirrorSyncWcfClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SeranfuenMirrorSync.Converters;
+using SeranfuenMirrorSync.StringResources;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
@@ -97,6 +100,34 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Members '
 
+        public void LoadCurrentSchedules()
+        {
+            try
+            {
+                var proxy = ServiceProxyFactory.Proxy;
+                var schedules = proxy.GetSchedules();
+                ListItems = new System.Collections.ObjectModel.ObservableCollection<SyncScheduleViewModel>(schedules.Select(sch => sch.ToSyncScheduleViewModel()));
+            }
+            catch (Exception ex)
+            {
+                ShowUserMessage(string.Format(AppStrings.ErrorMessage, ex.Message), AppStrings.ErrorTitle, ShowMessageRequestedEventArgs.MessageType.Error);
+                IsReadOnly = true;
+            }
+        }
+
+        public override void SaveChanges()
+        {
+            try
+            {
+                var proxy = ServiceProxyFactory.Proxy;
+                proxy.SetSchedules(ListItems.Select(viewModel => viewModel.ToScheduleDataModel()).ToList());
+            }
+            catch (Exception ex)
+            {
+                ShowUserMessage(string.Format(AppStrings.ErrorMessage, ex.Message), AppStrings.ErrorTitle, ShowMessageRequestedEventArgs.MessageType.Error);
+            }
+        }
+
         private void RegisterNewSchedule(SyncScheduleViewModel syncSchedule)
         {
             _listItems.Add(syncSchedule);
@@ -122,22 +153,6 @@ namespace SeranfuenMirrorSync.ViewModels
             get
             {
                 return _createSyncCommand;
-            }
-        }
-
-        public ICommand RemoveCurrentSyncCommand
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public ICommand PersistSyncSchedulesCommand
-        {
-            get
-            {
-                return null;
             }
         }
 

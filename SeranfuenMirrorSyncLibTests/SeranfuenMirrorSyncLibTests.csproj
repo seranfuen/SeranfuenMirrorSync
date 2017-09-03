@@ -63,6 +63,7 @@
     <Compile Include="TestSyncActionFactory.cs" />
     <Compile Include="TimeTests.cs" />
     <Compile Include="GZipDataCompressionTests.cs" />
+    <Compile Include="SyncScheduleDataViewModelConverterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\SeranfuenMirrorSyncLib\SeranfuenMirrorSyncLib.csproj">
       <Project>{04c2bf07-d150-4247-82b0-73fbcaafc2f8}</Project>
       <Name>SeranfuenMirrorSyncLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeranfuenMirrorSync\SeranfuenMirrorSyncApp.csproj">
+      <Project>{3433aa41-28cd-4c4d-902c-be36cab40b97}</Project>
+      <Name>SeranfuenMirrorSyncApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

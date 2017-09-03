@@ -111,6 +111,7 @@
     <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\PercentConverter.cs" />
     <Compile Include="Converters\NullBoolConverter.cs" />
+    <Compile Include="Converters\SyncScheduleDataViewModelConverter.cs" />
     <Compile Include="Converters\TimeSpanMinuteSecondStringConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

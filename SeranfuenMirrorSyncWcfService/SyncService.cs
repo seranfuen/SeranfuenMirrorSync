@@ -55,6 +55,7 @@ namespace SeranfuenMirrorSyncWcfService
         public void SetSchedules(List<ISchedule> schedules)
         {
             ScheduleManager.Instance.SetSchedules(schedules);
+            ScheduleManager.Instance.PersistSchedules();
         }
 
         #endregion

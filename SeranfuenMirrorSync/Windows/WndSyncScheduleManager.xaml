@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
         xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Name="MainWindow" x:Class="SeranfuenMirrorSync.Windows.WndSyncScheduleManager"
         mc:Ignorable="d"
-        Title="{Binding DisplayName, Mode=OneWay}" Height="598" Width="800" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing">
+        Title="{Binding DisplayName, Mode=OneWay}" Height="598" Width="800" WindowStartupLocation="CenterScreen" Closing="MainWindow_Closing" Loaded="MainWindow_Loaded">
     <Window.Resources>
         <Converters:NullBoolConverter x:Key="NullBoolConverter"/>
         <Converters:ImageConverter x:Key="ImageConverter"/>

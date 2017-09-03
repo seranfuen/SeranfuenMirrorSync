@@ -123,6 +123,14 @@
   <data name="ConfirmSave_Title" xml:space="preserve">
     <value>Save changes</value>
   </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>The follow error occurred:
+
+{0}</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>An error happened</value>
+  </data>
   <data name="SyncSourcesViewModel_AlreadyExistingPath_Message" xml:space="preserve">
     <value>The path '{0}' is already in the synchronization source</value>
   </data>

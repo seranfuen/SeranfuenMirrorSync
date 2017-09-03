@@ -10,7 +10,7 @@ namespace SeranfuenMirrorSync.Converters
 {
     public static class MessageBoxImageConverter
     {
-        public static MessageBoxImage FromViewModelMessageType(MessageType messageType)
+        public static MessageBoxImage FromViewModelMessageType(this MessageType messageType)
         {
             switch (messageType)
             {

@@ -48,6 +48,32 @@ namespace SeranfuenMirrorSyncLib.Data
             set;
         }
 
+        [DataMember]
+        public Time Time
+        {
+            get
+            {
+                return _time;
+            }
+            set
+            {
+                _time = value;
+            }
+        }
+
+        [DataMember]
+        public DaysOfWeekFlag DaysOfWeekFlag
+        {
+            get
+            {
+                return _dayOfWeek;
+            }
+            set
+            {
+                _dayOfWeek = value;
+            }
+        }
+
         public bool IsScheduled
         {
             get

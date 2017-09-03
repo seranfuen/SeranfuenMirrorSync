@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using SeranfuenMirrorSync.Converters;
 
 namespace SeranfuenMirrorSync.Windows
 {
@@ -29,8 +30,13 @@ namespace SeranfuenMirrorSync.Windows
             var viewModel = new SyncScheduleManagerViewModel();
             viewModel.RequestedSave += ViewModel_RequestedSave;
             viewModel.RequestedClose += ViewModel_RequestedClose;
+            viewModel.ShowMessageRequested += ViewModel_ShowMessageRequested;
             DataContext = viewModel;
-            
+        }
+
+        private void ViewModel_ShowMessageRequested(object sender, ShowMessageRequestedEventArgs e)
+        {
+            MessageBox.Show(e.Message, e.Title, MessageBoxButton.OK, e.Type.FromViewModelMessageType());
         }
 
         #region ' Properties '
@@ -45,7 +51,7 @@ namespace SeranfuenMirrorSync.Windows
 
         #endregion
 
-        #region ' Memebers '
+        #region ' Members '
 
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -83,6 +89,12 @@ namespace SeranfuenMirrorSync.Windows
             }
         }
 
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (SyncScheduleManagerViewModel)DataContext;
+            viewModel.LoadCurrentSchedules();
+        }
+
         private void ViewModel_RequestedClose(object sender, RequestedConfirmationEventArgs e)
         {
             Close();
@@ -110,8 +122,7 @@ namespace SeranfuenMirrorSync.Windows
             e.Cancel = result == MessageBoxResult.Cancel;
         }
 
+
         #endregion
-
-
     }
 }
