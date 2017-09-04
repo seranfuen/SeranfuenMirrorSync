@@ -60,6 +60,9 @@
     <None Include="Connected Services\ServiceReference\Arrays.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServiceReference\SeranfuenMirrorSyncLib.Controllers.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServiceReference\SeranfuenMirrorSyncLib.Data.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -73,6 +76,7 @@
     <None Include="Connected Services\ServiceReference\System.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SeranfuenMirrorSyncLib.Data.ScheduleBase.datasource" />
     <None Include="Properties\DataSources\SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus.datasource" />
   </ItemGroup>
   <ItemGroup>

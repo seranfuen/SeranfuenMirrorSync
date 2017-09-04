@@ -67,16 +67,16 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
         {
             var dir = Path.GetDirectoryName(_filepath);
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-            var serialization = new XmlSerialization<List<ISchedule>>();
-            serialization.Serialize(_schedules, _filepath);
+            var serialization = new XmlSerialization<List<ScheduleBase>>();
+            serialization.Serialize(_schedules.Cast<ScheduleBase>().ToList(), _filepath);
         }
 
         public void LoadSchedules()
         {
             if (File.Exists(_filepath))
             {
-                var serialization = new XmlSerialization<List<ISchedule>>();
-                _schedules = serialization.Deserialize(_filepath);
+                var serialization = new XmlSerialization<List<ScheduleBase>>();
+                _schedules = serialization.Deserialize(_filepath).Cast<ISchedule>().ToList();
             }
         }
         #endregion

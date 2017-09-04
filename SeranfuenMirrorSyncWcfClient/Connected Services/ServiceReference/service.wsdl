@@ -7,6 +7,7 @@
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Controllers" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISyncService_RunSync_InputMessage">

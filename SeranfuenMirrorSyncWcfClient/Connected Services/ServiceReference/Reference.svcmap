@@ -28,6 +28,7 @@
     <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="768eca9b-0026-4468-9fb8-e231a8059c2e" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
     <MetadataFile FileName="SeranfuenMirrorSyncLib.Data.xsd" MetadataType="Schema" ID="72ea70da-2a91-46ce-a602-e05bf9a38d2e" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
     <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="4ca5ac7d-6f70-4eb7-b663-958fa019a024" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
+    <MetadataFile FileName="SeranfuenMirrorSyncLib.Controllers.xsd" MetadataType="Schema" ID="5cb9e88d-8b09-4b80-a336-c0697598b6d0" SourceId="1" SourceUrl="http://localhost:8733/SeranfuenMirrorSyncWcfService/Service/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

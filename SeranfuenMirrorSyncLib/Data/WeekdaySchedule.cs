@@ -5,21 +5,22 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SeranfuenMirrorSyncLib.Data
 {
     [Serializable]
     [DataContract]
-    public class WeekdaySchedule : ISchedule
+    public class WeekdaySchedule : ScheduleBase
     {
-        private DaysOfWeekFlag _dayOfWeek;
         private Time _time;
+        private DaysOfWeek _daysOfWeek;
 
         #region ' Constructor '
 
         public WeekdaySchedule(DaysOfWeekFlag dayOfWeek, Time time, List<string> sourcePaths, string destinatioPath)
         {
-            _dayOfWeek = dayOfWeek;
+            _daysOfWeek = new DaysOfWeek(dayOfWeek);
             _time = time;
             TimeProvider = DateTimeNowProvider.Instance;
             SourcePaths = sourcePaths;
@@ -36,13 +37,14 @@ namespace SeranfuenMirrorSyncLib.Data
         #region ' Properties '
 
         [DataMember]
-        public DateTime? LastTimeRun
+        public override DateTime? LastTimeRun
         {
             get;
             set;
         }
 
-        public ITimeProvider TimeProvider
+        [XmlIgnore]
+        public override ITimeProvider TimeProvider
         {
             get;
             set;
@@ -61,20 +63,38 @@ namespace SeranfuenMirrorSyncLib.Data
             }
         }
 
-        [DataMember]
-        public DaysOfWeekFlag DaysOfWeekFlag
+        public DaysOfWeekFlag? DaysOfWeekFlag
         {
             get
             {
-                return _dayOfWeek;
+                return _daysOfWeek.ToFlag();
             }
             set
             {
-                _dayOfWeek = value;
+                if (value != null)
+                {
+                    _daysOfWeek = new DaysOfWeek(value.Value);
+                } else
+                {
+                    _daysOfWeek = null;
+                }
             }
         }
 
-        public bool IsScheduled
+        [DataMember]
+        public DaysOfWeek DaysOfWeek
+        {
+            get
+            {
+                return _daysOfWeek;
+            }
+            set
+            {
+                _daysOfWeek = value;
+            }
+        }
+
+        public override bool IsScheduled
         {
             get
             {
@@ -98,21 +118,21 @@ namespace SeranfuenMirrorSyncLib.Data
         }
 
         [DataMember]
-        public string Name
+        public override string Name
         {
             get;
             set;
         }
 
         [DataMember]
-        public List<string> SourcePaths
+        public override List<string> SourcePaths
         {
             get;
             set;
         }
 
         [DataMember]
-        public string DestinationPath
+        public override string DestinationPath
         {
             get;
             set;
@@ -122,14 +142,14 @@ namespace SeranfuenMirrorSyncLib.Data
 
         #region ' Members '
 
-        public void SetSyncRun()
+        public override void SetSyncRun()
         {
             LastTimeRun = TimeProvider.CurrentTime;
         }
 
         private bool IsDayScheduled(DaysOfWeekFlag dayOfWeek)
         {
-            return (dayOfWeek & _dayOfWeek) != 0;
+            return (dayOfWeek & _daysOfWeek.ToFlag()) != 0;
         }
 
         #endregion

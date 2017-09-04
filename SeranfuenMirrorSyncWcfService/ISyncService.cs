@@ -29,9 +29,9 @@ namespace SeranfuenMirrorSyncWcfService
         /// </summary>
         /// <param name="schedules"></param>
         [OperationContract]
-        void SetSchedules(List<ISchedule> schedules);
+        void SetSchedules(List<ScheduleBase> schedules);
 
         [OperationContract]
-        List<ISchedule> GetSchedules();
+        List<ScheduleBase> GetSchedules();
     }
 }

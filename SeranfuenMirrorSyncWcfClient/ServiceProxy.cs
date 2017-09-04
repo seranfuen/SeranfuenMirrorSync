@@ -45,7 +45,7 @@ namespace SeranfuenMirrorSyncWcfClient
             }
         }
 
-        public void SetSchedules(List<ISchedule> schedules)
+        public void SetSchedules(List<ScheduleBase> schedules)
         {
             using (var proxy = GetProxyInstance())
             {
@@ -53,11 +53,11 @@ namespace SeranfuenMirrorSyncWcfClient
             }
         }
 
-        public List<ISchedule> GetSchedules()
+        public List<ScheduleBase> GetSchedules()
         {
             using (var proxy = GetProxyInstance())
             {
-                return proxy.GetSchedules().Cast<ISchedule>().ToList();
+                return proxy.GetSchedules().ToList();
             }
         }
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using SeranfuenMirrorSync.Converters;
 using SeranfuenMirrorSync.StringResources;
+using SeranfuenMirrorSyncLib.Data;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
@@ -120,7 +121,7 @@ namespace SeranfuenMirrorSync.ViewModels
             try
             {
                 var proxy = ServiceProxyFactory.Proxy;
-                proxy.SetSchedules(ListItems.Select(viewModel => viewModel.ToScheduleDataModel()).ToList());
+                proxy.SetSchedules(ListItems.Select(viewModel => viewModel.ToScheduleDataModel()).Cast<ScheduleBase>().ToList());
             }
             catch (Exception ex)
             {

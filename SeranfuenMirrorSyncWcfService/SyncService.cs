@@ -42,9 +42,9 @@ namespace SeranfuenMirrorSyncWcfService
             throw new NotImplementedException();
         }
 
-        public List<ISchedule> GetSchedules()
+        public List<ScheduleBase> GetSchedules()
         {
-            return ScheduleManager.Instance.Schedules;
+            return ScheduleManager.Instance.Schedules.Cast<ScheduleBase>().ToList();
         }
 
         public void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
@@ -52,9 +52,9 @@ namespace SeranfuenMirrorSyncWcfService
             ServiceSyncController.Instance.ScheduleSync(sourceRoot, mirrorRoot);
         }
 
-        public void SetSchedules(List<ISchedule> schedules)
+        public void SetSchedules(List<ScheduleBase> schedules)
         {
-            ScheduleManager.Instance.SetSchedules(schedules);
+            ScheduleManager.Instance.SetSchedules(schedules.Cast<ISchedule>().ToList());
             ScheduleManager.Instance.PersistSchedules();
         }
 

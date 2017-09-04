@@ -63,6 +63,7 @@
     <Compile Include="Controllers\SyncProgressReportedEventArgs.cs" />
     <Compile Include="Controllers\SyncScheduler.cs" />
     <Compile Include="Controllers\Time.cs" />
+    <Compile Include="Data\DaysOfWeek.cs" />
     <Compile Include="Data\DaysOfWeekFlag.cs" />
     <Compile Include="Data\FileDatabaseEntry.cs" />
     <Compile Include="Controllers\FolderSyncController.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Data\PendingSyncInfo.cs" />
     <Compile Include="Data\ProgressCopyEventArgs.cs" />
     <Compile Include="Data\ProgressCopyStatus.cs" />
+    <Compile Include="Data\ScheduleBase.cs" />
     <Compile Include="Data\SourceMirrorSyncStatus.cs" />
     <Compile Include="Data\WeekdaySchedule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,7 +10,7 @@ namespace SeranfuenMirrorSyncLib.Data
 {
     [Serializable]
     [DataContract]
-    public class ManualSchedule : ISchedule
+    public class ManualSchedule : ScheduleBase
     {
         #region ' Ctor '
 
@@ -29,7 +29,7 @@ namespace SeranfuenMirrorSyncLib.Data
 
         #region ' Properties '
 
-        public bool IsScheduled
+        public override bool IsScheduled
         {
             get
             {
@@ -38,13 +38,13 @@ namespace SeranfuenMirrorSyncLib.Data
         }
 
         [DataMember]
-        public DateTime? LastTimeRun
+        public override DateTime? LastTimeRun
         {
             get;
             set;
         }
 
-        public ITimeProvider TimeProvider
+        public override ITimeProvider TimeProvider
         {
             get
             {
@@ -57,21 +57,21 @@ namespace SeranfuenMirrorSyncLib.Data
         }
 
         [DataMember]
-        public string Name
+        public override string Name
         {
             get;
             set;
         }
 
         [DataMember]
-        public List<string> SourcePaths
+        public override List<string> SourcePaths
         {
             get;
             set;
         }
 
         [DataMember]
-        public string DestinationPath
+        public override string DestinationPath
         {
             get;
             set;
@@ -81,7 +81,7 @@ namespace SeranfuenMirrorSyncLib.Data
 
         #region ' Members '
 
-        public void SetSyncRun()
+        public override void SetSyncRun()
         {
             LastTimeRun = TimeProvider.CurrentTime;
         }
