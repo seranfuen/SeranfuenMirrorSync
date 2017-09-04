@@ -15,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
-using SeranfuenMirrorSync.Converters;
 
 namespace SeranfuenMirrorSync.Windows
 {
@@ -28,7 +27,6 @@ namespace SeranfuenMirrorSync.Windows
         {
             InitializeComponent();
             var viewModel = new SyncScheduleManagerViewModel();
-            viewModel.RequestedSave += ViewModel_RequestedSave;
             viewModel.RequestedClose += ViewModel_RequestedClose;
             viewModel.ShowMessageRequested += ViewModel_ShowMessageRequested;
             DataContext = viewModel;
@@ -98,12 +96,6 @@ namespace SeranfuenMirrorSync.Windows
         private void ViewModel_RequestedClose(object sender, RequestedConfirmationEventArgs e)
         {
             Close();
-        }
-
-        private void ViewModel_RequestedSave(object sender, ConfirmSaveAndCloseEventArgs e)
-        {
-            MessageBoxResult result = PromptSaveClose();
-            e.ConfirmSave = result.ToBool();
         }
 
         private static MessageBoxResult PromptSaveClose()

@@ -24,7 +24,10 @@ namespace SeranfuenMirrorSync.Converters
 
         private static ISchedule GetWeekdaySyncSchedule(this SyncScheduleViewModel viewModel)
         {
-            return new WeekdaySchedule(GetDayOfWeekFlag(viewModel), new Time(viewModel.Hour), GetSourcePaths(viewModel), viewModel.MirrorFolder);
+            return new WeekdaySchedule(GetDayOfWeekFlag(viewModel), new Time(viewModel.Hour), GetSourcePaths(viewModel), viewModel.MirrorFolder)
+            {
+                Name = viewModel.SyncName
+            };
         }
 
         private static DaysOfWeekFlag GetDayOfWeekFlag(SyncScheduleViewModel viewModel)
@@ -55,7 +58,10 @@ namespace SeranfuenMirrorSync.Converters
 
         private static ISchedule GetManualSyncSchedule(SyncScheduleViewModel viewModel)
         {
-            return new ManualSchedule(GetSourcePaths(viewModel), viewModel.MirrorFolder);
+            return new ManualSchedule(GetSourcePaths(viewModel), viewModel.MirrorFolder)
+            {
+                Name = viewModel.SyncName
+            };
         }
 
         private static List<string> GetSourcePaths(SyncScheduleViewModel viewModel)

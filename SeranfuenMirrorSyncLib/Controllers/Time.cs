@@ -11,8 +11,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
     [DataContract]
     public class Time
     {
-        private DateTime hour;
-
         #region ' Ctor '
         public Time(int hour, int minute)
         {
@@ -26,8 +24,10 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         public Time(DateTime time) : this(time.Hour, time.Minute)
         {
-            
+
         }
+
+        public Time() { }
 
         #endregion
 

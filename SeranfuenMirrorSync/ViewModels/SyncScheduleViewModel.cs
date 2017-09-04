@@ -289,7 +289,7 @@ namespace SeranfuenMirrorSync.ViewModels
             get { return _manual; }
             set
             {
-                if (_monday != value)
+                if (_manual != value)
                 {
                     _manual = value;
                     OnPropertyChanged("Manual");

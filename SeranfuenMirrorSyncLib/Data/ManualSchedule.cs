@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using SeranfuenMirrorSyncLib.Controllers;
+using System.Xml.Serialization;
 
 namespace SeranfuenMirrorSyncLib.Data
 {
@@ -44,6 +45,7 @@ namespace SeranfuenMirrorSyncLib.Data
             set;
         }
 
+        [XmlIgnore]
         public override ITimeProvider TimeProvider
         {
             get

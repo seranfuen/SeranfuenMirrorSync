@@ -119,7 +119,7 @@
             </Grid>
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="3" Margin="304,0">
-            <Button Content="Close" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding SaveCloseCommand, Mode=OneWay}" />
+            <Button Content="Close" Padding="10, 5" Margin="5,5" Width="auto" Command="{Binding CloseCommand, Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </Window>

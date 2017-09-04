@@ -14,6 +14,7 @@ namespace SeranfuenMirrorSyncLib.Data
     public class WeekdaySchedule : ScheduleBase
     {
         private Time _time;
+        [XmlIgnore]
         private DaysOfWeek _daysOfWeek;
 
         #region ' Constructor '
@@ -63,6 +64,7 @@ namespace SeranfuenMirrorSyncLib.Data
             }
         }
 
+        [XmlIgnore]
         public DaysOfWeekFlag? DaysOfWeekFlag
         {
             get
