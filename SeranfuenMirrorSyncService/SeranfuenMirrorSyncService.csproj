@@ -77,6 +77,10 @@
       <Project>{1ccb2662-84c2-40f5-9c82-ac1a4d410f08}</Project>
       <Name>SeranfuenLogging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SeranfuenMirrorSyncLib\SeranfuenMirrorSyncLib.csproj">
+      <Project>{04c2bf07-d150-4247-82b0-73fbcaafc2f8}</Project>
+      <Name>SeranfuenMirrorSyncLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SeranfuenMirrorSyncWcfService\SeranfuenMirrorSyncWcfService.csproj">
       <Project>{9c9b6207-817c-4bec-88aa-4b88167b0bcd}</Project>
       <Name>SeranfuenMirrorSyncWcfService</Name>

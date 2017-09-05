@@ -1,4 +1,6 @@
 ﻿using SeranfuenLogging;
+using SeranfuenMirrorSyncLib.Controllers;
+using SeranfuenMirrorSyncWcfService.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +56,28 @@ namespace SeranfuenMirrorSyncService
 
         private void DoTimerWork()
         {
-            //
+            try
+            {
+                var scheduledSyncs = ScheduleManager.Instance.GetScheduledSyncs();
+                foreach (var sync in scheduledSyncs)
+                {
+                    var syncInfos = sync.GetSyncInfos();
+                    syncInfos.ForEach(info => SyncScheduler.Instance.ScheduleSync(info));
+                    sync.SetSyncRun();
+                }
+
+                if (scheduledSyncs.Any())
+                {
+                    ScheduleManager.Instance.PersistSchedules();
+                }
+
+                SyncScheduler.Instance.RunNextSync();
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                throw ex;
+            }
         }
 
         #endregion

@@ -307,6 +307,13 @@ namespace SeranfuenMirrorSyncLib.Data
             }
         }
 
+        [DataMember]
+        public string FaultMessage
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region ' Methods '

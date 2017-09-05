@@ -17,5 +17,6 @@ namespace SeranfuenMirrorSyncLib.Data
         string Name { get; }
         List<string> SourcePaths { get; }
         string DestinationPath { get; }
+        List<PendingSyncInfo> GetSyncInfos();
     }
 }

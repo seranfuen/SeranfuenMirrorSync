@@ -71,6 +71,11 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
             serialization.Serialize(_schedules.Cast<ScheduleBase>().ToList(), _filepath);
         }
 
+        public List<ISchedule> GetScheduledSyncs()
+        {
+            return _schedules.Where(schedule => schedule.IsScheduled).ToList();
+        }
+
         public void LoadSchedules()
         {
             if (File.Exists(_filepath))

@@ -29,5 +29,14 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 return sb.ToString();
             }
         }
+
+        public static string UnrollMessage(this Exception ex)
+        {
+            while (ex.InnerException != null)
+            {
+                ex = ex.InnerException;
+            }
+            return ex.Message;
+        }
     }
 }

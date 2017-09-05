@@ -7,6 +7,7 @@ using SeranfuenMirrorSyncLib.Data;
 using System.IO;
 using SeranfuenMirrorSyncLib.Utils.Clone;
 using System.Threading;
+using SeranfuenLogging;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
@@ -71,10 +72,23 @@ namespace SeranfuenMirrorSyncLib.Controllers
             try
             {
                 RunSyncInternal();
-            } catch (OperationCanceledException)
+            }
+            catch (OperationCanceledException)
             {
                 SetCancelledStatus();
             }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogException(ex);
+                SetFaultedStatus(ex.UnrollMessage());
+            }
+        }
+
+        private void SetFaultedStatus(string faultMessage)
+        {
+            _status.End = DateTime.Now;
+            _status.CurrentStatus = SourceMirrorSyncStatus.SyncStatus.Faulted;
+            _status.FaultMessage = faultMessage;
         }
 
         private void SetCancelledStatus()
@@ -199,6 +213,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 ReportActionFailed(action, ex);
             }
             finally
@@ -226,6 +241,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Instance.LogException(ex);
                 ReportActionFailed(action, ex);
             }
         }

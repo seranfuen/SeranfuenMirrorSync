@@ -100,6 +100,10 @@ namespace SeranfuenMirrorSyncLib.Data
         {
             get
             {
+                if (TimeProvider == null)
+                {
+                    TimeProvider = DateTimeNowProvider.Instance;
+                }
                 if (!IsDayScheduled(TimeProvider.DayOfWeek))
                 {
                     return false;

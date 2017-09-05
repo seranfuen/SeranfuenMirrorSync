@@ -90,5 +90,11 @@
     <Compile Include="Utils\Serialization\ISerialization.cs" />
     <Compile Include="Utils\Serialization\XmlSerialization.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SeranfuenLogging\SeranfuenLogging.csproj">
+      <Project>{1ccb2662-84c2-40f5-9c82-ac1a4d410f08}</Project>
+      <Name>SeranfuenLogging</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
