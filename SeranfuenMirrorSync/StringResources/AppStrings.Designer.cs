@@ -99,6 +99,33 @@ namespace SeranfuenMirrorSync.StringResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run sync now.
+        /// </summary>
+        internal static string MainMenu_RunNow {
+            get {
+                return ResourceManager.GetString("MainMenu_RunNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Service Running.
+        /// </summary>
+        internal static string NoServiceRunning {
+            get {
+                return ResourceManager.GetString("NoServiceRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Running.
+        /// </summary>
+        internal static string ServiceRunning {
+            get {
+                return ResourceManager.GetString("ServiceRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The path &apos;{0}&apos; is already in the synchronization source.
         /// </summary>
         internal static string SyncSourcesViewModel_AlreadyExistingPath_Message {

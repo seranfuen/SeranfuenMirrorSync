@@ -131,6 +131,15 @@
   <data name="ErrorTitle" xml:space="preserve">
     <value>An error happened</value>
   </data>
+  <data name="MainMenu_RunNow" xml:space="preserve">
+    <value>Run sync now</value>
+  </data>
+  <data name="NoServiceRunning" xml:space="preserve">
+    <value>No Service Running</value>
+  </data>
+  <data name="ServiceRunning" xml:space="preserve">
+    <value>Service Running</value>
+  </data>
   <data name="SyncSourcesViewModel_AlreadyExistingPath_Message" xml:space="preserve">
     <value>The path '{0}' is already in the synchronization source</value>
   </data>

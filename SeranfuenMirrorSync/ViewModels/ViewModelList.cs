@@ -10,6 +10,12 @@ namespace SeranfuenMirrorSync.ViewModels
 {
     public class ViewModelList<T> : ViewModel where T : ViewModel
     {
+        #region ' Events '
+
+        public event EventHandler CurrentChanged;
+
+        #endregion
+
         #region ' Fields '
 
         private int _selectedIndex = -1;
@@ -240,6 +246,15 @@ namespace SeranfuenMirrorSync.ViewModels
         public void SelectLast()
         {
             SelectedIndex = _listItems != null ? _listItems.Count - 1 : -1;
+        }
+
+        protected override void OnPropertyChanged(string propertyName, bool updateHasChanged = true)
+        {
+            base.OnPropertyChanged(propertyName, updateHasChanged);
+            if (propertyName == "Current")
+            {
+                CurrentChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         #endregion

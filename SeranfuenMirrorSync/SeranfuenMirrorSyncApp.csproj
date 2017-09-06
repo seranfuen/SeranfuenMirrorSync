@@ -148,13 +148,18 @@
       <DependentUpon>WndTestSyncFolders.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddSyncSourceViewModel.cs" />
+    <Compile Include="ViewModels\MainScreenViewModel.cs" />
     <Compile Include="ViewModels\PathViewModel.cs" />
+    <Compile Include="ViewModels\StatusViewModel.cs" />
     <Compile Include="ViewModels\SyncScheduleManagerViewModel.cs" />
     <Compile Include="ViewModels\SyncSourcesViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\ManualSyncViewModel.cs" />
     <Compile Include="ViewModels\SyncScheduleViewModel.cs" />
     <Compile Include="ViewModels\ViewModelList.cs" />
+    <Compile Include="Windows\WndMainScreen.xaml.cs">
+      <DependentUpon>WndMainScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WndSourcePathChooser.xaml.cs">
       <DependentUpon>WndSourcePathChooser.xaml</DependentUpon>
     </Compile>
@@ -212,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Test\WndTestSyncFolders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WndMainScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
