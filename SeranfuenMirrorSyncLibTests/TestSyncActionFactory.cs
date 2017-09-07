@@ -29,7 +29,7 @@ namespace SeranfuenMirrorSyncLibTests
 
         #endregion
 
-        public ISyncActionController GetDefaultController(string sourcePath, string mirrorPath)
+        public ISyncActionController GetDefaultController(string name, string sourcePath, string mirrorPath)
         {
             return new TestSyncActionController(sourcePath, mirrorPath);
         }

@@ -8,6 +8,6 @@ namespace SeranfuenMirrorSyncLib.Controllers
 {
     public interface ISyncActionControllerFactory
     {
-        ISyncActionController GetDefaultController(string sourcePath, string mirrorPath);
+        ISyncActionController GetDefaultController(string name, string sourcePath, string mirrorPath);
     }
 }

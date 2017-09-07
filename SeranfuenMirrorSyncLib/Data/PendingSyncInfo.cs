@@ -9,12 +9,19 @@ namespace SeranfuenMirrorSyncLib.Data
 {
     public class PendingSyncInfo
     {
-        public PendingSyncInfo(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilter = null, List<IFileFilter> directoryFilter = null)
+        public PendingSyncInfo(string name, string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilter = null, List<IFileFilter> directoryFilter = null)
         {
+            Name = name;
             SourceRoot = sourceRoot;
             MirrorRoot = mirrorRoot;
             FileFilter = fileFilter;
             DirectoryFilter = directoryFilter;
+        }
+
+        public string Name
+        {
+            get;
+            private set;
         }
 
         public string SourceRoot

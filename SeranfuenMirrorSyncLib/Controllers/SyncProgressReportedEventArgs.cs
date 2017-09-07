@@ -12,9 +12,11 @@ namespace SeranfuenMirrorSyncLib.Controllers
         private SyncProgressReportType _statusType;
         private string _sourceRoot;
         private string _mirrorRoot;
+        private string _name;
 
-        public SyncProgressReportedEventArgs(SyncProgressReportType statusType, string sourceRoot, string mirrorRoot)
+        public SyncProgressReportedEventArgs(SyncProgressReportType statusType, string name, string sourceRoot, string mirrorRoot)
         {
+            _name = Name;
             _statusType = statusType;
             _sourceRoot = sourceRoot;
             _mirrorRoot = mirrorRoot;
@@ -33,6 +35,14 @@ namespace SeranfuenMirrorSyncLib.Controllers
             get
             {
                 return _mirrorRoot;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _name;
             }
         }
 

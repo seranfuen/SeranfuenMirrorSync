@@ -57,8 +57,9 @@ namespace SeranfuenMirrorSyncLib.Data
 
         public SourceMirrorSyncStatus() { }
 
-        public SourceMirrorSyncStatus(string sourceRoot, string mirrorRoot)
+        public SourceMirrorSyncStatus(string name, string sourceRoot, string mirrorRoot)
         {
+            Name = name;
             SourceRoot = sourceRoot;
             MirrorRoot = mirrorRoot;
         }
@@ -80,7 +81,7 @@ namespace SeranfuenMirrorSyncLib.Data
         }
 
         [DataMember]
-        public Guid Id
+        public string Name
         {
             get;
             set;

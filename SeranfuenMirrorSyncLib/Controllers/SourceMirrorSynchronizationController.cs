@@ -21,8 +21,9 @@ namespace SeranfuenMirrorSyncLib.Controllers
         private SourceMirrorSyncStatus _status;
         private CancellationTokenSource _cancellationToken;
 
-        public SourceMirrorSynchronizationController(string sourceRoot, string mirrorRoot)
+        public SourceMirrorSynchronizationController(string name, string sourceRoot, string mirrorRoot)
         {
+            Name = name;
             SourceRoot = sourceRoot;
             MirrorRoot = mirrorRoot;
         }
@@ -36,6 +37,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
         }
 
         public string MirrorRoot
+        {
+            get;
+            private set;
+        }
+
+        public string Name
         {
             get;
             private set;
@@ -190,7 +197,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         private void ReportLoadingData()
         {
-            _status = new SourceMirrorSyncStatus(SourceRoot, MirrorRoot);
+            _status = new SourceMirrorSyncStatus(Name, SourceRoot, MirrorRoot);
             _status.SetStarted();
         }
 

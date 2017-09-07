@@ -41,9 +41,9 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         #endregion
 
-        public ISyncActionController GetDefaultController(string sourcePath, string mirrorPath)
+        public ISyncActionController GetDefaultController(string name, string sourcePath, string mirrorPath)
         {
-            var controller = new SourceMirrorSynchronizationController(sourcePath, mirrorPath);
+            var controller = new SourceMirrorSynchronizationController(name, sourcePath, mirrorPath);
             controller.MaxParallelActions = _defaultMaxActions;
             return controller;
         }

@@ -167,6 +167,15 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 _isReadOnly = value;
                 OnPropertyChanged("IsReadOnly");
+                OnPropertyChanged("HasCurrentItemActive");
+            }
+        }
+
+        public bool HasCurrentItemActive
+        {
+            get
+            {
+                return !_isReadOnly && _selectedIndex >= 0;
             }
         }
 
@@ -191,6 +200,7 @@ namespace SeranfuenMirrorSync.ViewModels
                 _selectedIndex = value;
                 OnPropertyChanged("SelectedIndex", false);
                 OnPropertyChanged("Current", false);
+                OnPropertyChanged("HasCurrentItemActive");
             }
         }
 
@@ -237,6 +247,11 @@ namespace SeranfuenMirrorSync.ViewModels
         #endregion
 
         #region ' Methods '
+
+        public void SetItems(IEnumerable<T> items)
+        {
+            ListItems = new ObservableCollection<T>(items);
+        }
 
         public void SelectFirst()
         {

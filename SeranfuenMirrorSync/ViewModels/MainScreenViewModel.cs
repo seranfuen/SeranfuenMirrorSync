@@ -1,4 +1,5 @@
 ﻿using SeranfuenMirrorSync.StringResources;
+using SeranfuenMirrorSyncWcfClient;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,6 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using SeranfuenMirrorSync.Converters;
+using System.ServiceModel;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
@@ -122,6 +125,21 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Members '
 
+        public void LoadData()
+        {
+            try
+            {
+                var proxy = ServiceProxyFactory.Proxy;
+                SetItems(proxy.GetSchedules().Select(schedule => schedule.ToSyncScheduleViewModel()));
+                IsConnected = true;
+            }
+            catch (CommunicationException)
+            {
+                ShowUserMessage(AppStrings.NoService_Error, AppStrings.ErrorTitle, ShowMessageRequestedEventArgs.MessageType.Error);
+                IsConnected = false;
+            }
+        }
+
         protected virtual void OnRunCurrentSync()
         {
             RunCurrentSync?.Invoke(this, new RunCurrentSyncEventArgs(Current));
@@ -139,10 +157,6 @@ namespace SeranfuenMirrorSync.ViewModels
         }
 
         #endregion
-    }
-
-    internal class AssemblyVersionInfo
-    {
     }
 
     #region ' RunCurrentSyncEventArgs '

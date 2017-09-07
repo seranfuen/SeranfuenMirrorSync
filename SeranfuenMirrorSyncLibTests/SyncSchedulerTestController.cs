@@ -27,9 +27,9 @@ namespace SeranfuenMirrorSyncLibTests
         /// </summary>
         public void RunThreeManualSyncsTest()
         {
-            var syncInfo1 = new PendingSyncInfo("a", "b");
-            var syncInfo2 = new PendingSyncInfo("c", "d");
-            var syncInfo3 = new PendingSyncInfo("e", "f");
+            var syncInfo1 = new PendingSyncInfo("test", "a", "b");
+            var syncInfo2 = new PendingSyncInfo("test", "c", "d");
+            var syncInfo3 = new PendingSyncInfo("test", "e", "f");
 
             var syncScheduler = SyncScheduler.Instance;
             syncScheduler.ScheduleSync(syncInfo1);

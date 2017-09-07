@@ -47,9 +47,9 @@ namespace SeranfuenMirrorSyncWcfService
             return ScheduleManager.Instance.Schedules.Cast<ScheduleBase>().ToList();
         }
 
-        public void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
+        public void RunSync(string name, string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
         {
-            ServiceSyncController.Instance.ScheduleSync(sourceRoot, mirrorRoot);
+            ServiceSyncController.Instance.ScheduleSync(name, sourceRoot, mirrorRoot);
         }
 
         public void SetSchedules(List<ScheduleBase> schedules)

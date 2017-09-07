@@ -37,7 +37,7 @@ namespace SeranfuenMirrorSyncLib.Data
 
         public virtual List<PendingSyncInfo> GetSyncInfos()
         {
-            return SourcePaths.Select(path => new PendingSyncInfo(path, DestinationPath)).ToList();
+            return SourcePaths.Select(path => new PendingSyncInfo(Name, path, DestinationPath)).ToList();
         }
     }
 }

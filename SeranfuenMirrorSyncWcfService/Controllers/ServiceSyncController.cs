@@ -29,7 +29,16 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
         private ServiceSyncController()
         {
             _scheduler = SyncScheduler.Instance;
+            _scheduler.SyncProgressReported += _scheduler_SyncProgressReported;
             _timer = new Timer(Timer_Callback, null, Settings.Default.ProcessQueueEveryMs, Timeout.Infinite);
+        }
+
+        private void _scheduler_SyncProgressReported(object sender, SyncProgressReportedEventArgs e)
+        {
+            if (e.StatusType == SyncProgressReportedEventArgs.SyncProgressReportType.SyncFinished)
+            {
+
+            }
         }
 
         private void Timer_Callback(object state)
@@ -56,9 +65,9 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
 
         #region ' Methods '
 
-        public void ScheduleSync(string sourcePath, string mirrorPath)
+        public void ScheduleSync(string name, string sourcePath, string mirrorPath)
         {
-            _scheduler.ScheduleSync(new SeranfuenMirrorSyncLib.Data.PendingSyncInfo(sourcePath, mirrorPath));
+            _scheduler.ScheduleSync(new PendingSyncInfo(name, sourcePath, mirrorPath));
         }
 
         public void CancelCurrentSync()

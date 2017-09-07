@@ -118,12 +118,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         protected virtual void OnSyncProgressReported(SyncProgressReportType statusType, PendingSyncInfo nextSync)
         {
-            SyncProgressReported?.Invoke(this, new SyncProgressReportedEventArgs(statusType, nextSync.SourceRoot, nextSync.MirrorRoot));
+            SyncProgressReported?.Invoke(this, new SyncProgressReportedEventArgs(statusType, nextSync.Name, nextSync.SourceRoot, nextSync.MirrorRoot));
         }
 
         private void RunSyncInternal(PendingSyncInfo nextSync)
         {
-            _currentSync = SyncActionFactory.GetDefaultController(nextSync.SourceRoot, nextSync.MirrorRoot);
+            _currentSync = SyncActionFactory.GetDefaultController(nextSync.Name, nextSync.SourceRoot, nextSync.MirrorRoot);
             _currentSync.FileFilters = nextSync.FileFilter;
             _currentSync.DirectoryFilters = nextSync.DirectoryFilter;
             OnSyncProgressReported(SyncProgressReportType.SyncStart, nextSync);

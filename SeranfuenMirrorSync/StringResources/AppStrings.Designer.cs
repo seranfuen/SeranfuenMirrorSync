@@ -22,7 +22,7 @@ namespace SeranfuenMirrorSync.StringResources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppStrings {
+    public class AppStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SeranfuenMirrorSync.StringResources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SeranfuenMirrorSync.StringResources.AppStrings", typeof(AppStrings).Assembly);
@@ -51,7 +51,7 @@ namespace SeranfuenMirrorSync.StringResources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Do you wish to save the changes before closing?.
         /// </summary>
-        internal static string ConfirmSave_Message {
+        public static string ConfirmSave_Message {
             get {
                 return ResourceManager.GetString("ConfirmSave_Message", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Save changes.
         /// </summary>
-        internal static string ConfirmSave_Title {
+        public static string ConfirmSave_Title {
             get {
                 return ResourceManager.GetString("ConfirmSave_Title", resourceCulture);
             }
@@ -83,7 +83,7 @@ namespace SeranfuenMirrorSync.StringResources {
         ///
         ///{0}.
         /// </summary>
-        internal static string ErrorMessage {
+        public static string ErrorMessage {
             get {
                 return ResourceManager.GetString("ErrorMessage", resourceCulture);
             }
@@ -92,7 +92,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to An error happened.
         /// </summary>
-        internal static string ErrorTitle {
+        public static string ErrorTitle {
             get {
                 return ResourceManager.GetString("ErrorTitle", resourceCulture);
             }
@@ -101,16 +101,34 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Run sync now.
         /// </summary>
-        internal static string MainMenu_RunNow {
+        public static string MainMenu_RunNow {
             get {
                 return ResourceManager.GetString("MainMenu_RunNow", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Last Status.
+        /// </summary>
+        public static string MainMenu_ShowLastStatus {
+            get {
+                return ResourceManager.GetString("MainMenu_ShowLastStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to conect to the sync service. Please make sure that it&apos;s running on your computer.
+        /// </summary>
+        public static string NoService_Error {
+            get {
+                return ResourceManager.GetString("NoService_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Service Running.
         /// </summary>
-        internal static string NoServiceRunning {
+        public static string NoServiceRunning {
             get {
                 return ResourceManager.GetString("NoServiceRunning", resourceCulture);
             }
@@ -119,7 +137,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Service Running.
         /// </summary>
-        internal static string ServiceRunning {
+        public static string ServiceRunning {
             get {
                 return ResourceManager.GetString("ServiceRunning", resourceCulture);
             }
@@ -128,7 +146,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to The path &apos;{0}&apos; is already in the synchronization source.
         /// </summary>
-        internal static string SyncSourcesViewModel_AlreadyExistingPath_Message {
+        public static string SyncSourcesViewModel_AlreadyExistingPath_Message {
             get {
                 return ResourceManager.GetString("SyncSourcesViewModel_AlreadyExistingPath_Message", resourceCulture);
             }
@@ -137,7 +155,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Path already exists.
         /// </summary>
-        internal static string SyncSourcesViewModel_AlreadyExistingPath_Title {
+        public static string SyncSourcesViewModel_AlreadyExistingPath_Title {
             get {
                 return ResourceManager.GetString("SyncSourcesViewModel_AlreadyExistingPath_Title", resourceCulture);
             }
@@ -146,7 +164,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to An empty path cannot be added.
         /// </summary>
-        internal static string SyncSourcesViewModel_EmptyPath_Message {
+        public static string SyncSourcesViewModel_EmptyPath_Message {
             get {
                 return ResourceManager.GetString("SyncSourcesViewModel_EmptyPath_Message", resourceCulture);
             }
@@ -155,7 +173,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Empty path.
         /// </summary>
-        internal static string SyncSourcesViewModel_EmptyPath_Title {
+        public static string SyncSourcesViewModel_EmptyPath_Title {
             get {
                 return ResourceManager.GetString("SyncSourcesViewModel_EmptyPath_Title", resourceCulture);
             }
@@ -164,7 +182,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to The path &apos;{0}&apos; you are trying to add does not seem to exist. Do you stil want to add it?.
         /// </summary>
-        internal static string SyncSourcesViewModel_PathNotExists_Message {
+        public static string SyncSourcesViewModel_PathNotExists_Message {
             get {
                 return ResourceManager.GetString("SyncSourcesViewModel_PathNotExists_Message", resourceCulture);
             }
@@ -173,7 +191,7 @@ namespace SeranfuenMirrorSync.StringResources {
         /// <summary>
         ///   Looks up a localized string similar to Path not found.
         /// </summary>
-        internal static string SyncSourcesViewModel_PathNotExists_Title {
+        public static string SyncSourcesViewModel_PathNotExists_Title {
             get {
                 return ResourceManager.GetString("SyncSourcesViewModel_PathNotExists_Title", resourceCulture);
             }

@@ -66,7 +66,7 @@ namespace SeranfuenMirrorSync.Test
 
                 Task.Factory.StartNew(() =>
                 {
-                    _controller = new SourceMirrorSynchronizationController(sourcePath, mirrorPath);
+                    _controller = new SourceMirrorSynchronizationController("test", sourcePath, mirrorPath);
                     _timer = new Timer(StatusTimerTicked, null, 500, Timeout.Infinite);
                     _controller.RunSynchronization();
                     _timer.Dispose();

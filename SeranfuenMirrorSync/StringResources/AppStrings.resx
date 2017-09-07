@@ -134,8 +134,14 @@
   <data name="MainMenu_RunNow" xml:space="preserve">
     <value>Run sync now</value>
   </data>
+  <data name="MainMenu_ShowLastStatus" xml:space="preserve">
+    <value>Show Last Status</value>
+  </data>
   <data name="NoServiceRunning" xml:space="preserve">
     <value>No Service Running</value>
+  </data>
+  <data name="NoService_Error" xml:space="preserve">
+    <value>Unable to conect to the sync service. Please make sure that it's running on your computer</value>
   </data>
   <data name="ServiceRunning" xml:space="preserve">
     <value>Service Running</value>

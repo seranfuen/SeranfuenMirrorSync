@@ -13,7 +13,7 @@ namespace SeranfuenMirrorSyncWcfService
     public interface ISyncService
     {
         [OperationContract]
-        void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
+        void RunSync(string name, string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
 
         [OperationContract]
         byte[] GetCurrentSyncStatus(bool filterCompletedActions);

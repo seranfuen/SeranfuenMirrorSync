@@ -12,7 +12,7 @@ namespace SeranfuenMirrorSyncWcfService.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -29,6 +29,18 @@ namespace SeranfuenMirrorSyncWcfService.Properties {
         public int ProcessQueueEveryMs {
             get {
                 return ((int)(this["ProcessQueueEveryMs"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int MaxHistoryItems {
+            get {
+                return ((int)(this["MaxHistoryItems"]));
+            }
+            set {
+                this["MaxHistoryItems"] = value;
             }
         }
     }
