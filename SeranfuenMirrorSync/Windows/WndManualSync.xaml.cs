@@ -1,4 +1,5 @@
-﻿using SeranfuenMirrorSync.ViewModels;
+﻿using SeranfuenMirrorSync.StringResources;
+using SeranfuenMirrorSync.ViewModels;
 using SeranfuenMirrorSyncWcfClient;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace SeranfuenMirrorSync.Windows
         private void Sync_Click(object sender, RoutedEventArgs e)
         {
             var proxy = ServiceProxyFactory.Proxy;
-            proxy.RunSync(ViewModel.SourcePath, ViewModel.FinalMirrorPath);
+            proxy.RunSync(AppStrings.ManualSync, ViewModel.SourcePath, ViewModel.FinalMirrorPath);
             var statusWnd = new WndCurrentSyncStatus();
             statusWnd.StartUpdating();
             statusWnd.ShowDialog();

@@ -156,6 +156,21 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
+        public List<string> Sources
+        {
+            get
+            {
+                if (_syncSourcesViewModel != null)
+                {
+                    return _syncSourcesViewModel.ListItems.Select(item => item.Path).ToList();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public string MirrorFolder
         {
             get { return _mirrorFolder; }

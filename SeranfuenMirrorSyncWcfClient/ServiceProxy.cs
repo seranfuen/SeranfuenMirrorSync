@@ -29,11 +29,20 @@ namespace SeranfuenMirrorSyncWcfClient
             }
         }
 
-        public void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
+        public void RunSync(string name, string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
         {
             using (var proxy = GetProxyInstance())
             {
-                proxy.RunSync(sourceRoot, mirrorRoot, fileFilters?.ToArray(), directoryFilters?.ToArray());
+                proxy.RunSync(name, sourceRoot, mirrorRoot, fileFilters?.ToArray(), directoryFilters?.ToArray());
+            }
+        }
+
+
+        public void RunSyncs(string name, List<string> sourceRoots, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
+        {
+            using (var proxy = GetProxyInstance())
+            {
+                proxy.RunSyncs(name, sourceRoots.ToArray(), mirrorRoot, fileFilters?.ToArray(), directoryFilters?.ToArray());
             }
         }
 

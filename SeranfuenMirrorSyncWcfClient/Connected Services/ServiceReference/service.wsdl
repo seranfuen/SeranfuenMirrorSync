@@ -16,6 +16,12 @@
   <wsdl:message name="ISyncService_RunSync_OutputMessage">
     <wsdl:part name="parameters" element="tns:RunSyncResponse" />
   </wsdl:message>
+  <wsdl:message name="ISyncService_RunSyncs_InputMessage">
+    <wsdl:part name="parameters" element="tns:RunSyncs" />
+  </wsdl:message>
+  <wsdl:message name="ISyncService_RunSyncs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RunSyncsResponse" />
+  </wsdl:message>
   <wsdl:message name="ISyncService_GetCurrentSyncStatus_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCurrentSyncStatus" />
   </wsdl:message>
@@ -51,6 +57,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/RunSync" message="tns:ISyncService_RunSync_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/RunSyncResponse" message="tns:ISyncService_RunSync_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="RunSyncs">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/RunSyncs" message="tns:ISyncService_RunSyncs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/RunSyncsResponse" message="tns:ISyncService_RunSyncs_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetCurrentSyncStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/ISyncService/GetCurrentSyncStatus" message="tns:ISyncService_GetCurrentSyncStatus_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ISyncService/GetCurrentSyncStatusResponse" message="tns:ISyncService_GetCurrentSyncStatus_OutputMessage" />
@@ -76,6 +86,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="RunSync">
       <soap:operation soapAction="http://tempuri.org/ISyncService/RunSync" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RunSyncs">
+      <soap:operation soapAction="http://tempuri.org/ISyncService/RunSyncs" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

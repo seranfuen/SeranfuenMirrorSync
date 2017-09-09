@@ -10,17 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using SeranfuenMirrorSync.Converters;
 using System.ServiceModel;
+using System.Windows.Threading;
+using SeranfuenMirrorSyncLib.Data;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
     public class MainScreenViewModel : ViewModelList<SyncScheduleViewModel>
     {
-        #region ' Events '
-
-        public event EventHandler<RunCurrentSyncEventArgs> RunCurrentSync;
-
-        #endregion
-
         #region ' Command Definitions '
 
         private class RunCurrentSyncCommandDefinition : ICommand
@@ -56,7 +52,7 @@ namespace SeranfuenMirrorSync.ViewModels
 
             public void Execute(object parameter)
             {
-                _parent.OnRunCurrentSync();
+                _parent.RunCurrentSync();
             }
 
             protected virtual void OnCanExecuteChanged()
@@ -72,6 +68,16 @@ namespace SeranfuenMirrorSync.ViewModels
         #region ' Fields '
 
         private bool _isConnected = false;
+        private StatusViewModel _statusViewModel;
+
+        #endregion
+
+        #region ' Ctor '
+
+        public MainScreenViewModel()
+        {
+            RunCurrentSyncCommand = new RunCurrentSyncCommandDefinition(this);
+        }
 
         #endregion
 
@@ -87,8 +93,15 @@ namespace SeranfuenMirrorSync.ViewModels
 
         public StatusViewModel LastStatus
         {
-            get;
-            set;
+            get
+            {
+                return _statusViewModel;
+            }
+            set
+            {
+                _statusViewModel = value;
+                OnPropertyChanged("LastStatus");
+            }
         }
 
         public bool IsConnected
@@ -125,6 +138,24 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #region ' Members '
 
+        public void UpdateLastStatus()
+        {
+            Task.Factory.StartNew<SourceMirrorSyncStatus>(() =>
+            {
+                var proxy = ServiceProxyFactory.Proxy;
+                return proxy.GetCurrentSyncStatus(true);
+            }).ContinueWith((taskResult) =>
+            {
+                if (!taskResult.IsFaulted && taskResult.Result != null)
+                {
+                    Dispatcher.CurrentDispatcher.Invoke(() =>
+                    {
+                        LastStatus = taskResult.Result.ToViewModel();
+                    });
+                }
+            });
+        }
+
         public void LoadData()
         {
             try
@@ -140,9 +171,13 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
-        protected virtual void OnRunCurrentSync()
+        protected void RunCurrentSync()
         {
-            RunCurrentSync?.Invoke(this, new RunCurrentSyncEventArgs(Current));
+            if (Current != null)
+            {
+                var service = ServiceProxyFactory.Proxy;
+                service.RunSyncs(Current.SyncName, Current.Sources, Current.MirrorFolder);
+            }
         }
 
         private static string GetAssemblyVersion()
@@ -158,30 +193,4 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #endregion
     }
-
-    #region ' RunCurrentSyncEventArgs '
-
-    public class RunCurrentSyncEventArgs : EventArgs
-    {
-        #region ' Constructor '
-
-        public RunCurrentSyncEventArgs(SyncScheduleViewModel syncToRun)
-        {
-            SyncToRun = syncToRun;
-        }
-
-        #endregion
-
-        #region ' Properties '
-
-        public SyncScheduleViewModel SyncToRun
-        {
-            get;
-            private set;
-        }
-
-        #endregion
-    }
-
-    #endregion
 }

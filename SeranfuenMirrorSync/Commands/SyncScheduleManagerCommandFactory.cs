@@ -10,5 +10,6 @@ namespace SeranfuenMirrorSync.Commands
     public static class SyncScheduleManagerCommandFactory
     {
         public static RoutedCommand CmdAddSyncSource = new RoutedCommand();
+        public static RoutedCommand CmdOpenManager = new RoutedCommand();
     }
 }

@@ -3,11 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:commands="clr-namespace:SeranfuenMirrorSync.Commands"
         xmlns:strings="clr-namespace:SeranfuenMirrorSync.StringResources"
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
-        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" x:Name="MainWindow" x:Class="SeranfuenMirrorSync.Windows.WndMainScreen"
+        xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Name="MainWindow" x:Class="SeranfuenMirrorSync.Windows.WndMainScreen"
         mc:Ignorable="d"
         Title="{Binding DisplayName, Mode=OneWay}" Height="600" Width="800">
+    <Window.Resources>
+        <Converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        <Converters:TimeSpanMinuteSecondStringConverter x:Key="TimeSpanMinuteSecondStringConverter"/>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdOpenManager}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
     <Window.DataContext>
         <ViewModels:MainScreenViewModel/>
     </Window.DataContext>
@@ -25,21 +33,53 @@
                     <MenuItem Header="_About"/>
                 </MenuItem>
             </Menu>
-            <StackPanel></StackPanel>
+            <StackPanel/>
         </DockPanel>
         <Grid Margin="5" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" Padding="10" ItemsSource="{Binding ListItems}">
+            <ListBox Grid.Column="0" Padding="10" ItemsSource="{Binding ListItems}" MouseDoubleClick="ListBox_MouseDoubleClick">
                 <ListBox.ContextMenu>
                     <ContextMenu>
+                        <MenuItem Header="{x:Static strings:AppStrings.MainMenu_Edit}" Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdOpenManager}"/>
+                        <Separator />
                         <MenuItem Command="{Binding RunCurrentSyncCommand}" Header="{x:Static strings:AppStrings.MainMenu_RunNow}"/>
                         <MenuItem Header="{x:Static strings:AppStrings.MainMenu_ShowLastStatus}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="5*" />
+                </Grid.RowDefinitions>
+                <GroupBox Grid.Row="0" Header="{x:Static strings:AppStrings.GroupBox_LastStatus}" Margin="5" VerticalAlignment="Top" DataContext="{Binding LastStatus}">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="{x:Static strings:AppStrings.MainScreen_LastStatus_Status}" />
+                        <TextBox Grid.Row="0"  Grid.Column="1" IsReadOnly="True" Margin="5" Text="{Binding Status, Converter={StaticResource EnumDescriptionConverter}}" />
+                        <Label Grid.Column="2" Content="{x:Static strings:AppStrings.MainScreen_LastStatus_Duration}" />
+                        <TextBox Grid.Column="3" IsReadOnly="True" Margin="5" Text="{Binding Duration, Converter={StaticResource TimeSpanMinuteSecondStringConverter}, Mode=OneWay}" />
+                        <Label Grid.Row="1" Content="{x:Static strings:AppStrings.MainScreen_LastStatus_SourceFolder}" />
+                        <TextBox Grid.Row="1"  Grid.Column="1" IsReadOnly="True" Margin="5" Text="{Binding SourceFolder, Mode=OneWay}" />
+                        <Label Grid.Row="1"  Grid.Column="2" Content="{x:Static strings:AppStrings.MainScreen_LastStatus_SourceFolder}" />
+                        <TextBox Grid.Row="1"  Grid.Column="3" IsReadOnly="True" Margin="5" Text="{Binding MirrorFolder, Mode=OneWay}" />
+                       
+                    </Grid>
+                </GroupBox>
+            </Grid>
+
         </Grid>
     </Grid>
 </Window>

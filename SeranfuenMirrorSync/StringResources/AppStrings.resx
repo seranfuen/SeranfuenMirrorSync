@@ -131,11 +131,32 @@
   <data name="ErrorTitle" xml:space="preserve">
     <value>An error happened</value>
   </data>
+  <data name="GroupBox_LastStatus" xml:space="preserve">
+    <value>Last Sync Status</value>
+  </data>
+  <data name="MainMenu_Edit" xml:space="preserve">
+    <value>Edit Syncs</value>
+  </data>
   <data name="MainMenu_RunNow" xml:space="preserve">
     <value>Run sync now</value>
   </data>
   <data name="MainMenu_ShowLastStatus" xml:space="preserve">
     <value>Show Last Status</value>
+  </data>
+  <data name="MainScreen_LastStatus_DestinationFolder" xml:space="preserve">
+    <value>Destination Folder</value>
+  </data>
+  <data name="MainScreen_LastStatus_Duration" xml:space="preserve">
+    <value>Sync Duration</value>
+  </data>
+  <data name="MainScreen_LastStatus_SourceFolder" xml:space="preserve">
+    <value>Source Folder</value>
+  </data>
+  <data name="MainScreen_LastStatus_Status" xml:space="preserve">
+    <value>Current Status</value>
+  </data>
+  <data name="ManualSync" xml:space="preserve">
+    <value>Manual Sync</value>
   </data>
   <data name="NoServiceRunning" xml:space="preserve">
     <value>No Service Running</value>

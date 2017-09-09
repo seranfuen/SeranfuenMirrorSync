@@ -10,7 +10,8 @@ namespace SeranfuenMirrorSyncWcfClient
 {
     public interface IServiceProxy
     {
-        void RunSync(string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
+        void RunSync(string name, string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
+        void RunSyncs(string name, List<string> sourceRoots, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null);
         SourceMirrorSyncStatus GetCurrentSyncStatus(bool filterCompletedActions);
         void CancelCurrentSync();
         void SetSchedules(List<ScheduleBase> schedules);

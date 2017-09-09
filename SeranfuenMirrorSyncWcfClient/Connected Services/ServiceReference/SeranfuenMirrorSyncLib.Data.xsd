@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Controllers" />
@@ -13,14 +12,15 @@
   <xs:complexType name="SourceMirrorSyncStatus">
     <xs:sequence>
       <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FileSyncActionStatuses" nillable="true" type="tns:ArrayOfFileSyncActionStatus" />
       <xs:element minOccurs="0" name="FilesCopied" type="xs:int" />
       <xs:element minOccurs="0" name="FilesDeletedMirror" type="xs:int" />
       <xs:element minOccurs="0" name="FilesFailed" type="xs:int" />
       <xs:element minOccurs="0" name="FilesProcessed" type="xs:int" />
       <xs:element minOccurs="0" name="FilesSkipped" type="xs:int" />
-      <xs:element minOccurs="0" name="Id" type="ser:guid" />
       <xs:element minOccurs="0" name="MirrorRoot" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SourceRoot" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Threads" type="xs:int" />
@@ -98,74 +98,25 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:ScheduleBase">
         <xs:sequence>
-          <xs:element minOccurs="0" name="DaysOfWeekFlag" type="tns:DaysOfWeekFlag" />
+          <xs:element minOccurs="0" name="DaysOfWeek" nillable="true" type="tns:DaysOfWeek" />
           <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Controllers" minOccurs="0" name="Time" nillable="true" type="q3:Time" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="WeekdaySchedule" nillable="true" type="tns:WeekdaySchedule" />
-  <xs:simpleType name="DaysOfWeekFlag">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Monday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Tuesday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Wednesday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Thursday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Friday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Saturday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Sunday">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="EveryDay">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">127</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="DaysOfWeekFlag" nillable="true" type="tns:DaysOfWeekFlag" />
+  <xs:complexType name="DaysOfWeek">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Friday" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Monday" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Saturday" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Sunday" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Thursday" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Tuesday" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Wednesday" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DaysOfWeek" nillable="true" type="tns:DaysOfWeek" />
   <xs:complexType name="ManualSchedule">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:ScheduleBase">

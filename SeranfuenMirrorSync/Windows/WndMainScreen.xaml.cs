@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SeranfuenMirrorSync.Converters;
+using System.Threading;
 
 namespace SeranfuenMirrorSync.Windows
 {
@@ -21,12 +22,32 @@ namespace SeranfuenMirrorSync.Windows
     /// </summary>
     public partial class WndMainScreen : Window
     {
+        #region ' Fields '
+
+        private Timer _timer;
+        private const int TIMER_PERIOD_MS = 1000;
+
+        #endregion
+
         #region ' Ctor '
 
         public WndMainScreen()
         {
             InitializeComponent();
             Loaded += WndMainScreen_Loaded;
+            _timer = new Timer(Timer_Callback, null, TIMER_PERIOD_MS, TIMER_PERIOD_MS);
+        }
+
+        #endregion
+
+        #region ' Properties '
+
+        private MainScreenViewModel ViewModel
+        {
+            get
+            {
+                return DataContext as MainScreenViewModel;
+            }
         }
 
         #endregion
@@ -51,6 +72,40 @@ namespace SeranfuenMirrorSync.Windows
             MessageBox.Show(e.Message, e.Title, MessageBoxButton.OK, e.Type.FromViewModelMessageType());
         }
 
+        private void Timer_Callback(object state)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (ViewModel != null) ViewModel.UpdateLastStatus();
+            });
+        }
+
+        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ViewModel != null && ViewModel.Current != null)
+            {
+                ShowSyncManager();
+            }
+        }
+
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = ViewModel != null && ViewModel.Current != null;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            ShowSyncManager();
+        }
+
+        private void ShowSyncManager()
+        {
+            var wnd = new WndSyncScheduleManager();
+            wnd.ShowDialog();
+            ViewModel.LoadData();
+        }
+
         #endregion
+
     }
 }
