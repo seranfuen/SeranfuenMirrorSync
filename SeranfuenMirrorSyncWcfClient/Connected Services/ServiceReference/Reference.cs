@@ -18,19 +18,11 @@ namespace SeranfuenMirrorSyncWcfClient.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISyncService/RunSync", ReplyAction="http://tempuri.org/ISyncService/RunSyncResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(string[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncActionStatus[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncActionStatus))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncAction.FileActionType))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncActionStatus.ActionStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.ScheduleBase[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.ScheduleBase))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.WeekdaySchedule))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.DaysOfWeek))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.ManualSchedule))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Exception))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Controllers.Time))]
         void RunSync(string name, string sourceRoot, string mirrorRoot, object[] fileFilters, object[] directoryFilters);
         
@@ -40,19 +32,11 @@ namespace SeranfuenMirrorSyncWcfClient.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISyncService/RunSyncs", ReplyAction="http://tempuri.org/ISyncService/RunSyncsResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(string[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncActionStatus[]))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncActionStatus))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncAction))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncAction.FileActionType))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.FileSyncActionStatus.ActionStatus))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.ScheduleBase[]))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.ScheduleBase))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.WeekdaySchedule))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.DaysOfWeek))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Data.ManualSchedule))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Exception))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SeranfuenMirrorSyncLib.Controllers.Time))]
         void RunSyncs(string name, string[] sourceRoots, string mirrorRoot, object[] fileFilters, object[] directoryFilters);
         
@@ -66,10 +50,10 @@ namespace SeranfuenMirrorSyncWcfClient.ServiceReference {
         System.Threading.Tasks.Task<byte[]> GetCurrentSyncStatusAsync(bool filterCompletedActions);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISyncService/GetHistorySyncStatus", ReplyAction="http://tempuri.org/ISyncService/GetHistorySyncStatusResponse")]
-        SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus[] GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count);
+        byte[] GetHistorySyncStatus(string syncName, int count);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISyncService/GetHistorySyncStatus", ReplyAction="http://tempuri.org/ISyncService/GetHistorySyncStatusResponse")]
-        System.Threading.Tasks.Task<SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus[]> GetHistorySyncStatusAsync(string sourceRoot, string mirrorRoot, int count);
+        System.Threading.Tasks.Task<byte[]> GetHistorySyncStatusAsync(string syncName, int count);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISyncService/CancelCurrentSync", ReplyAction="http://tempuri.org/ISyncService/CancelCurrentSyncResponse")]
         void CancelCurrentSync();
@@ -141,12 +125,12 @@ namespace SeranfuenMirrorSyncWcfClient.ServiceReference {
             return base.Channel.GetCurrentSyncStatusAsync(filterCompletedActions);
         }
         
-        public SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus[] GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count) {
-            return base.Channel.GetHistorySyncStatus(sourceRoot, mirrorRoot, count);
+        public byte[] GetHistorySyncStatus(string syncName, int count) {
+            return base.Channel.GetHistorySyncStatus(syncName, count);
         }
         
-        public System.Threading.Tasks.Task<SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus[]> GetHistorySyncStatusAsync(string sourceRoot, string mirrorRoot, int count) {
-            return base.Channel.GetHistorySyncStatusAsync(sourceRoot, mirrorRoot, count);
+        public System.Threading.Tasks.Task<byte[]> GetHistorySyncStatusAsync(string syncName, int count) {
+            return base.Channel.GetHistorySyncStatusAsync(syncName, count);
         }
         
         public void CancelCurrentSync() {

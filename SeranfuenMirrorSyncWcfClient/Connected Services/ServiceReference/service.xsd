@@ -51,8 +51,7 @@
   <xs:element name="GetHistorySyncStatus">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="sourceRoot" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="mirrorRoot" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="syncName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="count" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -60,7 +59,7 @@
   <xs:element name="GetHistorySyncStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="GetHistorySyncStatusResult" nillable="true" type="q6:ArrayOfSourceMirrorSyncStatus" />
+        <xs:element minOccurs="0" name="GetHistorySyncStatusResult" nillable="true" type="xs:base64Binary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -77,7 +76,7 @@
   <xs:element name="SetSchedules">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="schedules" nillable="true" type="q7:ArrayOfScheduleBase" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="schedules" nillable="true" type="q6:ArrayOfScheduleBase" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -94,7 +93,7 @@
   <xs:element name="GetSchedulesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="GetSchedulesResult" nillable="true" type="q8:ArrayOfScheduleBase" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" minOccurs="0" name="GetSchedulesResult" nillable="true" type="q7:ArrayOfScheduleBase" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

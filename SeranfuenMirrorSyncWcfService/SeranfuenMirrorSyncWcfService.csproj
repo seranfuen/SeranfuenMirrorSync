@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ScheduleManager.cs" />
     <Compile Include="Controllers\ServiceSyncController.cs" />
+    <Compile Include="Controllers\SyncStatusesKeyValuePair.cs" />
     <Compile Include="Controllers\SyncStatusHistory.cs" />
     <Compile Include="ISyncService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

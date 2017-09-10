@@ -1,8 +1,11 @@
 ﻿using SeranfuenMirrorSyncLib.Data;
+using SeranfuenMirrorSyncLib.Utils.Serialization;
 using SeranfuenMirrorSyncWcfService.Properties;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static SeranfuenMirrorSyncLib.Data.SourceMirrorSyncStatus;
@@ -27,13 +30,22 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
         private SyncStatusHistory()
         {
             _statuses = new Dictionary<string, List<SourceMirrorSyncStatus>>();
+            var currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            _filepath = Path.Combine(currentPath, PERSIST_FILE_NAME);
             LoadHistory();
         }
 
         #endregion
 
+        #region ' Constants '
+
+        private const string PERSIST_FILE_NAME = "data\\history.xml";
+
+        #endregion
+
         #region ' Fields '
 
+        private string _filepath;
         private Dictionary<string, List<SourceMirrorSyncStatus>> _statuses;
 
         #endregion
@@ -70,7 +82,10 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
 
         public void PersistHistory()
         {
-
+            var dir = Path.GetDirectoryName(_filepath);
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            var serialization = new DataContractSerialization<List<SyncStatusesKeyValuePair>>();
+            serialization.Serialize(SyncStatusesKeyValuePair.FromDictionary(_statuses), _filepath);
         }
 
         private void TrimHistory(SourceMirrorSyncStatus status)
@@ -81,7 +96,11 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
 
         private void LoadHistory()
         {
-            throw new NotImplementedException();
+            if (File.Exists(_filepath))
+            {
+                var serialization = new DataContractSerialization<List<SyncStatusesKeyValuePair>>();
+                _statuses = SyncStatusesKeyValuePair.ToDictionary(serialization.Deserialize(_filepath).Cast<SyncStatusesKeyValuePair>().ToList());
+            }
         }
 
         #endregion

@@ -76,7 +76,11 @@ namespace SeranfuenMirrorSync.Windows
         {
             Dispatcher.Invoke(() =>
             {
-                if (ViewModel != null) ViewModel.UpdateLastStatus();
+                if (ViewModel != null)
+                {
+                    ViewModel.UpdateLastStatus();
+                    ViewModel.RefreshCurrentHistory();
+                }
             });
         }
 

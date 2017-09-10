@@ -1,84 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Data" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Controllers" />
-  <xs:complexType name="ArrayOfSourceMirrorSyncStatus">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SourceMirrorSyncStatus" nillable="true" type="tns:SourceMirrorSyncStatus" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSourceMirrorSyncStatus" nillable="true" type="tns:ArrayOfSourceMirrorSyncStatus" />
-  <xs:complexType name="SourceMirrorSyncStatus">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="FaultMessage" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FileSyncActionStatuses" nillable="true" type="tns:ArrayOfFileSyncActionStatus" />
-      <xs:element minOccurs="0" name="FilesCopied" type="xs:int" />
-      <xs:element minOccurs="0" name="FilesDeletedMirror" type="xs:int" />
-      <xs:element minOccurs="0" name="FilesFailed" type="xs:int" />
-      <xs:element minOccurs="0" name="FilesProcessed" type="xs:int" />
-      <xs:element minOccurs="0" name="FilesSkipped" type="xs:int" />
-      <xs:element minOccurs="0" name="MirrorRoot" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SourceRoot" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Threads" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SourceMirrorSyncStatus" nillable="true" type="tns:SourceMirrorSyncStatus" />
-  <xs:complexType name="ArrayOfFileSyncActionStatus">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileSyncActionStatus" nillable="true" type="tns:FileSyncActionStatus" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfFileSyncActionStatus" nillable="true" type="tns:ArrayOfFileSyncActionStatus" />
-  <xs:complexType name="FileSyncActionStatus">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:FileSyncAction">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AverageBandwidth" type="xs:long" />
-          <xs:element minOccurs="0" name="CurrentStatus" type="tns:FileSyncActionStatus.ActionStatus" />
-          <xs:element minOccurs="0" name="DataCopied" type="xs:long" />
-          <xs:element minOccurs="0" name="End" nillable="true" type="xs:dateTime" />
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="Exception" nillable="true" type="q1:Exception" />
-          <xs:element minOccurs="0" name="Start" type="xs:dateTime" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="FileSyncActionStatus" nillable="true" type="tns:FileSyncActionStatus" />
-  <xs:complexType name="FileSyncAction">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Action" type="tns:FileSyncAction.FileActionType" />
-      <xs:element minOccurs="0" name="MirrorLastModified" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="MirrorPath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MirrorSize" nillable="true" type="xs:long" />
-      <xs:element minOccurs="0" name="SourceLastModified" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="SourcePath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SourceSize" nillable="true" type="xs:long" />
-      <xs:element minOccurs="0" name="VirtualPath" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="FileSyncAction" nillable="true" type="tns:FileSyncAction" />
-  <xs:simpleType name="FileSyncAction.FileActionType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Copy" />
-      <xs:enumeration value="Skip" />
-      <xs:enumeration value="Delete" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="FileSyncAction.FileActionType" nillable="true" type="tns:FileSyncAction.FileActionType" />
-  <xs:simpleType name="FileSyncActionStatus.ActionStatus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Pending" />
-      <xs:enumeration value="Started" />
-      <xs:enumeration value="Copying" />
-      <xs:enumeration value="Finished" />
-      <xs:enumeration value="Failed" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="FileSyncActionStatus.ActionStatus" nillable="true" type="tns:FileSyncActionStatus.ActionStatus" />
   <xs:complexType name="ArrayOfScheduleBase">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ScheduleBase" nillable="true" type="tns:ScheduleBase" />
@@ -90,7 +13,7 @@
       <xs:element minOccurs="0" name="DestinationPath" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastTimeRun" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SourcePaths" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SourcePaths" nillable="true" type="q1:ArrayOfstring" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ScheduleBase" nillable="true" type="tns:ScheduleBase" />
@@ -99,7 +22,7 @@
       <xs:extension base="tns:ScheduleBase">
         <xs:sequence>
           <xs:element minOccurs="0" name="DaysOfWeek" nillable="true" type="tns:DaysOfWeek" />
-          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Controllers" minOccurs="0" name="Time" nillable="true" type="q3:Time" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SeranfuenMirrorSyncLib.Controllers" minOccurs="0" name="Time" nillable="true" type="q2:Time" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

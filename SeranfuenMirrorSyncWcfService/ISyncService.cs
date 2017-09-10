@@ -22,7 +22,7 @@ namespace SeranfuenMirrorSyncWcfService
         byte[] GetCurrentSyncStatus(bool filterCompletedActions);
 
         [OperationContract]
-        List<SourceMirrorSyncStatus> GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count);
+        byte[] GetHistorySyncStatus(string syncName, int count);
 
         [OperationContract]
         void CancelCurrentSync();

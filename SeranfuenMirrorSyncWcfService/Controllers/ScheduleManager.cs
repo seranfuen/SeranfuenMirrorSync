@@ -58,6 +58,10 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
             }
         }
 
+        #endregion
+
+        #region ' Members '
+
         public void SetSchedules(List<ISchedule> schedules)
         {
             _schedules = schedules;

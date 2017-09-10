@@ -29,6 +29,17 @@ namespace SeranfuenMirrorSyncWcfClient
             }
         }
 
+        public List<SourceMirrorSyncStatus> GetHistorySyncStatus(string syncName, int count)
+        {
+            using (var proxy = GetProxyInstance())
+            {
+                var statusArray = proxy.GetHistorySyncStatus(syncName, count);
+                if (statusArray == null) return null;
+                return ObjectCompressionFactory.GetDefaultCompressor<List<SourceMirrorSyncStatus>>().DecompressObjecT(statusArray);
+            }
+        }
+
+
         public void RunSync(string name, string sourceRoot, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
         {
             using (var proxy = GetProxyInstance())

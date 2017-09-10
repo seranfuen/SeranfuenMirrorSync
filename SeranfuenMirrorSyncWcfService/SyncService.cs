@@ -36,10 +36,12 @@ namespace SeranfuenMirrorSyncWcfService
             }
         }
 
-        public List<SourceMirrorSyncStatus> GetHistorySyncStatus(string sourceRoot, string mirrorRoot, int count)
+        public byte[] GetHistorySyncStatus(string syncName, int count)
         {
-            // use a status controller to find the history for source and mirror
-            throw new NotImplementedException();
+            var statuses = SyncStatusHistory.Instance.GetStatuses(syncName);
+            statuses.OrderByDescending(status => status.Start).Take(count).OrderBy(status => status.Start);
+            statuses.ForEach(status => status.FilterNotActiveActions());
+            return ObjectCompressionFactory.GetDefaultCompressor<List<SourceMirrorSyncStatus>>().CompressObject(statuses);
         }
 
         public List<ScheduleBase> GetSchedules()

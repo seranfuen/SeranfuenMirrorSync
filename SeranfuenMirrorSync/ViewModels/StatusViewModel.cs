@@ -10,7 +10,9 @@ namespace SeranfuenMirrorSync.ViewModels
         private string _sourceFolder;
         private string _mirrorFolder;
         private TimeSpan _duration;
+        private DateTime _start;
         private SourceMirrorSyncStatus.SyncStatus _status;
+        private Guid _guid;
 
         #endregion
 
@@ -42,6 +44,27 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
+        public System.Windows.Media.Brush StatusBrush
+        {
+            get
+            {
+                if (Status == SourceMirrorSyncStatus.SyncStatus.Faulted)
+                {
+                    return System.Windows.Media.Brushes.Red;
+                }
+                else
+                {
+                    return System.Windows.Media.Brushes.Black;
+                }
+            }
+        }
+
+        public string FaultMessage
+        {
+            get;
+            set;
+        }
+
         public TimeSpan Duration
         {
             get
@@ -65,6 +88,32 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 _status = value;
                 OnPropertyChanged("Status");
+            }
+        }
+
+        public DateTime Start
+        {
+            get
+            {
+                return _start;
+            }
+            set
+            {
+                _start = value;
+                OnPropertyChanged("Start");
+            }
+        }
+
+        public Guid Guid
+        {
+            get
+            {
+                return _guid;
+            }
+            set
+            {
+                _guid = value;
+                OnPropertyChanged("Guid");
             }
         }
 

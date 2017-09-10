@@ -37,7 +37,8 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
         {
             if (e.StatusType == SyncProgressReportedEventArgs.SyncProgressReportType.SyncFinished)
             {
-
+                SyncStatusHistory.Instance.PutStatus(_scheduler.GetCurrentStatus());
+                SyncStatusHistory.Instance.PersistHistory();
             }
         }
 

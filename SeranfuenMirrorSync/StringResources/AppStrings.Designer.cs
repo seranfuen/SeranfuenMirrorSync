@@ -108,6 +108,15 @@ namespace SeranfuenMirrorSync.StringResources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sync History.
+        /// </summary>
+        public static string GroupBox_StatusHistory {
+            get {
+                return ResourceManager.GetString("GroupBox_StatusHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Edit Syncs.
         /// </summary>
         public static string MainMenu_Edit {
@@ -203,6 +212,33 @@ namespace SeranfuenMirrorSync.StringResources {
         public static string ServiceRunning {
             get {
                 return ResourceManager.GetString("ServiceRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Source.
+        /// </summary>
+        public static string StatusHistoryGrid_SourceHeader {
+            get {
+                return ResourceManager.GetString("StatusHistoryGrid_SourceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sync Start.
+        /// </summary>
+        public static string StatusHistoryGrid_Start {
+            get {
+                return ResourceManager.GetString("StatusHistoryGrid_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Status.
+        /// </summary>
+        public static string StatusHistoryGrid_Status {
+            get {
+                return ResourceManager.GetString("StatusHistoryGrid_Status", resourceCulture);
             }
         }
         

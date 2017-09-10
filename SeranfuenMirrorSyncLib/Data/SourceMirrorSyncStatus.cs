@@ -51,6 +51,7 @@ namespace SeranfuenMirrorSyncLib.Data
         private DateTime _start;
         private DateTime? _end;
         private SyncStatus _syncStatus = SyncStatus.NotStarted;
+        private Guid _guid;
 
         private List<FileSyncActionStatus> _actionStatuses;
         private Dictionary<string, FileSyncActionStatus> _vPathToFileSync;
@@ -62,9 +63,18 @@ namespace SeranfuenMirrorSyncLib.Data
             Name = name;
             SourceRoot = sourceRoot;
             MirrorRoot = mirrorRoot;
+            _guid = Guid.NewGuid();
+            Start = DateTime.Now;
         }
 
         #region ' Properties '
+
+        [DataMember]
+        public Guid Guid
+        {
+            get { return _guid; }
+            set { _guid = value; }
+        }
 
         [DataMember]
         public string SourceRoot
@@ -289,7 +299,7 @@ namespace SeranfuenMirrorSyncLib.Data
             }
         }
 
-
+        [DataMember]
         public SyncStatus CurrentStatus
         {
             get

@@ -12,6 +12,10 @@ using SeranfuenMirrorSync.Converters;
 using System.ServiceModel;
 using System.Windows.Threading;
 using SeranfuenMirrorSyncLib.Data;
+using SeranfuenMirrorSync.Properties;
+using System.Collections.ObjectModel;
+using System.Threading;
+using System.Windows;
 
 namespace SeranfuenMirrorSync.ViewModels
 {
@@ -69,6 +73,7 @@ namespace SeranfuenMirrorSync.ViewModels
 
         private bool _isConnected = false;
         private StatusViewModel _statusViewModel;
+        private ObservableCollection<StatusViewModel> _selectedSyncHistory;
 
         #endregion
 
@@ -77,6 +82,7 @@ namespace SeranfuenMirrorSync.ViewModels
         public MainScreenViewModel()
         {
             RunCurrentSyncCommand = new RunCurrentSyncCommandDefinition(this);
+            CurrentChanged += MainScreenViewModel_CurrentChanged;
         }
 
         #endregion
@@ -118,6 +124,19 @@ namespace SeranfuenMirrorSync.ViewModels
             }
         }
 
+        public ObservableCollection<StatusViewModel> SelectedSyncStatusHistory
+        {
+            get
+            {
+                return _selectedSyncHistory;
+            }
+            set
+            {
+                _selectedSyncHistory = value;
+                OnPropertyChanged("SelectedSyncStatusHistory");
+            }
+        }
+
         #endregion
 
         #region ' Commands '
@@ -148,10 +167,14 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 if (!taskResult.IsFaulted && taskResult.Result != null)
                 {
-                    Dispatcher.CurrentDispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         LastStatus = taskResult.Result.ToViewModel();
                     });
+                }
+                else if (taskResult.IsFaulted && taskResult.Exception.InnerException is CommunicationException)
+                {
+                    IsConnected = false;
                 }
             });
         }
@@ -162,13 +185,62 @@ namespace SeranfuenMirrorSync.ViewModels
             {
                 var proxy = ServiceProxyFactory.Proxy;
                 SetItems(proxy.GetSchedules().Select(schedule => schedule.ToSyncScheduleViewModel()));
+                RefreshCurrentHistory();
                 IsConnected = true;
             }
             catch (CommunicationException)
             {
-                ShowUserMessage(AppStrings.NoService_Error, AppStrings.ErrorTitle, ShowMessageRequestedEventArgs.MessageType.Error);
-                IsConnected = false;
+                ShowCommunicationErrorMessage();
             }
+        }
+
+        public void RefreshCurrentHistory()
+        {
+            if (Current != null)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    var proxy = ServiceProxyFactory.Proxy;
+                    return proxy.GetHistorySyncStatus(Current.SyncName, Settings.Default.MaxStatusHistory);
+                }).ContinueWith((taskResult) =>
+                {
+                    if (!taskResult.IsFaulted && taskResult.Result != null)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            if (SelectedSyncStatusHistory == null)
+                            {
+                                SelectedSyncStatusHistory = new ObservableCollection<StatusViewModel>(taskResult.Result.Select(res => res.ToViewModel()).OrderByDescending(status => status.Start));
+                            }
+                            else
+                            {
+                                foreach (var status in taskResult.Result)
+                                {
+                                    if (!SelectedSyncStatusHistory.Any(stat => stat.Guid == status.Guid))
+                                    {
+                                        SelectedSyncStatusHistory.Add(status.ToViewModel());
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    else if (taskResult.IsFaulted && taskResult.Exception.InnerException is CommunicationException)
+                    {
+                        IsConnected = false;
+                    }
+                });
+            }
+        }
+
+        private void ShowCommunicationErrorMessage()
+        {
+            ShowUserMessage(AppStrings.NoService_Error, AppStrings.ErrorTitle, ShowMessageRequestedEventArgs.MessageType.Error);
+            IsConnected = false;
+        }
+
+        private void MainScreenViewModel_CurrentChanged(object sender, EventArgs e)
+        {
+            RefreshCurrentHistory();
         }
 
         protected void RunCurrentSync()

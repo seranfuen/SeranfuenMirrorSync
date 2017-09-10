@@ -17,7 +17,10 @@ namespace SeranfuenMirrorSync.Converters
                 SourceFolder = status.SourceRoot,
                 MirrorFolder = status.MirrorRoot,
                 Duration = status.Duration,
-                Status = status.CurrentStatus
+                Status = status.CurrentStatus,
+                Start = status.Start,
+                FaultMessage = status.FaultMessage,
+                Guid = status.Guid
             };
             return viewModel;
         }

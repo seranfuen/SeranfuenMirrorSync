@@ -134,6 +134,9 @@
   <data name="GroupBox_LastStatus" xml:space="preserve">
     <value>Last Sync Status</value>
   </data>
+  <data name="GroupBox_StatusHistory" xml:space="preserve">
+    <value>Sync History</value>
+  </data>
   <data name="MainMenu_Edit" xml:space="preserve">
     <value>Edit Syncs</value>
   </data>
@@ -166,6 +169,15 @@
   </data>
   <data name="ServiceRunning" xml:space="preserve">
     <value>Service Running</value>
+  </data>
+  <data name="StatusHistoryGrid_SourceHeader" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="StatusHistoryGrid_Start" xml:space="preserve">
+    <value>Sync Start</value>
+  </data>
+  <data name="StatusHistoryGrid_Status" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="SyncSourcesViewModel_AlreadyExistingPath_Message" xml:space="preserve">
     <value>The path '{0}' is already in the synchronization source</value>
