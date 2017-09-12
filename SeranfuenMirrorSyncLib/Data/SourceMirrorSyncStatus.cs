@@ -329,6 +329,26 @@ namespace SeranfuenMirrorSyncLib.Data
 
         #region ' Methods '
 
+        public void CopyTo(SourceMirrorSyncStatus newStatus)
+        {
+            newStatus.CurrentStatus = CurrentStatus;
+            newStatus.End = End;
+            newStatus.FaultMessage = FaultMessage;
+            newStatus.FilesCopied = FilesCopied;
+            newStatus.FilesDeletedMirror = FilesDeletedMirror;
+            newStatus.FilesFailed = FilesFailed;
+            newStatus.FilesProcessed = FilesProcessed;
+            newStatus.FilesSkipped = FilesSkipped;
+            newStatus.FileSyncActionStatuses = FileSyncActionStatuses != null ? FileSyncActionStatuses.ToList() : null;
+            newStatus.Guid = Guid;
+            newStatus.MirrorRoot = MirrorRoot;
+            newStatus.Name = Name;
+            newStatus.SourceRoot = SourceRoot;
+            newStatus.Start = Start;
+            newStatus.Threads = Threads;
+        }
+
+
         public void IncrementThreads()
         {
             lock (this)

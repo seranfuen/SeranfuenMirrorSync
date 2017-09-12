@@ -146,6 +146,9 @@
   <data name="MainMenu_ShowLastStatus" xml:space="preserve">
     <value>Show Last Status</value>
   </data>
+  <data name="MainScreen_CurrentSync" xml:space="preserve">
+    <value>Current Sync</value>
+  </data>
   <data name="MainScreen_LastStatus_DestinationFolder" xml:space="preserve">
     <value>Destination Folder</value>
   </data>

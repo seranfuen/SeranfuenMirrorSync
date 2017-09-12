@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeranfuenMirrorSyncLib.Controllers;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace SeranfuenMirrorSyncLib.Data
 {
@@ -37,6 +38,32 @@ namespace SeranfuenMirrorSyncLib.Data
 
         public virtual List<PendingSyncInfo> GetSyncInfos()
         {
+            var listInfos = new List<PendingSyncInfo>();
+
+            var query =
+                from source in SourcePaths
+                group source by Path.GetFileName(source).ToLower() into g
+                select g;
+
+            foreach (var group in query)
+            {
+                foreach (var source in group)
+                {
+                    int i = 1;
+                    string destination = null;
+                    if (i == 1)
+                    {
+                        destination = Path.Combine(DestinationPath, Path.GetFileName(source));
+                    }
+                    else
+                    {
+                        destination = Path.Combine(DestinationPath, string.Format("{0} ({1})", Path.GetFileName(source), i));
+                    }
+
+                    listInfos.Add(new PendingSyncInfo(Name, source, DestinationPath));
+                    i++;
+                }
+            }
             return SourcePaths.Select(path => new PendingSyncInfo(Name, path, DestinationPath)).ToList();
         }
     }

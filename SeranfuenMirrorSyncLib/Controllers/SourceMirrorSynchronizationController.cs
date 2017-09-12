@@ -8,6 +8,7 @@ using System.IO;
 using SeranfuenMirrorSyncLib.Utils.Clone;
 using System.Threading;
 using SeranfuenLogging;
+using SeranfuenMirrorSyncLib.Utils;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
@@ -20,6 +21,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         private SourceMirrorSyncStatus _status;
         private CancellationTokenSource _cancellationToken;
+        private const int MAX_PARALLEL_COPIES = 4;
 
         public SourceMirrorSynchronizationController(string name, string sourceRoot, string mirrorRoot)
         {
@@ -127,9 +129,11 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         public SourceMirrorSyncStatus GetStatus()
         {
-            lock (_status)
+            lock (this)
             {
-                return DeepCloneFactory<SourceMirrorSyncStatus>.DefaultCloner.DeepClone(_status);
+                var newStatus = new SourceMirrorSyncStatus();
+                _status.CopyTo(newStatus);
+                return newStatus;
             }
         }
 
@@ -139,15 +143,9 @@ namespace SeranfuenMirrorSyncLib.Controllers
             var actualActions = actions.Where(action => action.Action != FileSyncAction.FileActionType.Skip);
             UpdatePendingActions(actualActions);
 
-            var options = new ParallelOptions()
+            Parallel.ForEach(actualActions, ParallelOptionsFactory.GetMaxParlallelOptions(MAX_PARALLEL_COPIES), (action) =>
             {
-                MaxDegreeOfParallelism = MaxParallelActions,
-                CancellationToken = _cancellationToken.Token
-            };
-
-            Parallel.ForEach(actualActions, options, (action) =>
-            {
-                options.CancellationToken.ThrowIfCancellationRequested();
+                if (_cancellationToken.IsCancellationRequested) _cancellationToken.Token.ThrowIfCancellationRequested();
                 _status.IncrementThreads();
                 ReportActionStarted(action);
                 PerformAction(action);

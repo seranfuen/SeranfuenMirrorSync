@@ -8,14 +8,29 @@
         xmlns:local="clr-namespace:SeranfuenMirrorSync.Windows"
         xmlns:ViewModels="clr-namespace:SeranfuenMirrorSync.ViewModels" xmlns:Converters="clr-namespace:SeranfuenMirrorSync.Converters" x:Name="MainWindow" x:Class="SeranfuenMirrorSync.Windows.WndMainScreen"
         mc:Ignorable="d"
-        Title="{Binding DisplayName, Mode=OneWay}" Height="600" Width="800">
+        Title="{Binding DisplayName, Mode=OneWay}" Height="600" Width="997">
     <Window.Resources>
+        <Converters:HumanReadableBytesConverter x:Key="HumanReadableBytesConverter"/>
+        <Converters:PercentConverter x:Key="PercentConverter"/>
         <Converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
         <Converters:TimeSpanMinuteSecondStringConverter x:Key="TimeSpanMinuteSecondStringConverter"/>
+        <Style x:Key="Body_Content_DataGrid_Centering"
+        TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdOpenManager}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed" />
     </Window.CommandBindings>
+
     <Window.DataContext>
         <ViewModels:MainScreenViewModel/>
     </Window.DataContext>
@@ -37,16 +52,15 @@
         </DockPanel>
         <Grid Margin="5" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <ListBox Grid.Column="0" Padding="10" ItemsSource="{Binding ListItems}" MouseDoubleClick="ListBox_MouseDoubleClick">
+            <ListBox Grid.Column="0" Padding="10" ItemsSource="{Binding ListItems}" MouseDoubleClick="ListBox_MouseDoubleClick" SelectedIndex="{Binding SelectedIndex}">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="{x:Static strings:AppStrings.MainMenu_Edit}" Command="{x:Static commands:SyncScheduleManagerCommandFactory.CmdOpenManager}"/>
                         <Separator />
                         <MenuItem Command="{Binding RunCurrentSyncCommand}" Header="{x:Static strings:AppStrings.MainMenu_RunNow}"/>
-                        <MenuItem Header="{x:Static strings:AppStrings.MainMenu_ShowLastStatus}"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
@@ -77,22 +91,92 @@
                         <TextBox Grid.Row="1"  Grid.Column="3" IsReadOnly="True" Margin="5" Text="{Binding MirrorFolder, Mode=OneWay}" />
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="1" Header="{x:Static strings:AppStrings.GroupBox_StatusHistory}" Margin="5" VerticalAlignment="Top" >
-                    <Grid Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Label Content="{Binding Current.SyncName}" />
-                        <DataGrid x:Name="HistoryGrid" Grid.Row="1" ItemsSource="{Binding SelectedSyncStatusHistory}" AutoGenerateColumns="False" IsReadOnly="True">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding SourceFolder}" ClipboardContentBinding="{x:Null}" Header="{x:Static strings:AppStrings.StatusHistoryGrid_SourceHeader}" />
-                                <DataGridTextColumn x:Name="StartHistoryColumn" Binding="{Binding Start, StringFormat=\{0:g\}}" ClipboardContentBinding="{x:Null}" Header="{x:Static strings:AppStrings.StatusHistoryGrid_Start}" SortDirection="Descending"/>
-                                <DataGridTextColumn Binding="{Binding Status, Converter={StaticResource EnumDescriptionConverter}}" ClipboardContentBinding="{x:Null}" Header="{x:Static strings:AppStrings.StatusHistoryGrid_Status}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </GroupBox>
+                <TabControl Grid.Row="1">
+                    
+                    <TabItem Header="{x:Static strings:AppStrings.MainScreen_CurrentSync}" DataContext="{Binding LastStatus.StatusData, Mode=OneWay}">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" Margin="0,10" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Source" Margin="0,0,10,0" />
+                                <TextBox Grid.Column="1" IsReadOnly="True" Width="Auto" HorizontalAlignment="Stretch" Text="{Binding SourceRoot}" VerticalAlignment="Center" />
+                                <Label Grid.Column="2" Content="Destination" Margin="0,0,10,0" />
+                                <TextBox Grid.Column="3" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" Text="{Binding MirrorRoot}" VerticalAlignment="Center" />
+                                <Label Grid.Column="4" Content="Start" Margin="0,0,10,0" />
+                                <TextBox Grid.Column="5"  Width="Auto"  IsReadOnly="True" HorizontalAlignment="Stretch" Text="{Binding Start, StringFormat=\{0:G\}}" VerticalContentAlignment="Stretch" VerticalAlignment="Center" />
+                                <Label Grid.Column="6" Content="Duration" Margin="0,0,10,0" />
+                                <TextBox Grid.Column="7" IsReadOnly="True" Width="Auto"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Duration, Converter={StaticResource TimeSpanMinuteSecondStringConverter}, Mode=OneWay}"  />
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="0,10" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Sync Status" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="1" IsReadOnly="True" VerticalAlignment="Center" Width="120" Margin="10,0" Text="{Binding CurrentStatus, Converter={StaticResource EnumDescriptionConverter}}" />
+                                <Label Grid.Column="2" Margin="0,0,10,0" Content="Files Processed" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="3" IsReadOnly="True" Text="{Binding FilesProcessed}" VerticalAlignment="Center" Width="70" />
+                                <Label Grid.Column="4" Margin="0,0,10,0" Content="Files Copied" VerticalAlignment="Center" />
+                                <TextBox Grid.Column="5" IsReadOnly="True" Text="{Binding FilesCopied}" VerticalAlignment="Center" Width="70" />
+                            </Grid>
+                            <DataGrid x:Name="ActionsGrid" Grid.Row="2" ItemsSource="{Binding FileSyncActionStatuses}" AutoGenerateColumns="False" VerticalContentAlignment="Center" CanUserAddRows="False"
+        CellStyle="{StaticResource Body_Content_DataGrid_Centering}" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding VirtualPath}" ClipboardContentBinding="{x:Null}" Header="File" IsReadOnly="True" Width="500"/>
+                                    <DataGridTextColumn Binding="{Binding SourceSize, Converter={StaticResource HumanReadableBytesConverter}}" ClipboardContentBinding="{x:Null}" Header="Size" IsReadOnly="True"/>
+                                    <DataGridTextColumn Binding="{Binding DataCopied, Converter={StaticResource HumanReadableBytesConverter}}" ClipboardContentBinding="{Binding Converter={StaticResource HumanReadableBytesConverter}, Mode=OneWay}" Header="Copied"/>
+                                    <DataGridTemplateColumn Header="Progress" Width="200" SortMemberPath="ProgressPercent" MaxWidth="200" MinWidth="200" SortDirection="Descending">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="2">
+                                                    <ProgressBar MinHeight="2" Grid.Row="0" Grid.Column="0" Minimum="0" Maximum="100" Value="{Binding ProgressPercent, Mode=OneWay}" ToolTip="{Binding ProgressPercent, Mode=OneWay}" />
+                                                    <Label Padding="2" Margin="1" Content="{Binding ProgressPercent, Converter={StaticResource PercentConverter}, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                <Button Content="Cancel Sync" Width="Auto" HorizontalAlignment="Center" Margin="5" Padding="10,4" />
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{x:Static strings:AppStrings.GroupBox_StatusHistory}">
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Label Content="{Binding Current.SyncName}" />
+                            <DataGrid x:Name="HistoryGrid" Grid.Row="1" ItemsSource="{Binding SelectedSyncStatusHistory}" AutoGenerateColumns="False" IsReadOnly="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding SourceFolder}" ClipboardContentBinding="{x:Null}" Header="{x:Static strings:AppStrings.StatusHistoryGrid_SourceHeader}" />
+                                    <DataGridTextColumn x:Name="StartHistoryColumn" Binding="{Binding Start, StringFormat=\{0:g\}}" ClipboardContentBinding="{x:Null}" Header="{x:Static strings:AppStrings.StatusHistoryGrid_Start}" SortDirection="Descending"/>
+                                    <DataGridTextColumn Binding="{Binding Status, Converter={StaticResource EnumDescriptionConverter}}" ClipboardContentBinding="{x:Null}" Header="{x:Static strings:AppStrings.StatusHistoryGrid_Status}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </Grid>
 
         </Grid>

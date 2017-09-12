@@ -16,7 +16,29 @@ namespace SeranfuenMirrorSync.ViewModels
 
         #endregion
 
+        #region ' Ctor '
+
+        public StatusViewModel(SourceMirrorSyncStatus status)
+        {
+            StatusData = status;
+            SourceFolder = status.SourceRoot;
+            MirrorFolder = status.MirrorRoot;
+            Duration = status.Duration;
+            Status = status.CurrentStatus;
+            Start = status.Start;
+            FaultMessage = status.FaultMessage;
+            Guid = status.Guid;
+        }
+
+        #endregion
+
         #region ' Properties '
+
+        public SourceMirrorSyncStatus StatusData
+        {
+            get;
+            private set;
+        }
 
         public string SourceFolder
         {

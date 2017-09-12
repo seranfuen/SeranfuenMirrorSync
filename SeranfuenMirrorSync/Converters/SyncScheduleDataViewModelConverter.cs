@@ -47,11 +47,6 @@ namespace SeranfuenMirrorSync.Converters
                 if (viewModel.Saturday) flag |= 0x20;
                 if (viewModel.Sunday) flag |= 0x40;
 
-                if (flag == 0)
-                {
-                    throw new ArgumentException();
-                }
-
                 return (DaysOfWeekFlag)flag;
             }
         }

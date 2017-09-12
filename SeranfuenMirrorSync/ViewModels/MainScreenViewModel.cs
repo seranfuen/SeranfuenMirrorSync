@@ -169,7 +169,7 @@ namespace SeranfuenMirrorSync.ViewModels
                 {
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        LastStatus = taskResult.Result.ToViewModel();
+                        LastStatus = new StatusViewModel(taskResult.Result);
                     });
                 }
                 else if (taskResult.IsFaulted && taskResult.Exception.InnerException is CommunicationException)
@@ -204,13 +204,17 @@ namespace SeranfuenMirrorSync.ViewModels
                     return proxy.GetHistorySyncStatus(Current.SyncName, Settings.Default.MaxStatusHistory);
                 }).ContinueWith((taskResult) =>
                 {
-                    if (!taskResult.IsFaulted && taskResult.Result != null)
+                    if (!taskResult.IsFaulted)
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            if (SelectedSyncStatusHistory == null)
+                            if (taskResult.Result == null)
                             {
-                                SelectedSyncStatusHistory = new ObservableCollection<StatusViewModel>(taskResult.Result.Select(res => res.ToViewModel()).OrderByDescending(status => status.Start));
+                                SelectedSyncStatusHistory = null;
+                            }
+                            else if (SelectedSyncStatusHistory == null)
+                            {
+                                SelectedSyncStatusHistory = new ObservableCollection<StatusViewModel>(taskResult.Result.Select(res => new StatusViewModel(res)).OrderByDescending(status => status.Start));
                             }
                             else
                             {
@@ -218,7 +222,7 @@ namespace SeranfuenMirrorSync.ViewModels
                                 {
                                     if (!SelectedSyncStatusHistory.Any(stat => stat.Guid == status.Guid))
                                     {
-                                        SelectedSyncStatusHistory.Add(status.ToViewModel());
+                                        SelectedSyncStatusHistory.Add(new StatusViewModel(status));
                                     }
                                 }
                             }

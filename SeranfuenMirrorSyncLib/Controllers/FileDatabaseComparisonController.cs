@@ -53,10 +53,8 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
         public void LoadDatabases()
         {
-            List<Task> listTasks = new List<Task>();
-            listTasks.Add(Task.Factory.StartNew(() => SourceFileDatabase = LoadDatabase(SourceRoot)));
-            listTasks.Add(Task.Factory.StartNew(() => MirrorFileDatabase = LoadDatabase(MirrorRoot)));
-            Task.WaitAll(listTasks.ToArray());
+            SourceFileDatabase = LoadDatabase(SourceRoot);
+            MirrorFileDatabase = LoadDatabase(MirrorRoot);
         }
 
         public List<FileSyncAction> CalculateSyncActions()

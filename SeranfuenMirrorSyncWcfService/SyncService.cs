@@ -7,6 +7,7 @@ using System.Text;
 using SeranfuenMirrorSyncLib.Controllers;
 using SeranfuenMirrorSyncLib.Data;
 using SeranfuenMirrorSyncWcfService.Controllers;
+using System.IO;
 
 namespace SeranfuenMirrorSyncWcfService
 {
@@ -39,9 +40,16 @@ namespace SeranfuenMirrorSyncWcfService
         public byte[] GetHistorySyncStatus(string syncName, int count)
         {
             var statuses = SyncStatusHistory.Instance.GetStatuses(syncName);
-            statuses.OrderByDescending(status => status.Start).Take(count).OrderBy(status => status.Start);
-            statuses.ForEach(status => status.FilterNotActiveActions());
-            return ObjectCompressionFactory.GetDefaultCompressor<List<SourceMirrorSyncStatus>>().CompressObject(statuses);
+            if (statuses != null)
+            {
+                statuses.OrderByDescending(status => status.Start).Take(count).OrderBy(status => status.Start);
+                statuses.ForEach(status => status.FilterNotActiveActions());
+                return ObjectCompressionFactory.GetDefaultCompressor<List<SourceMirrorSyncStatus>>().CompressObject(statuses);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<ScheduleBase> GetSchedules()
@@ -56,7 +64,30 @@ namespace SeranfuenMirrorSyncWcfService
 
         public void RunSyncs(string name, List<string> sourceRoots, string mirrorRoot, List<IFileFilter> fileFilters = null, List<IFileFilter> directoryFilters = null)
         {
-            sourceRoots.ForEach(source => RunSync(name, source, mirrorRoot, fileFilters, directoryFilters));
+            var query =
+                from source in sourceRoots
+                group source by Path.GetFileName(source).ToLower() into g
+                select g;
+
+            foreach (var group in query)
+            {
+                int i = 1;
+                foreach (var source in group)
+                {
+                    string destination = null;
+                    if (i == 1)
+                    {
+                        destination = Path.Combine(mirrorRoot, Path.GetFileName(source));
+                    }
+                    else
+                    {
+                        destination = Path.Combine(mirrorRoot, string.Format("{0} ({1})", Path.GetFileName(source), i));
+                    }
+
+                    RunSync(name, source, destination, fileFilters, directoryFilters);
+                    i++;
+                }
+            }
         }
 
         public void SetSchedules(List<ScheduleBase> schedules)

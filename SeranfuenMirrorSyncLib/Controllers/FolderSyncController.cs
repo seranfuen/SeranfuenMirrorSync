@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using SeranfuenMirrorSyncLib.Utils;
 
 namespace SeranfuenMirrorSyncLib.Controllers
 {
@@ -105,7 +106,10 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
             if (!failed)
             {
-                Parallel.ForEach(Directory.GetDirectories(rootFolder), (dir) => SyncSourceInternal(dir));
+                foreach (var dir in Directory.GetDirectories(rootFolder))
+                {
+                    SyncSourceInternal(dir);
+                }
             }
         }
 
@@ -129,7 +133,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 {
                     action.Action = FolderSyncAction.FolderAction.Delete;
                     Directory.GetDirectories(targetFolder).ToList().ForEach(dir => SyncDestinationInternal(dir));
-                    Parallel.ForEach(Directory.GetFiles(targetFolder), (file) => File.Delete(file));
+                    foreach (var file in Directory.GetFiles(targetFolder)) File.Delete(file);
                     Directory.Delete(targetFolder, true);
                 }
                 failed = false;
@@ -148,7 +152,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
 
             if (!failed && action.Action == FolderSyncAction.FolderAction.Skip)
             {
-                Parallel.ForEach(Directory.GetDirectories(targetFolder), (dir) => SyncDestinationInternal(dir));
+                foreach (var dir in Directory.GetDirectories(targetFolder)) SyncDestinationInternal(dir);
             }
         }
 

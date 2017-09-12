@@ -11,7 +11,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         #region ' Singleton '
 
         private static SyncActionControllerFactory _instance;
-        private static int _defaultMaxActions = 4;
+        private static int _defaultMaxActions = 2;
 
         public static SyncActionControllerFactory Instance
         {

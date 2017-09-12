@@ -86,7 +86,7 @@ namespace SeranfuenMirrorSync.Windows
 
         private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (ViewModel != null && ViewModel.Current != null)
+            if (ViewModel != null)
             {
                 ShowSyncManager();
             }
@@ -94,7 +94,7 @@ namespace SeranfuenMirrorSync.Windows
 
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = ViewModel != null && ViewModel.Current != null;
+            
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

@@ -54,6 +54,8 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
 
         public void PutStatus(SourceMirrorSyncStatus status)
         {
+            // we only serialize faulted actions which can help debugging or finding problems
+            status.FileSyncActionStatuses = status.FileSyncActionStatuses.Where(action => action.CurrentStatus == FileSyncActionStatus.ActionStatus.Failed).ToList();
             var name = status.Name.ToLower();
             if (!_statuses.ContainsKey(name))
             {
@@ -74,7 +76,8 @@ namespace SeranfuenMirrorSyncWcfService.Controllers
             if (_statuses.ContainsKey(lowerCapsName))
             {
                 return _statuses[lowerCapsName].ToList();
-            } else
+            }
+            else
             {
                 return null;
             }

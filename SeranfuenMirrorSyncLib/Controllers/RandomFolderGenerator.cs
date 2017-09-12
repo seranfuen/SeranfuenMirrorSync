@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeranfuenMirrorSyncLib.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -77,7 +78,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 return;
             }
 
-            Parallel.For(0, _maxBreadth, (i) =>
+            for (int i = 0; i < _maxBreadth; i++)
             {
                 try
                 {
@@ -91,12 +92,12 @@ namespace SeranfuenMirrorSyncLib.Controllers
                 }
                 catch (Exception ex)
                 {
-                    lock(this)
+                    lock (this)
                     {
                         _listExceptions.Add(ex);
                     }
                 }
-            });
+            }
         }
     }
 }

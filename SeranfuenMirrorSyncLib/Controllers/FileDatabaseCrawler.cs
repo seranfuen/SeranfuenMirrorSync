@@ -1,4 +1,5 @@
 ﻿using SeranfuenMirrorSyncLib.Data;
+using SeranfuenMirrorSyncLib.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +69,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
         {
             try
             {
-                Parallel.ForEach(Directory.GetFiles(path).Where(file => FileFilters.All(filter => !filter.ShouldFilter(file))), (file) =>
+                foreach (var file in Directory.GetFiles(path).Where(file => FileFilters.All(filter => !filter.ShouldFilter(file))))
                 {
                     var entry = new FileDatabaseEntry(new FileInfo(file));
                     entry.VirtualPath = FileDatabaseEntry.GetVirtualPath(entry.LocalPath, _rootPath);
@@ -77,7 +78,7 @@ namespace SeranfuenMirrorSyncLib.Controllers
                     {
                         databaseEntries.Add(entry);
                     }
-                });
+                }
             }
             catch (UnauthorizedAccessException)
             {
@@ -85,10 +86,10 @@ namespace SeranfuenMirrorSyncLib.Controllers
             }
             try
             {
-                Parallel.ForEach(Directory.GetDirectories(path).Where(dir => DirectoryFilters.All(filter => !filter.ShouldFilter(dir))), (dir) =>
+                foreach (var dir in Directory.GetDirectories(path).Where(dir => DirectoryFilters.All(filter => !filter.ShouldFilter(dir))))
                 {
                     CrawlInternal(dir);
-                });
+                }
             }
             catch (UnauthorizedAccessException)
             {

@@ -14,7 +14,7 @@ namespace SeranfuenMirrorSyncLib.Utils.Serialization
         public T Deserialize(string path)
         {
             var serializer = new DataContractSerializer(typeof(T));
-            using (var reader = new XmlTextReader(path))
+            using (var reader = XmlReader.Create(path, new XmlReaderSettings() { CheckCharacters = false }))
             {
                 var obj = serializer.ReadObject(reader);
                 return (T)obj;
